@@ -1,0 +1,27 @@
+{
+  "name": "youtrack-client",
+  "description": "Client library for accessing the youtrack REST and Widget API",
+  "version": "0.0.1",
+  "type": "module",
+  "keywords": [
+    "youtrack",
+    "client",
+    "rest",
+    "widget",
+    "api",
+    "typescript"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "check": "biome check",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.1.4"
+  }
+}

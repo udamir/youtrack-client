@@ -1,0 +1,55 @@
+import type { QueryParamBuilder } from "../../temp/apiBuilder"
+import type { FetchApi, FetchApiConfig } from "../types"
+import { buildQueryParam } from "./fetchHelpers"
+
+export type Builders<T extends Record<string, any>> = {
+  [K in keyof T]-?: QueryParamBuilder<T[K]> | "string" | "number" | "boolean"
+}
+
+export class RequestBuilder<T extends Record<string, any>> {
+  private _args: string[] = []
+
+  constructor(
+    private baseUrl: string,
+    builders: Builders<T>,
+    params: T = {} as T,
+  ) {
+    Object.keys(params).forEach((key) => {
+      // Dynamically create setters for each key
+      if (key in builders) {
+        const value = builders[key]
+        const arg = typeof value !== "function" ? buildQueryParam(key, value) : value(params[key])
+        if (arg) {
+          this._args.push(...(Array.isArray(arg) ? arg : [arg]))
+        }
+      }
+    })
+  }
+
+  // Method to build the query string
+  private build(options?: FetchApiConfig): Parameters<FetchApi> {
+    const query = this._args.join("&")
+    const uri = query ? `${this.baseUrl}?${query}` : this.baseUrl
+    return [uri, options]
+  }
+
+  public get() {
+    return this.build()
+  }
+
+  public post<TBody>(body: TBody) {
+    return this.build({ method: "POST", body: JSON.stringify(body) })
+  }
+
+  public delete() {
+    return this.build({ method: "DELETE" })
+  }
+
+  public put() {
+    return this.build({ method: "PUT" })
+  }
+
+  public patch() {
+    return this.build({ method: "PATCH" })
+  }
+}
