@@ -1,10 +1,11 @@
 import type { DashboardApi, FetchApi, Service } from "./types"
 import * as ResourceApi from "./resources"
+import { joinUrl } from "./utils"
 
 export class YouTrack {
   static client (baseUrl: string, token: string) {
     return new YouTrack(async (url, options?) => {
-      const response = await fetch(baseUrl + url, {
+      const response = await fetch(joinUrl(baseUrl, url), {
         headers: {
           Authorization: token,
           Accept: "application/json",
@@ -44,7 +45,7 @@ export class YouTrack {
   // public Issues = new ResourceApi.IssuesApi(this.fetch)
   // public SavedQueries = new ResourceApi.SavedQueriesApi(this.fetch)
   // public Search = new ResourceApi.SearchApi(this.fetch)
-  // public Tags = new ResourceApi.TagsApi(this.fetch)
+  public Tags = new ResourceApi.TagsApi(this.fetch)
   // public Users = new ResourceApi.UsersApi(this.fetch)
   // public Profile = new ResourceApi.ProfileApi(this.fetch)
   // public WorkItems = new ResourceApi.WorkItemsApi(this.fetch)

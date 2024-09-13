@@ -3,25 +3,30 @@
   "description": "Client library for accessing the youtrack REST and Widget API",
   "version": "0.0.1",
   "type": "module",
+  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "browser": "dist/index.iife.js",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "youtrack",
     "client",
     "rest",
+    "rest api",
     "widget",
     "api",
-    "typescript"
+    "typescript",
+    "jetbrains",
+    "sdk"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc",
     "check": "biome check",
     "preview": "vite preview"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "typescript": "^5.5.4",
-    "vite": "^5.1.4"
+    "rollup": "^4.21.3"
   }
 }
