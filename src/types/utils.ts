@@ -1,3 +1,5 @@
+import type { EntityBase } from "./entities"
+
 /**
  * FieldSchema is a read-only array of Field, which allows for a mix of flat fields (strings)
  * and nested fields (objects).
@@ -5,16 +7,16 @@
  * Example:
  * const personFields: FieldsSchema = [
  *   'name',  // flat field
- *   { 
+ *   {
  *     address: [  // nested fields
- *       'city', 
- *       { 
+ *       'city',
+ *       {
  *         details: [
-    *       'zip'
+ *       'zip'
  *         ]
  *       }
  *     ]
- *   }  
+ *   }
  * ]
  */
 export type FieldsSchema = ReadonlyArray<Field>
@@ -116,3 +118,39 @@ export type FilterFields<T, F extends Schema<T>> = {
       : never
     : never
 }
+
+/**
+ * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
+ * 
+ * @template T - The base entity type (e.g., Agile, Project) from which fields will be filtered.
+ * @template TSchema - A schema describing the fields to include in the resulting entity. 
+ * If undefined, the full `EntityBase` schema is used.
+ * 
+ * Example:
+ * type Person = {
+ *   name: string;
+ *   age: number;
+ *   address: {
+ *     city: string;
+ *     country: string;
+ *   };
+ * };
+ * 
+ * type FilteredPerson = Entity<Person, ['name', { address: ['city'] }]>;
+ * // Resulting type:
+ * // {
+ * //   name: string;
+ * //   address: {
+ * //     city: string;
+ * //   };
+ * // }
+ * 
+ * type FullPerson = Entity<Person, undefined>;
+ * // Resulting type: Schema<EntityBase>
+ */
+export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined 
+  ? Schema<EntityBase>
+  : TSchema extends Schema<T> 
+    ? FilterFields<T, TSchema> | Schema<{ $type: string }>
+    : never 
+    

@@ -44,6 +44,15 @@ export type BaseActivityItem<TCategory extends string, TItem, TTarget> = EntityB
   timestamp: number // The timestamp of the activity event in milliseconds (unix timestamp at UTC). Read-only.
 }
 
+export type ActivityCursorPage = EntityBase<'ActivityCursorPage'> & {
+  activities: Array<ActivityItem>; // The list of activities in the page. Read-only.
+  afterCursor: string; // A string value that is required to retrieve the next page of activities. Read-only.
+  beforeCursor: string; // A string value that is required to retrieve the previous page of activities. Read-only.
+  hasAfter: boolean; // Indicates if the next page exists. Read-only.
+  hasBefore: boolean; // Indicates if the previous page exists. Read-only.
+  reverse: boolean; // Indicates whether the order of returning activities on the page is from newest to oldest or the opposite. If false, then the oldest activity item that matches a selected filter is returned first. If true, then the newest activity is returned first. By default, false. Read-only.
+};
+
 export type SimpleValueActivityItem<TCategory extends string, TValueType> = BaseActivityItem<TCategory, TValueType, any>
 
 export type CommentAttachmentsActivityItem = BaseActivityItem<

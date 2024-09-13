@@ -1,22 +1,22 @@
-import type { FetchApi, FieldsParam, FilterFields, ListParams, Schema } from "../types"
-import type { GetIssuesParams, IssueFiltered, IssueSchema } from "./Issues"
+import type { Entity, FieldsParam, ListParams, Schema } from "../types"
+import type { GetIssuesParams, IssueEntity, IssueSchema } from "./Issues"
 import { fields, arrayParams } from "../utils/fetchHelpers"
 import { RequestBuilder } from "../utils/queryBuilder"
 import type { Tag } from "../types/entities/Tag"
+import { ResourceApi } from "./common"
 
 export type TagSchema = Schema<Tag>
-export type TagFiltered<TSchema extends TagSchema> = FilterFields<Tag, TSchema>
+export type TagEntity<TSchema extends TagSchema> = Entity<Tag, TSchema>
 
 export type GetTagsParams<TFields extends Schema<Tag>> = ListParams &
   FieldsParam<TFields> & {
     query?: string
   }
 
-export class TagsApi {
-  constructor(private fetch: FetchApi) {}
+export class TagsApi extends ResourceApi {
 
-  async getList<TSchema extends TagSchema>(params?: GetTagsParams<TSchema>): Promise<TagFiltered<TSchema>[]> {
-    return this.fetch<TagFiltered<TSchema>[]>(...new RequestBuilder(
+  async getList<TSchema extends TagSchema>(params?: GetTagsParams<TSchema>): Promise<TagEntity<TSchema>[]> {
+    return this.fetch<TagEntity<TSchema>[]>(...new RequestBuilder(
       "api/tags",
       { fields, $skip: "string", $top: "string", query: "string" },
       params,
@@ -26,8 +26,8 @@ export class TagsApi {
   async getIssues<TSchema extends IssueSchema>(
     tagId: string,
     params?: GetIssuesParams<TSchema>,
-  ): Promise<IssueFiltered<TSchema>[]> {
-    return this.fetch<IssueFiltered<TSchema>[]>(...new RequestBuilder(
+  ): Promise<IssueEntity<TSchema>[]> {
+    return this.fetch<IssueEntity<TSchema>[]>(...new RequestBuilder(
       `api/tags/${tagId}/issues`,
       { fields, $skip: "string", $top: "string", ...arrayParams("customFields") },
       params,
