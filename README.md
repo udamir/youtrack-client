@@ -27,18 +27,20 @@ const baseUrl = "http://example.myjetbrains.com"
 const token = "perm:your-token"
 
 const yt = YouTrack.client(baseUrl, token)
+
 yt.Users.getCurrentUserProfile({ fields: ["login", "avatarUrl", "email", "fullName"] }).then((user) => {
   console.log(user)
 })
 
 ```
 
-## Widget Client
+### Widget Client
 
 ```typescript
 import { YouTrack } from "youtrack-client"
 
 DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: WidgetApi) => {
+  
   const yt = await YouTrack.widget(dashboardApi)
   const user = await yt.Users.getCurrentUserProfile({ fields: ["login", "avatarUrl", "email", "fullName"] })
 

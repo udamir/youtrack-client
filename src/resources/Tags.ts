@@ -1,4 +1,4 @@
-import type { Tag, Entity, FieldsParam, Issue, ListParams, QueryParam, Schema } from "../types"
+import type { Tag, Entity, FieldsParam, Issue, ListParams, QueryParam, Schema, CustomFieldsParam } from "../types"
 import { fields, RequestBuilder, queryParams } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -100,7 +100,7 @@ export class TagsApi extends ResourceApi {
    */
   async getIssuesByTag<TSchema extends IssueSchema>(
     tagId: string,
-    params?: ListParams & FieldsParam<TSchema> & { customFields?: string[] },
+    params?: ListParams & FieldsParam<TSchema> & CustomFieldsParam,
   ): Promise<IssueEntity<TSchema>[]> {
     return this.fetch<IssueEntity<TSchema>[]>(
       ...new RequestBuilder(

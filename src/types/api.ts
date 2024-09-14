@@ -7,10 +7,6 @@ export type FieldsParam<T> = {
   fields?: T
 }
 
-export type BodyParam<T> = {
-  body: T
-}
-
 export type CustomFieldsParam = {
   customFields?: string[]
 }
