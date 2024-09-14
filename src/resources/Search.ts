@@ -1,5 +1,4 @@
-import type { SearchSuggestions } from "../types/entities/Search"
-import type { Entity, FieldsParam, Schema } from "../types"
+import type { SearchSuggestions, Entity, FieldsParam, Schema } from "../types"
 import { fields, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 

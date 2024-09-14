@@ -4,8 +4,12 @@ import type {
   NotificationsUserProfile,
   TimeTrackingUserProfile,
   SavedQuery,
-} from "../types/entities/User"
-import type { Entity, FieldsParam, ListParams, Schema, Tag } from "../types"
+  Entity,
+  FieldsParam,
+  ListParams,
+  Schema,
+  Tag,
+} from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 

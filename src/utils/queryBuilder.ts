@@ -41,6 +41,10 @@ export class RequestBuilder<T extends Record<string, any>> {
     return this.build({ method: "POST", body: JSON.stringify(body) })
   }
 
+  public postFile(body: FormData) {
+    return this.build({ method: "POST", body, "Content-Type": "multipart/form-data" })
+  }
+
   public delete() {
     return this.build({ method: "DELETE" })
   }

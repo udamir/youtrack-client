@@ -1,5 +1,4 @@
-import type { ActivityCursorPage, ActivityItem } from "../types/entities/Activity"
-import type { Entity, FieldsParam, ListParams, Schema } from "../types"
+import type { ActivityCursorPage, ActivityItem, Entity, FieldsParam, ListParams, Schema } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 

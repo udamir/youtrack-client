@@ -1,11 +1,12 @@
-import type { Entity, FieldsParam, ListParams, Schema } from "../types"
+import type { Tag, Entity, FieldsParam, Issue, ListParams, QueryParam, Schema } from "../types"
 import { fields, RequestBuilder, queryParams } from "../utils"
-import type { IssueEntity, IssueSchema } from "./Issues"
-import type { Tag } from "../types/entities/Tag"
 import { ResourceApi } from "./common"
 
 type TagSchema = Schema<Tag>
+type IssueSchema = Schema<Issue>
+
 type TagEntity<TSchema extends TagSchema> = Entity<Tag, TSchema>
+type IssueEntity<TSchema extends IssueSchema> = Entity<Issue, TSchema>
 
 /**
  * This resource lets you access and work with tags in YouTrack.
@@ -22,7 +23,7 @@ export class TagsApi extends ResourceApi {
    * @returns A list of tags visible to the current user that match the specified criteria.
    */
   async getTags<TSchema extends TagSchema>(
-    params?: ListParams & FieldsParam<TSchema> & { query?: string },
+    params?: ListParams & FieldsParam<TSchema> & QueryParam,
   ): Promise<TagEntity<TSchema>[]> {
     return this.fetch<TagEntity<TSchema>[]>(
       ...new RequestBuilder("api/tags", { fields, $skip: "number", $top: "number", query: "string" }, params).get(),

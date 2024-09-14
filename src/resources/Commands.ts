@@ -1,4 +1,4 @@
-import type { CommandList, Entity, FieldsParam, Schema } from "../types"
+import type { CommandList, Entity, FieldsParam, MuteUpdateNotificationsParam, Schema } from "../types"
 import { fields, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -19,7 +19,7 @@ export class CommandsApi extends ResourceApi {
    */
   async applyCommandToIssues<TSchema extends CommandListSchema>(
     body: Partial<Omit<CommandList, "id">>,
-    params?: FieldsParam<TSchema> | { muteUpdateNotifications?: boolean }
+    params?: FieldsParam<TSchema> | MuteUpdateNotificationsParam
   ): Promise<CommandListEntity<TSchema>> {
     return this.fetch<CommandListEntity<TSchema>>(
       ...new RequestBuilder('api/commands', { fields, muteUpdateNotifications: "string" }, params).post(body)

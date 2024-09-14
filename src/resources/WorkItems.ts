@@ -1,4 +1,4 @@
-import type { Entity, FieldsParam, IssueWorkItem, ListParams, Schema } from "../types"
+import type { Entity, FieldsParam, IssueWorkItem, ListParams, QueryParam, Schema } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -31,8 +31,7 @@ export class WorkItemsApi extends ResourceApi {
    */
   async getWorkItems<TSchema extends WorkItemSchema>(
     params?: FieldsParam<TSchema> &
-      ListParams & {
-        query?: string
+      ListParams & QueryParam & {
         startDate?: string
         endDate?: string
         start?: number

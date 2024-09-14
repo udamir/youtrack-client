@@ -10,3 +10,15 @@ export type FieldsParam<T> = {
 export type BodyParam<T> = {
   body: T
 }
+
+export type CustomFieldsParam = {
+  customFields?: string[]
+}
+
+export type QueryParam = {
+  query?: string
+}
+
+export type MuteUpdateNotificationsParam = { 
+  muteUpdateNotifications?: boolean
+}

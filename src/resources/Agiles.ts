@@ -1,5 +1,4 @@
-import type { Entity, FieldsParam, ListParams, Schema } from "../types"
-import type { Agile, Sprint } from "../types/entities/Agile"
+import type { Agile, Sprint, Entity, FieldsParam, ListParams, Schema } from "../types"
 import { RequestBuilder, fields } from "../utils"
 import { ResourceApi } from "./common"
 
