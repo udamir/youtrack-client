@@ -1,7 +1,6 @@
 import type { ActivityCursorPage, ActivityItem } from "../types/entities/Activity"
-import { fields, stringParams, arrayParams } from "../utils/fetchHelpers"
+import { fields, stringParams, arrayParams, RequestBuilder } from "../utils"
 import type { Entity, FieldsParam, ListParams, Schema } from "../types"
-import { RequestBuilder } from "../utils/queryBuilder"
 import { ResourceApi } from "./common"
 
 type ActivityItemSchema = Schema<ActivityItem>

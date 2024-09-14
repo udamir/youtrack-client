@@ -11,4 +11,5 @@ export type GetIssuesParams<T extends IssueSchema> = ListParams & {
 }
 
 export class IssuesApi extends ResourceApi {
+  
 }

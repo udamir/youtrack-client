@@ -1,18 +1,16 @@
 import type { Entity, FieldsParam, ListParams, Schema } from "../types"
-import { fields, arrayParams } from "../utils/fetchHelpers"
+import { fields, arrayParams, RequestBuilder } from "../utils"
 import type { IssueEntity, IssueSchema } from "./Issues"
-import { RequestBuilder } from "../utils/queryBuilder"
 import type { Tag } from "../types/entities/Tag"
 import { ResourceApi } from "./common"
 
-export type TagSchema = Schema<Tag>
-export type TagEntity<TSchema extends TagSchema> = Entity<Tag, TSchema>
+type TagSchema = Schema<Tag>
+type TagEntity<TSchema extends TagSchema> = Entity<Tag, TSchema>
 
-export type GetTagsParams<TFields extends Schema<Tag>> = ListParams &
-  FieldsParam<TFields> & {
-    query?: string
-  }
-
+/**
+ * This resource lets you access and work with tags in YouTrack.
+ * https://www.jetbrains.com/help/youtrack/devportal/resource-api-tags.html
+ */
 export class TagsApi extends ResourceApi {
   /**
    * Get all tags that are visible to the current user.

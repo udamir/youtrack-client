@@ -1,7 +1,6 @@
 import type { Entity, FieldsParam, ListParams, Schema } from "../types"
 import type { Agile, Sprint } from "../types/entities/Agile"
-import { RequestBuilder } from "../utils/queryBuilder"
-import { fields } from "../utils/fetchHelpers"
+import { RequestBuilder, fields } from "../utils"
 import { ResourceApi } from "./common"
 
 type AgileSchema = Schema<Agile> | undefined

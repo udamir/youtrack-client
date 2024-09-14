@@ -46,7 +46,6 @@ export class YouTrack {
   // public SavedQueries = new ResourceApi.SavedQueriesApi(this.fetch)
   // public Search = new ResourceApi.SearchApi(this.fetch)
   public Tags = new ResourceApi.TagsApi(this.fetch)
-  // public Users = new ResourceApi.UsersApi(this.fetch)
-  // public Profile = new ResourceApi.ProfileApi(this.fetch)
+  public Users = new ResourceApi.UsersApi(this.fetch)
   // public WorkItems = new ResourceApi.WorkItemsApi(this.fetch)
 }
