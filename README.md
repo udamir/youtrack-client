@@ -74,6 +74,18 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
 | `getAgileSprintById`(agileId, sprintId, {fields})<br>GET /api/agiles/{agileId}/sprints/{sprintId} | Get settings of the specific sprint of the agile board. |
 | `deleteAgileSprint`(agileId, sprintId, {fields})<br>DELETE /api/agiles/{agileId}/sprints/{sprintId} | Delete the specific sprint from the agile board. |
 | `updateAgileSprint`(agileId, sprintId, body, {fields})<br>POST /api/agiles/{agileId}/sprints/{sprintId} | Update the specific sprint of the agile board. |
+
+### ArticlesApi
+| Method with Parameters / API Endpoint             | Description     |
+|---|---|
+| `getArticles`({fields, $top, $skip})<br>GET /api/articles | Gets all articles. |
+| `createArticle`(body, {fields, draftId, muteUpdateNotifications})<br>POST /api/articles | Creates a new article. |
+| `getArticle`(articleId, {fields})<br>GET /api/articles/{articleId} | Reads an article with a specific ID. |
+| `updateArticle`(articleId, body, {fields, muteUpdateNotifications})<br>POST /api/articles/{articleId} | Updates a single article. |
+| `deleteArticle`(articleId, {fields})<br>DELETE /api/articles/{articleId} | Deletes an article. |
+| `getArticleAttachments`(articleId, {fields, $top, $skip})<br>GET /api/articles/{articleId}/attachments | Gets a list of all attachments to a specific article. |
+| `createArticleAttachment`(articleId, body, {fields, muteUpdateNotifications})<br>POST /api/articles/{articleId}/attachments | Adds an attachment to the article. |
+| `getArticleAttachment`(articleId, attachmentId, {fields})<br>GET /api/articles/{articleId}/attachments/{attachmentId} | Reads a specific attachment in the article. |
 | `updateArticleAttachment`(articleId, attachmentId, body, { fields })<br>POST /api/articles/{articleId}/attachments/{attachmentId} | Updates a specific attachment in the article.               |
 | `deleteArticleAttachment`(articleId, attachmentId, { fields })<br>DELETE /api/articles/{articleId}/attachments/{attachmentId} | Deletes a specific attachment from the article.             |
 | `getChildArticles`(articleId, { fields, $skip, $top })<br>GET /api/articles/{articleId}/childArticles | Gets the list of sub-articles of the current article.       |
