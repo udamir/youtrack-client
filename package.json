@@ -1,12 +1,8 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the youtrack REST and Widget API",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
-  "module": "dist/index.mjs",
-  "main": "dist/index.cjs",
-  "browser": "dist/index.iife.js",
-  "typings": "dist/index.d.ts",
   "keywords": [
     "youtrack",
     "client",
@@ -18,15 +14,37 @@
     "jetbrains",
     "sdk"
   ],
+  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "browser": "dist/youtrack-client.min.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc",
-    "check": "biome check",
-    "preview": "vite preview"
+    "prebuild": "rimraf ./dist",
+    "build": "rollup -c",
+    "check": "biome check"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "typescript": "^5.5.4",
-    "rollup": "^4.21.3"
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-progress": "^1.1.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.21.3",
+    "typescript": "^5.5.4"
   }
 }

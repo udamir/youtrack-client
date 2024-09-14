@@ -4,9 +4,12 @@ import progress from 'rollup-plugin-progress';
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import pkg from './package.json';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+
+import { readFileSync } from 'node:fs';
+
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 const packageName = 'YouTrackClient'
 const inputPath = './src'
@@ -17,7 +20,7 @@ const preamble = `/*!
  * Date: ${new Date().toUTCString()}
  */`;
 
-const extensions = ['.ts', '.js'];
+const extensions = ['.ts'];
 
 const jsPlugins = [
     resolve(),

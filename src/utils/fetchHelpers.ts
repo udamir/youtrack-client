@@ -1,5 +1,4 @@
-import type { QueryParamBuilder } from "../../temp/apiBuilder"
-import type { Schema } from "../types"
+import type { QueryParamBuilder, Schema } from "../types"
 import { isObject } from "./common"
 
 // Function to build the URI with path parameters
@@ -54,22 +53,6 @@ export const queryParams = <TKey extends string, T extends string | number | boo
     {} as Record<TKey, QueryParamBuilder<T | undefined>>,
   )
 }
-  
-// export const numberParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<number | undefined>> => {
-//   return queryParams(...keys)
-// }
-
-// export const stringParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string | undefined>> => {
-//   return queryParams(...keys)
-// }
-
-// export const booleanParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<boolean | undefined>> => {
-//   return queryParams(...keys)
-// }
-
-// export const arrayParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string[] | undefined>> => {
-//   return queryParams(...keys)
-// }
 
 export const customField: QueryParamBuilder<string | string[] | undefined> = (value) =>
   buildQueryParam("customField", value)

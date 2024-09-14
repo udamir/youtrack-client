@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "importHelpers": false, 
     "outDir": "dist",
+    "declaration": true,
 
     /* Linting */
     "strict": true,

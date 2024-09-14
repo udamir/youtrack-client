@@ -1,5 +1,4 @@
-import type { QueryParamBuilder } from "../../temp/apiBuilder"
-import type { FetchApi, FetchApiConfig } from "../types"
+import type { FetchApi, FetchApiConfig, QueryParamBuilder } from "../types"
 import { buildQueryParam } from "./fetchHelpers"
 
 export type Builders<T extends Record<string, any>> = {

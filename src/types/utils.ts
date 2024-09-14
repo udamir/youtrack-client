@@ -153,4 +153,5 @@ export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends u
   : TSchema extends Schema<T> 
     ? FilterFields<T, TSchema> | Schema<{ $type: string }>
     : never 
-    
+  
+export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[] | undefined
