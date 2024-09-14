@@ -45,25 +45,31 @@ export const stringParam =
   (value?) =>
     buildQueryParam(key, value)
 
-export const stringParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string | undefined>> => {
+export const queryParams = <TKey extends string, T extends string | number | boolean | string[] | number[] | boolean[]>(...keys: TKey[]): Record<TKey, QueryParamBuilder<T | undefined>> => {
   return keys.reduce(
     (params, key) => {
       params[key] = (value?) => buildQueryParam(key, value)
       return params
     },
-    {} as Record<T, QueryParamBuilder<string | undefined>>,
+    {} as Record<TKey, QueryParamBuilder<T | undefined>>,
   )
 }
+  
+// export const numberParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<number | undefined>> => {
+//   return queryParams(...keys)
+// }
 
-export const arrayParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string[] | undefined>> => {
-  return keys.reduce(
-    (params, key) => {
-      params[key] = (value?) => buildQueryParam(key, value)
-      return params
-    },
-    {} as Record<T, QueryParamBuilder<string[] | undefined>>,
-  )
-}
+// export const stringParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string | undefined>> => {
+//   return queryParams(...keys)
+// }
+
+// export const booleanParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<boolean | undefined>> => {
+//   return queryParams(...keys)
+// }
+
+// export const arrayParams = <T extends string>(...keys: T[]): Record<T, QueryParamBuilder<string[] | undefined>> => {
+//   return queryParams(...keys)
+// }
 
 export const customField: QueryParamBuilder<string | string[] | undefined> = (value) =>
   buildQueryParam("customField", value)

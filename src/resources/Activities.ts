@@ -1,6 +1,6 @@
 import type { ActivityCursorPage, ActivityItem } from "../types/entities/Activity"
-import { fields, stringParams, arrayParams, RequestBuilder } from "../utils"
 import type { Entity, FieldsParam, ListParams, Schema } from "../types"
+import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
 type ActivityItemSchema = Schema<ActivityItem>
@@ -50,11 +50,7 @@ export class ActivitiesApi extends ResourceApi {
         "api/activities",
         {
           fields,
-          $skip: "number",
-          $top: "number",
-          reverse: "boolean",
-          ...arrayParams("categories"),
-          ...stringParams("author", "start", "end", "issueQuery"),
+          ...queryParams("$skip", "$top", "reverse", "categories", "author", "start", "end", "issueQuery"),
         },
         params,
       ).get(),
@@ -100,9 +96,7 @@ export class ActivitiesApi extends ResourceApi {
         "/api/activitiesPage",
         {
           fields,
-          reverse: "boolean",
-          ...arrayParams("categories"),
-          ...stringParams("author", "start", "end", "issueQuery", "cursor", "activityId"),
+          ...queryParams("categories", "reverse", "author", "start", "end", "issueQuery", "cursor", "activityId"),
         },
         params,
       ).get(),

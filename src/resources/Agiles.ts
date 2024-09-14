@@ -10,7 +10,7 @@ type AgileEntity<TSchema extends AgileSchema> = Entity<Agile, TSchema>
 type SprintEntity<TSchema extends SprintSchema> = Entity<Sprint, TSchema>
 
 export type AgileTemplateParam = {
-  template?: 'kanban' | 'scrum' | 'version' | 'custom' | 'personal'
+  template?: "kanban" | "scrum" | "version" | "custom" | "personal"
 }
 
 /**
@@ -20,6 +20,7 @@ export type AgileTemplateParam = {
 export class AgilesApi extends ResourceApi {
   /**
    * Get the list of all available agile boards in the system.
+   * @param params - Optional parameters for the request.
    * @param params.fields - A list of Agile attributes that should be returned in the response. If no field is specified, only the entityID is returned.
    * @param params.$skip - Optional. Lets you set a number of returned entities to skip before returning the first one.
    * @param params.$top - Optional. Lets you specify the maximum number of entries that are returned in the response. If you don't set the $top value, the server limits the maximum number of returned entries.
@@ -61,9 +62,7 @@ export class AgilesApi extends ResourceApi {
     agileId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
-    return this.fetch<AgileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).get()
-    )
+    return this.fetch<AgileEntity<TSchema>>(...new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).get())
   }
 
   /**
@@ -83,7 +82,7 @@ export class AgilesApi extends ResourceApi {
       ...new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).post(body),
     )
   }
-    
+
   /**
    * Delete an agile board with the specific Id.
    * @param agileId - The Id of the agile board.
@@ -96,7 +95,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
     return this.fetch<AgileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).delete()
+      ...new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).delete(),
     )
   }
   /**
@@ -113,7 +112,11 @@ export class AgilesApi extends ResourceApi {
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>[]> {
     return this.fetch<SprintEntity<TSchema>[]>(
-      ...new RequestBuilder(`/api/agiles/${agileId}/sprints`, { fields, $skip: "number", $top: "number" }, params).get()
+      ...new RequestBuilder(
+        `/api/agiles/${agileId}/sprints`,
+        { fields, $skip: "number", $top: "number" },
+        params,
+      ).get(),
     )
   }
 
@@ -132,7 +135,11 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema> & { muteUpdateNotifications?: boolean },
   ): Promise<SprintEntity<TSchema>> {
     return this.fetch<SprintEntity<TSchema>>(
-      ...new RequestBuilder(`/api/agiles/${agileId}/sprints`, { fields, muteUpdateNotifications: "boolean" }, params).post(body)
+      ...new RequestBuilder(
+        `/api/agiles/${agileId}/sprints`,
+        { fields, muteUpdateNotifications: "boolean" },
+        params,
+      ).post(body),
     )
   }
 
@@ -140,7 +147,7 @@ export class AgilesApi extends ResourceApi {
    * Get settings of the specific sprint of the agile board.
    * @param agileId - The Id of the agile board.
    * @param sprintId - The Id of the sprint or "current" for the current sprint.
-   * @param params - Optional parameters for the request. 
+   * @param params - Optional parameters for the request.
    * @param params.fields - Optional. A list of Sprint attributes that should be returned in the response. If no field is specified, only the entityId is returned.
    * @returns The settings of the specified sprint.
    */

@@ -10,6 +10,4 @@ export type GetIssuesParams<T extends IssueSchema> = ListParams & {
   customFields?: string[]
 }
 
-export class IssuesApi extends ResourceApi {
-  
-}
+export class IssuesApi extends ResourceApi {}

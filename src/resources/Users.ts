@@ -6,7 +6,7 @@ import type {
   SavedQuery,
 } from "../types/entities/User"
 import type { Entity, FieldsParam, ListParams, Schema, Tag } from "../types"
-import { fields, RequestBuilder } from "../utils"
+import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
 type UserSchema = Schema<User>
@@ -50,11 +50,10 @@ export class UsersApi extends ResourceApi {
         "/api/users",
         {
           fields,
-          $skip: "number",
-          $top: "number",
+          ...queryParams("$skip", "$top"),
         },
         params,
-      ).get()
+      ).get(),
     )
   }
 
@@ -86,7 +85,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
     return this.fetch<GeneralUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/general`, { fields }, params).get()
+      ...new RequestBuilder(`/api/users/${userId}/profiles/general`, { fields }, params).get(),
     )
   }
 
@@ -105,7 +104,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
     return this.fetch<GeneralUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userID}/profiles/general`, { fields }, params).post(data)
+      ...new RequestBuilder(`/api/users/${userID}/profiles/general`, { fields }, params).post(data),
     )
   }
 
@@ -124,7 +123,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.fetch<NotificationsUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get()
+      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
     )
   }
 
@@ -145,7 +144,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.fetch<NotificationsUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body)
+      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
     )
   }
 
@@ -162,7 +161,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
     return this.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).get()
+      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).get(),
     )
   }
 
@@ -181,7 +180,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
     return this.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).post(data)
+      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).post(data),
     )
   }
 
@@ -207,7 +206,7 @@ export class UsersApi extends ResourceApi {
           $top: "number",
         },
         params,
-      ).get()
+      ).get(),
     )
   }
 
@@ -229,11 +228,10 @@ export class UsersApi extends ResourceApi {
         `/api/users/${userId}/tags`,
         {
           fields,
-          $skip: "number",
-          $top: "number",
+          ...queryParams("$skip", "$top"),
         },
-        params
-      ).get()
+        params,
+      ).get(),
     )
   }
 
@@ -243,11 +241,7 @@ export class UsersApi extends ResourceApi {
    * @param params.fields - A list of attributes to include in the response. If not specified, only the entityId is returned.
    * @returns The profile settings of the currently logged-in user.
    */
-  async getCurrentUserProfile<TSchema extends UserSchema>(
-    params?: FieldsParam<TSchema>,
-  ): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(
-      ...new RequestBuilder("/api/users/me", { fields }, params).get()
-    )
+  async getCurrentUserProfile<TSchema extends UserSchema>(params?: FieldsParam<TSchema>): Promise<UserEntity<TSchema>> {
+    return this.fetch<UserEntity<TSchema>>(...new RequestBuilder("/api/users/me", { fields }, params).get())
   }
 }

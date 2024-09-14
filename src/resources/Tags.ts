@@ -1,5 +1,5 @@
 import type { Entity, FieldsParam, ListParams, Schema } from "../types"
-import { fields, arrayParams, RequestBuilder } from "../utils"
+import { fields, RequestBuilder, queryParams } from "../utils"
 import type { IssueEntity, IssueSchema } from "./Issues"
 import type { Tag } from "../types/entities/Tag"
 import { ResourceApi } from "./common"
@@ -25,11 +25,7 @@ export class TagsApi extends ResourceApi {
     params?: ListParams & FieldsParam<TSchema> & { query?: string },
   ): Promise<TagEntity<TSchema>[]> {
     return this.fetch<TagEntity<TSchema>[]>(
-      ...new RequestBuilder(
-        "api/tags",
-        { fields, $skip: "number", $top: "number", query: "string" },
-        params,
-      ).get()
+      ...new RequestBuilder("api/tags", { fields, $skip: "number", $top: "number", query: "string" }, params).get(),
     )
   }
 
@@ -44,9 +40,7 @@ export class TagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).get(),
-    );
+    return this.fetch<TagEntity<TSchema>>(...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).get())
   }
 
   /**
@@ -57,12 +51,10 @@ export class TagsApi extends ResourceApi {
    * @returns The newly created tag.
    */
   async createTag<TSchema extends TagSchema>(
-    body: Partial<Omit<Tag, 'id'>>,
+    body: Partial<Omit<Tag, "id">>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder("api/tags", { fields }, params).post(body),
-    )
+    return this.fetch<TagEntity<TSchema>>(...new RequestBuilder("api/tags", { fields }, params).post(body))
   }
 
   /**
@@ -75,12 +67,10 @@ export class TagsApi extends ResourceApi {
    */
   async updateTag<TSchema extends TagSchema>(
     tagId: string,
-    body: Partial<Omit<Tag, 'id'>>,
+    body: Partial<Omit<Tag, "id">>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).post(body),
-    );
+    return this.fetch<TagEntity<TSchema>>(...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).post(body))
   }
 
   /**
@@ -94,9 +84,7 @@ export class TagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).delete(),
-    );
+    return this.fetch<TagEntity<TSchema>>(...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).delete())
   }
 
   /**
@@ -118,12 +106,10 @@ export class TagsApi extends ResourceApi {
         `/api/tags/${tagId}/issues`,
         {
           fields,
-          $skip: "number",
-          $top: "number",
-          ...arrayParams("customFields"),
+          ...queryParams("$skip", "$top", "customFields"),
         },
         params,
       ).get(),
-    );
+    )
   }
 }
