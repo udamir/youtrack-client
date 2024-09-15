@@ -53,18 +53,21 @@ type Field = string | Record<string, FieldsSchema>
  * //   { address: ['city', 'country', { details: ['zip', 'street'] }] }
  * // ]
  */
+
+type Primitive = string | number | boolean | symbol | bigint | null | undefined
+
 export type Schema<T> = {
   [K in keyof T]-?: T[K] extends Array<infer U> // Check if the field is an array
-    ? U extends object
-      ? { [P in K]-?: Schema<U> } // If the array contains objects, recursively apply Schema
-      : K extends string | number
+    ? U extends Primitive
+      ? K extends string | number
         ? `${K}` // For primitive fields, return the key as string
         : never
-    : T[K] extends object
-      ? { [P in K]-?: Schema<T[K]> } // If it's an object, recursively apply Schema
-      : K extends string | number
+      : { [P in K]-?: Schema<U> } // If the array contains objects, recursively apply Schema
+    : T[K] extends Primitive
+      ? K extends string | number
         ? `${K}` // For primitive fields, return the key as string
         : never
+      : { [P in K]-?: Schema<T[K]> } // If it's an object, recursively apply Schema
 }[keyof T] extends infer Result
   ? ReadonlyArray<Result>
   : never
@@ -121,11 +124,11 @@ export type FilterFields<T, F extends Schema<T>> = {
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
- * 
+ *
  * @template T - The base entity type (e.g., Agile, Project) from which fields will be filtered.
- * @template TSchema - A schema describing the fields to include in the resulting entity. 
+ * @template TSchema - A schema describing the fields to include in the resulting entity.
  * If undefined, the full `EntityBase` schema is used.
- * 
+ *
  * Example:
  * type Person = {
  *   name: string;
@@ -135,7 +138,7 @@ export type FilterFields<T, F extends Schema<T>> = {
  *     country: string;
  *   };
  * };
- * 
+ *
  * type FilteredPerson = Entity<Person, ['name', { address: ['city'] }]>;
  * // Resulting type:
  * // {
@@ -144,14 +147,14 @@ export type FilterFields<T, F extends Schema<T>> = {
  * //     city: string;
  * //   };
  * // }
- * 
+ *
  * type FullPerson = Entity<Person, undefined>;
  * // Resulting type: Schema<EntityBase>
  */
-export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined 
+export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined
   ? Schema<EntityBase>
-  : TSchema extends Schema<T> 
+  : TSchema extends Schema<T>
     ? FilterFields<T, TSchema> | Schema<{ $type: string }>
-    : never 
-  
+    : never
+
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[] | undefined
