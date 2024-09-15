@@ -17,7 +17,7 @@ export class RequestBuilder<T extends Record<string, any>> {
       // Dynamically create setters for each key
       if (key in builders) {
         const value = builders[key]
-        const arg = typeof value !== "function" ? buildQueryParam(key, value) : value(params[key])
+        const arg = typeof value !== "function" ? buildQueryParam(key, params[key]) : value(params[key])
         if (arg) {
           this._args.push(...(Array.isArray(arg) ? arg : [arg]))
         }

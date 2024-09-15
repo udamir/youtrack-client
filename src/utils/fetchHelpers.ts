@@ -18,25 +18,27 @@ export const createParamsMap = (keys: string[] = [], values: Array<string | numb
   )
 }
 
-export const fields: QueryParamBuilder<Schema<any> | undefined> = (schema?) => {
-  if (!schema) {
-    return
-  }
+const fieldsBuilder = (schema: Schema<any> = []): string => {
   const _fields = schema.map((field) =>
     isObject(field)
       ? Object.keys(field)
-          .map((key) => `${key}(${fields(field[key])})`)
+          .map((key) => `${key}(${fieldsBuilder(field[key])})`)
           .join(",")
       : encodeURIComponent(field),
   )
-  return `fields=${_fields.join(",")}`
+  return _fields.length ? _fields.join(",") : ""
+}
+
+export const fields: QueryParamBuilder<Schema<any> | undefined> = (schema = []) => {
+  const _fields = fieldsBuilder(schema)
+  return _fields ? `fields=${fieldsBuilder(schema)}` : ""
 }
 
 export const buildQueryParam = (key: string, value?: string | number | boolean | string[] | number[] | boolean[]) => {
   if (Array.isArray(value)) {
     return value.map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`)
   }
-  return typeof value !== "undefined" ? `${encodeURIComponent(key)}=${encodeURIComponent(value)}` : undefined
+  return typeof value !== "undefined" ? `${encodeURIComponent(key)}=${encodeURIComponent(value)}` : ""
 }
 
 export const stringParam =
