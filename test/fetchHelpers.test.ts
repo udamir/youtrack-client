@@ -21,8 +21,7 @@ describe("createParamsMap", () => {
   })
 
   it("should return an empty object when no keys or values are provided", () => {
-    const result = createParamsMap()
-    expect(result).toEqual({})
+    expect(createParamsMap()).toEqual({})
   })
 })
 
@@ -60,32 +59,26 @@ describe("stringParam", () => {
 describe("queryParams", () => {
   it("should return an object with query parameter builders", () => {
     const params = queryParams("status", "category")
-    const statusParam = params.status("active")
-    const categoryParam = params.category("electronics")
-    expect(statusParam).toBe("status=active")
-    expect(categoryParam).toBe("category=electronics")
+    expect(params.status("active")).toBe("status=active")
+    expect( params.category("electronics")).toBe("category=electronics")
   })
 
   it("should return an empty string when no value is provided", () => {
     const params = queryParams("status")
-    const result = params.status()
-    expect(result).toBe("")
+    expect(params.status()).toBe("")
   })
 })
 
 describe("customField", () => {
   it("should return customField query parameter string for a given value", () => {
-    const result = customField("customValue")
-    expect(result).toBe("customField=customValue")
+    expect(customField("customValue")).toBe("customField=customValue")
   })
 
   it("should handle array of values for customField", () => {
-    const result = customField(["value1", "value2"])
-    expect(result).toEqual(["customField=value1", "customField=value2"])
+    expect(customField(["value1", "value2"])).toEqual(["customField=value1", "customField=value2"])
   })
 
   it("should return undefined when no value is provided for customField", () => {
-    const result = customField()
-    expect(result).toBe("")
+    expect(customField()).toBe("")
   })
 })

@@ -31,8 +31,21 @@ const yt = YouTrack.client(baseUrl, token)
 yt.Users.getCurrentUserProfile({ 
   fields: ["login", "avatarUrl", "email", "fullName"] 
 }).then((user) => {
+  // typeof user
+  // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
+
   console.log(user)
 })
+
+yt.Tags.getTags({
+  fields: ["id", "name", { owner: ["login"]}]
+}).then((tags) => {
+  // typeof tags
+  // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
+
+  console.log(tags)
+})
+
 
 ```
 
@@ -47,9 +60,36 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
   const user = await yt.Users.getCurrentUserProfile({ 
     fields: ["login", "avatarUrl", "email", "fullName"]
   })
+  // typeof user
+  // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
 
-  // Do some logic ...
+  const tags = await yt.Tags.getTags({
+    fields: ["id", "name", { owner: ["login"]}]
+  })
+  // typeof tags
+  // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
+
 })
+```
+
+## Documentation
+
+The following resources are avaliable in Youtrack instance:
+```typescript
+interface YouTrack {
+  Agiles: ResourceApi.AgilesApi
+  Activities: ResourceApi.ActivitiesApi
+  Articles: ResourceApi.ArticlesApi
+  Commands: ResourceApi.CommandsApi
+  Groups: ResourceApi.GroupsApi
+  IssueLinkTypes: ResourceApi.IssueLinkTypesApi
+  Issues: ResourceApi.IssuesApi
+  SavedQueries: ResourceApi.SavedQueriesApi
+  Search: ResourceApi.SearchApi
+  Tags: ResourceApi.TagsApi
+  Users: ResourceApi.UsersApi
+  WorkItems: ResourceApi.WorkItemsApi
+}
 ```
 
 ## Contributing
