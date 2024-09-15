@@ -1,4 +1,7 @@
 # Youtrack Client
+<img alt="npm" src="https://img.shields.io/npm/v/youtrack-client"> <img alt="npm" src="https://img.shields.io/npm/dm/youtrack-client?label=npm"> 
+ <img alt="npm type definitions" src="https://img.shields.io/npm/types/youtrack-client">  <img alt="GitHub" src="https://img.shields.io/github/license/udamir/youtrack-client">
+
 Client library for accessing the youtrack REST and Widget API
 
 ## Features
