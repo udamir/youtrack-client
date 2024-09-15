@@ -23,7 +23,5 @@ jobs:
       # run any `bun` or `bunx` command
       - name: Install dependencies
         run: bun install
-      - name: Build package
-        run: bun run build
       - name: Run tests
         run: bun test
