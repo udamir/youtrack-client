@@ -156,7 +156,7 @@ export type FilterFields<T, F extends Schema<T>> = {
 export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined
   ? Schema<EntityBase>
   : TSchema extends Schema<T>
-    ? FilterFields<T, TSchema> | Schema<{ $type: string }>
+    ? FilterFields<T, TSchema> & { $type:string }
     : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]

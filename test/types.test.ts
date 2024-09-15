@@ -39,6 +39,7 @@ expectType<FullPerson>(["$type", "id"])
 // Test Entity with schema
 type PartialPerson = Entity<Person, ["name", { address: ["city"] }]>
 expectType<PartialPerson>({
+  $type: "",
   name: "John",
   address: {
     city: "New York",
