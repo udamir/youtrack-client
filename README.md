@@ -9,7 +9,6 @@ Client library for accessing the youtrack REST and Widget API
 - Can be used in Widgets
 - Full Typescript support, including parameters and responses
 - All methods with full documentation
-- Can be used in nodejs or browser
 
 ## Installation
 ```SH
@@ -73,20 +72,6 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
   // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
 
 })
-```
-
-### Browser
-
-A browser version of youtrack-client is also available via CDN:
-```html
-<script src="https://cdn.jsdelivr.net/npm/youtrack-client@latest"></script>
-```
-
-Reference youtrack-client in your HTML and use the global variable `YouTrackClient`.
-```html
-<script>
-  var youtrack = YouTrackClient.merge({ /* ... */ })
-</script>
 ```
 
 ## Documentation
