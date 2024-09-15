@@ -153,10 +153,14 @@ export type FilterFields<T, F extends Schema<T>> = {
  * type FullPerson = Entity<Person, undefined>;
  * // Resulting type: Schema<EntityBase>
  */
+type ExtractTypeField<T> = T extends { $type: infer U } ? U : never;
+
 export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined
   ? Schema<EntityBase>
   : TSchema extends Schema<T>
-    ? FilterFields<T, TSchema> & { $type:string }
+    ? ExtractTypeField<T> extends never
+      ? FilterFields<T, TSchema>
+      : FilterFields<T, TSchema> & { $type: ExtractTypeField<T> }
     : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]
