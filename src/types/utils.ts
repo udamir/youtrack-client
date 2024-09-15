@@ -62,12 +62,14 @@ export type Schema<T> = {
       ? K extends string | number
         ? `${K}` // For primitive fields, return the key as string
         : never
-      : { [P in K]-?: Schema<U> } // If the array contains objects, recursively apply Schema
+      : { [P in K]-?: Schema<NonNullable<U>> } // If the array contains objects, recursively apply Schema
     : T[K] extends Primitive
       ? K extends string | number
         ? `${K}` // For primitive fields, return the key as string
         : never
-      : { [P in K]-?: Schema<T[K]> } // If it's an object, recursively apply Schema
+      : NonNullable<T[K]> extends object
+        ? { [P in K]-?: Schema<NonNullable<T[K]>> } // Recursively apply Schema for non-nullable objects
+        : never
 }[keyof T] extends infer Result
   ? ReadonlyArray<Result>
   : never
