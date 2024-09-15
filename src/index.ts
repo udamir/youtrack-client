@@ -1,4 +1,7 @@
+import { YouTrack } from "./youtrack"
 export * from "./resources"
 export * from "./types"
 export * from "./utils"
-export * from "./youtrack"
+
+export { YouTrack }
+export default YouTrack

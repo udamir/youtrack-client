@@ -75,6 +75,20 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
 })
 ```
 
+### Browser
+
+A browser version of youtrack-client is also available via CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/youtrack-client@latest"></script>
+```
+
+Reference youtrack-client in your HTML and use the global variable `YouTrackClient`.
+```html
+<script>
+  var youtrack = YouTrackClient.merge({ /* ... */ })
+</script>
+```
+
 ## Documentation
 
 The following resources are avaliable in Youtrack instance:
@@ -94,6 +108,8 @@ interface YouTrack {
   WorkItems: ResourceApi.WorkItemsApi
 }
 ```
+
+List of all method in resources can be found in "src/resources" folder.
 
 ## Contributing
 When contributing, keep in mind that it is an objective of `youtrack-client` to have no package dependencies. This may change in the future, but for now, no new dependencies.
