@@ -6,7 +6,7 @@ Client library for accessing the youtrack REST and Widget API
 
 ## Features
 - All API methods are supported
-- Can be used in Widgets
+- Can be used in Youtrack Widgets (check [widget template](https://github.com/udamir/youtrack-widget-template))
 - Full Typescript support, including parameters and responses
 - All methods with full documentation
 
