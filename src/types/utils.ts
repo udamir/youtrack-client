@@ -75,6 +75,41 @@ export type Schema<T> = {
   : never
 
 /**
+ * ExtendSchema<T, U> combines fields from an array type `T` with a union type `U` into a single array.
+ *
+ * @template T - An array of fields (strings).
+ * @template U - A union type of fields to extend the schema with.
+ * @returns A new array type containing both the original fields in `T` and the fields in `U`.
+ */
+export type ExtendSchema<T extends readonly any[], U> = (T[number] | U)[]
+
+/**
+ * MergeType<T> takes a union type T and merges all its variants into a single object type.
+ * 
+ * This type recursively iterates through each union and merges the properties.
+ * 
+ * Example:
+ * type Issue = {
+ *   project: ["id"];
+ * } | {
+ *   customFields: ["id", "name"];
+ * };
+ * 
+ * type MergedIssue = MergeType<Issue>;
+ * // Resulting type:
+ * // {
+ * //   project: ["id"];
+ * //   customFields: ["id", "name"];
+ * // }
+ */
+
+export type MergeType<T> = (
+  T extends any ? (x: T) => void : never
+) extends (x: infer U) => void
+  ? { [K in keyof U]: U[K] }
+  : never;
+
+/**
  * FilterFields<T, F> is a utility type that filters fields of object type T based on a given field schema F.
  * F can be a mix of flat fields (strings) and nested fields (objects).
  * It recursively extracts the specified fields, handling both flat and nested objects.
@@ -108,21 +143,27 @@ export type Schema<T> = {
  * //   };
  * // }
  */
-export type FilterFields<T, F extends Schema<T>> = {
-  // Handle flat fields (string) and check if K exists in T
+
+// Handle flat fields (string) and check if K exists in T
+type FilterStringFields<T, F extends Schema<T>> = {
   [K in Extract<F[number], string>]: K extends keyof T ? T[K] : never
-} & {
-  // Handle nested fields (object)
-  [K in keyof Extract<F[number], object>]: K extends keyof T
+}
+
+// Handle nested fields (object)
+type FilterObjectFields<T, F extends Schema<T>> = {
+  [K in keyof MergeType<Extract<F[number], object>>]: K extends keyof T
     ? T[K] extends object
-      ? K extends keyof Extract<F[number], object>
-        ? Extract<F[number], object>[K] extends Schema<T[K]>
-          ? FilterFields<T[K], Extract<F[number], object>[K]>
+      ? K extends keyof MergeType<Extract<F[number], object>>
+        ? MergeType<Extract<F[number], object>>[K] extends Schema<T[K]>
+          ? FilterFields<T[K], MergeType<Extract<F[number], object>>[K]>
           : never
         : never
       : never
     : never
 }
+
+export type FilterFields<T, F extends Schema<T>> = 
+  MergeType<FilterStringFields<T, F> & FilterObjectFields<T, F>>
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.

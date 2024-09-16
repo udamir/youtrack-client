@@ -1,9 +1,18 @@
 import type { ProjectCustomField } from "./CustomFields"
+import type { EntityBase, PeriodValue } from "./Entity"
+import type {
+  BuildBundleElement,
+  BundleElement,
+  EnumBundleElement,
+  OwnedBundleElement,
+  StateBundleElement,
+  VersionBundleElement,
+} from "./BundleElement"
 import type { IssueWorkItem } from "./WorkItem"
 import type { Visibility } from "./Visibility"
 import type { Attachment } from "./Attachment"
+import type { UserGroup } from "./UserGroup"
 import type { IssueFolder } from "./Search"
-import type { EntityBase } from "./Entity"
 import type { Project } from "./Project"
 import type { Comment } from "./Comment"
 import type { User } from "./User"
@@ -15,7 +24,7 @@ export type Issue = EntityBase<"Issue"> & {
   comments: IssueComment[] // A list of comments for the issue.
   commentsCount: number // The number of comments in the issue. Read-only.
   created: number // The timestamp in milliseconds indicating the moment when the issue was created. Stored as a unix timestamp at UTC. Read-only.
-  customFields: IssueCustomField[] // The collection of custom fields that are present in the issue. Read-only.
+  customFields: IssueCustomFieldBase[] // The collection of custom fields that are present in the issue. Read-only.
   description: string | null // The issue description. Can be null.
   draftOwner: User | null // The creator of the draft if the issue is a draft. null if the issue is reported. Read-only. Can be null.
   externalIssue: ExternalIssue | null // Reference to the issue or similar object in an originating third-party system. Read-only. Can be null.
@@ -58,11 +67,106 @@ export type IssueComment = Comment<"IssueComment"> & {
   textPreview: string // The comment text as it is shown in UI after processing with wiki/markdown (including HTML markup). Read-only.
 }
 
-export type IssueCustomField = EntityBase<"IssueCustomField"> & {
+export type IssueCustomField =
+  | SimpleIssueCustomField
+  | DateIssueCustomField
+  | PeriodIssueCustomField
+  | SingleBuildIssueCustomField
+  | SingleGroupIssueCustomField
+  | SingleOwnedIssueCustomField
+  | SingleUserIssueCustomField
+  | SingleVersionIssueCustomField
+  | StateIssueCustomField
+  | StateMachineIssueCustomField
+  | MultiBuildIssueCustomField
+  | MultiEnumIssueCustomField
+  | MultiEnumIssueCustomField
+  | MultiGroupIssueCustomField
+  | MultiOwnedIssueCustomField
+  | MultiUserIssueCustomField
+  | MultiVersionIssueCustomField
+  | TextIssueCustomField
+
+export type IssueCustomFieldBase<T extends string = "IssueCustomField"> = EntityBase<T> & {
   id: string // The ID of the custom field in the issue. Read-only.
   projectCustomField: ProjectCustomField // Reference to the custom field settings for the particular project. Read-only.
   name: string // The name of the custom field. Read-only.
   value: any // The value assigned to the custom field in the issue. Depending on the type of the field, this attribute can store a single value or an array of values. Read-only.
+}
+
+export type SimpleIssueCustomField = IssueCustomFieldBase<"SimpleIssueCustomField"> & {
+  value: string | number // The value assigned to the custom field in the issue.
+}
+
+export type TextIssueCustomField = IssueCustomFieldBase<"TextIssueCustomField"> & {
+  value: string
+}
+
+export type DateIssueCustomField = IssueCustomFieldBase<"DateIssueCustomField"> & {
+  value: number // The value assigned to the custom field in the issue. For a field with the type "Date and time", its value is represented by the exact timestamp in milliseconds. Stored as a unix timestamp at UTC. Timestamps are presented by a value of the type Long.
+}
+
+export type PeriodIssueCustomField = IssueCustomFieldBase<"PeriodIssueCustomField"> & {
+  value: PeriodValue // The value assigned to the custom field in the issue.
+}
+
+export type SingleBuildIssueCustomField = IssueCustomFieldBase<"SingleBuildIssueCustomField"> & {
+  value: BuildBundleElement // The value assigned to the custom field in the issue.
+}
+
+export type SingleGroupIssueCustomField = IssueCustomFieldBase<"SingleGroupIssueCustomField"> & {
+  value: UserGroup // The value assigned to the custom field in the issue
+}
+
+export type SingleOwnedIssueCustomField = IssueCustomFieldBase<"SingleOwnedIssueCustomField"> & {
+  value: OwnedBundleElement // The value assigned to the custom field in the issue
+}
+
+export type SingleUserIssueCustomField = IssueCustomFieldBase<"SingleUserIssueCustomField"> & {
+  value: User // The value assigned to the custom field in the issue
+}
+
+export type SingleVersionIssueCustomField = IssueCustomFieldBase<"SingleVersionIssueCustomField"> & {
+  value: VersionBundleElement // The value assigned to the custom field in the issue
+}
+
+export type StateIssueCustomField = IssueCustomFieldBase<"StateIssueCustomField"> & {
+  value: StateBundleElement // The value assigned to the custom field in the issue
+}
+
+export type StateMachineIssueCustomField = IssueCustomFieldBase<"StateMachineIssueCustomField"> & {
+  value:
+    | StateBundleElement
+    | BuildBundleElement
+    | VersionBundleElement
+    | OwnedBundleElement
+    | EnumBundleElement
+    | UserGroup
+    | User
+}
+
+export type MultiBuildIssueCustomField = IssueCustomFieldBase<"MultiBuildIssueCustomField"> & {
+  value: BundleElement[] // The value assigned to the custom field in the issue
+}
+
+export type MultiEnumIssueCustomField = IssueCustomFieldBase<"MultiEnumIssueCustomField"> & {
+  value: EnumBundleElement[] // The value assigned to the custom field in the issue
+}
+
+export type MultiGroupIssueCustomField = IssueCustomFieldBase<"MultiGroupIssueCustomField"> & {
+  value: UserGroup[] // The list of user groups that are set as values for the custom field in the issue.
+}
+
+export type MultiOwnedIssueCustomField = IssueCustomFieldBase<"MultiOwnedIssueCustomField"> & {
+  value: OwnedBundleElement[] // The list of owned values that are set for the custom field in the issue.
+}
+
+export type MultiUserIssueCustomField = IssueCustomFieldBase<"MultiUserIssueCustomField"> & {
+  value: User[] // The list of owned values that are set for the custom field in the issue.
+}
+
+export type MultiVersionIssueCustomField = IssueCustomFieldBase<"MultiVersionIssueCustomField"> & {
+  value: VersionBundleElement[] // The list of versions that are set as values for the issue custom field.
 }
 
 export type ExternalIssue = EntityBase<"ExternalIssue"> & {
@@ -113,14 +217,14 @@ export type IssueWatcher = EntityBase<"IssueWatcher"> & {
   isStarred: boolean // true if the user added the "Star" tag to this issue, otherwise false.
 }
 
-export type IssueCountResponse = EntityBase<'IssueCountResponse'> & {
-  count?: number; // The number of issues found by the search. If this number equals -1, it means that YouTrack hasn't finished counting the issues yet. Can be null.
-  unresolvedOnly?: boolean; // true when the Hide resolved issues control is enabled. Can be null.
-  query?: string; // The search query. Can be null.
-  folder?: IssueFolder; // The currently selected search context. Can be null.
+export type IssueCountResponse = EntityBase<"IssueCountResponse"> & {
+  count?: number // The number of issues found by the search. If this number equals -1, it means that YouTrack hasn't finished counting the issues yet. Can be null.
+  unresolvedOnly?: boolean // true when the Hide resolved issues control is enabled. Can be null.
+  query?: string // The search query. Can be null.
+  folder?: IssueFolder // The currently selected search context. Can be null.
 }
 
-export type IssueTimeTracking = EntityBase<'IssueTimeTracking'> & {
-  workItems: Array<IssueWorkItem>; // Collection of work items of the issue.
-  enabled: boolean; // Indicates whether the time tracking is enabled in the project that the issue belongs to. Read-only.
+export type IssueTimeTracking = EntityBase<"IssueTimeTracking"> & {
+  workItems: Array<IssueWorkItem> // Collection of work items of the issue.
+  enabled: boolean // Indicates whether the time tracking is enabled in the project that the issue belongs to. Read-only.
 }

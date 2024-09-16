@@ -1,4 +1,5 @@
 import type { CustomFieldCondition, Project } from "./Project"
+import type { IssueCustomField } from "./Issue"
 import type { EntityBase } from "./Entity"
 
 export type CustomField = EntityBase<"CustomField"> & {
@@ -15,44 +16,7 @@ export type CustomField = EntityBase<"CustomField"> & {
   instances: ProjectCustomField[] // Project-related settings. May contain different values for custom fields of different types.
 }
 
-export type FieldType = IssueCustomFieldType | ProjectCustomFieldType
-
-export type SingleEnumIssueCustomField = EntityBase<"SingleEnumIssueCustomField">
-export type MultiEnumIssueCustomField = EntityBase<"MultiEnumIssueCustomField">
-export type SingleBuildIssueCustomField = EntityBase<"SingleBuildIssueCustomField">
-export type MultiBuildIssueCustomField = EntityBase<"MultiBuildIssueCustomField">
-export type StateIssueCustomField = EntityBase<"StateIssueCustomField">
-export type SingleVersionIssueCustomField = EntityBase<"SingleVersionIssueCustomField">
-export type MultiVersionIssueCustomField = EntityBase<"MultiVersionIssueCustomField">
-export type SingleOwnedIssueCustomField = EntityBase<"SingleOwnedIssueCustomField">
-export type MultiOwnedIssueCustomField = EntityBase<"MultiOwnedIssueCustomField">
-export type SingleUserIssueCustomField = EntityBase<"SingleUserIssueCustomField">
-export type MultiUserIssueCustomField = EntityBase<"MultiUserIssueCustomField">
-export type SingleGroupIssueCustomField = EntityBase<"SingleGroupIssueCustomField">
-export type MultiGroupIssueCustomField = EntityBase<"MultiGroupIssueCustomField">
-export type SimpleIssueCustomField = EntityBase<"SimpleIssueCustomField">
-export type DateIssueCustomField = EntityBase<"DateIssueCustomField">
-export type PeriodIssueCustomField = EntityBase<"PeriodIssueCustomField">
-export type TextIssueCustomField = EntityBase<"TextIssueCustomField">
-
-export type IssueCustomFieldType =
-  | SingleEnumIssueCustomField
-  | MultiEnumIssueCustomField
-  | SingleBuildIssueCustomField
-  | MultiBuildIssueCustomField
-  | StateIssueCustomField
-  | SingleVersionIssueCustomField
-  | MultiVersionIssueCustomField
-  | SingleOwnedIssueCustomField
-  | MultiOwnedIssueCustomField
-  | SingleUserIssueCustomField
-  | MultiUserIssueCustomField
-  | SingleGroupIssueCustomField
-  | MultiGroupIssueCustomField
-  | SimpleIssueCustomField
-  | DateIssueCustomField
-  | PeriodIssueCustomField
-  | TextIssueCustomField
+export type FieldType = IssueCustomField | ProjectCustomFieldType
 
 export type EnumProjectCustomField = EntityBase<"EnumProjectCustomField">
 export type BuildProjectCustomField = EntityBase<"BuildProjectCustomField">
