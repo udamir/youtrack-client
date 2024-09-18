@@ -56,22 +56,21 @@ type Field = string | Record<string, FieldsSchema>
 
 type Primitive = string | number | boolean | symbol | bigint | null | undefined
 
+type SchemaItem<T, K> = T extends Primitive
+  ? ToString<K> // For primitive fields, return the key as string
+  : SubSchema<T, K> // For object fields, recursively apply Schema
+
+type ToString<T> = T extends string | number ? `${T}` : never
+type SubSchema<T, K> = K extends string
+  ? { [P in K]-?: Schema<NonNullable<T>> }
+  : never
+
 export type Schema<T> = {
-  [K in keyof T]-?: T[K] extends Array<infer U> // Check if the field is an array
-    ? U extends Primitive
-      ? K extends string | number
-        ? `${K}` // For primitive fields, return the key as string
-        : never
-      : { [P in K]-?: Schema<NonNullable<U>> } // If the array contains objects, recursively apply Schema
-    : T[K] extends Primitive
-      ? K extends string | number
-        ? `${K}` // For primitive fields, return the key as string
-        : never
-      : NonNullable<T[K]> extends object
-        ? { [P in K]-?: Schema<NonNullable<T[K]>> } // Recursively apply Schema for non-nullable objects
-        : never
-}[keyof T] extends infer Result
-  ? ReadonlyArray<Result>
+  [K in keyof T]-?: T[K] extends Array<infer U> 
+    ? SchemaItem<U, K>
+    : SchemaItem<T[K], K>
+}[keyof T] extends infer U 
+  ? Array<U>
   : never
 
 /**
@@ -144,26 +143,38 @@ export type MergeType<T> = (
  * // }
  */
 
+type FilterKeys<F extends FieldsSchema> = {
+  [K in Extract<F[number], string>]: K
+}
+
+type FilterNested<F extends FieldsSchema> = MergeType<{
+  [K in keyof F]: F[K] extends string ? never : F[K]
+}[number]>
+
 // Handle flat fields (string) and check if K exists in T
-type FilterStringFields<T, F extends Schema<T>> = {
-  [K in Extract<F[number], string>]: K extends keyof T ? T[K] : never
+type FilterStringFields<T, F extends Record<string, string>> = {
+  [K in keyof F]: K extends keyof T 
+    ? T[K] 
+    : T extends { [Q in K]: infer U }
+      ? U
+      : never
 }
 
 // Handle nested fields (object)
-type FilterObjectFields<T, F extends Schema<T>> = {
-  [K in keyof MergeType<Extract<F[number], object>>]: K extends keyof T
-    ? T[K] extends object
-      ? K extends keyof MergeType<Extract<F[number], object>>
-        ? MergeType<Extract<F[number], object>>[K] extends Schema<T[K]>
-          ? FilterFields<T[K], MergeType<Extract<F[number], object>>[K]>
-          : never
-        : never
-      : never
-    : never
+type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
+  [K in keyof F]: K extends keyof T
+    ? K extends keyof F
+      ? F[K] extends FieldsSchema
+        ? NonNullable<T[K]> extends Array<infer U>
+          ? MergeType<FilterFields<U, F[K]> | { $type: ExtractTypeField<U> }>[]
+          : MergeType<FilterFields<NonNullable<T[K]>, F[K]> | { $type: ExtractTypeField<T[K]> }>
+        : "c"
+      : "b"
+    : "a"
 }
 
-export type FilterFields<T, F extends Schema<T>> = 
-  MergeType<FilterStringFields<T, F> & FilterObjectFields<T, F>>
+export type FilterFields<T, F extends FieldsSchema> = 
+  MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>> | { $type: ExtractTypeField<T> }>
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
@@ -196,12 +207,10 @@ export type FilterFields<T, F extends Schema<T>> =
  */
 type ExtractTypeField<T> = T extends { $type: infer U } ? U : never;
 
-export type Entity<T, TSchema extends Schema<T> | undefined> = TSchema extends undefined
+export type Entity<T, TSchema> = TSchema extends undefined
   ? Schema<EntityBase>
-  : TSchema extends Schema<T>
-    ? ExtractTypeField<T> extends never
-      ? FilterFields<T, TSchema>
-      : FilterFields<T, TSchema> & { $type: ExtractTypeField<T> }
+  : TSchema extends FieldsSchema
+    ? FilterFields<T, TSchema>
     : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]

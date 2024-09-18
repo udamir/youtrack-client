@@ -24,7 +24,7 @@ export type Issue = EntityBase<"Issue"> & {
   comments: IssueComment[] // A list of comments for the issue.
   commentsCount: number // The number of comments in the issue. Read-only.
   created: number // The timestamp in milliseconds indicating the moment when the issue was created. Stored as a unix timestamp at UTC. Read-only.
-  customFields: IssueCustomFieldBase[] // The collection of custom fields that are present in the issue. Read-only.
+  customFields: IssueCustomField[] // The collection of custom fields that are present in the issue. Read-only.
   description: string | null // The issue description. Can be null.
   draftOwner: User | null // The creator of the draft if the issue is a draft. null if the issue is reported. Read-only. Can be null.
   externalIssue: ExternalIssue | null // Reference to the issue or similar object in an originating third-party system. Read-only. Can be null.
