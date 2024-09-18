@@ -31,7 +31,7 @@ const token = "perm:your-token"
 const yt = YouTrack.client(baseUrl, token)
 
 yt.Users.getCurrentUserProfile({ 
-  fields: ["login", "avatarUrl", "email", "fullName"] 
+  fields: ["login", "avatarUrl", "email", "fullName"] as const
 }).then((user) => {
   // typeof user
   // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
@@ -40,7 +40,7 @@ yt.Users.getCurrentUserProfile({
 })
 
 yt.Tags.getTags({
-  fields: ["id", "name", { owner: ["login"]}]
+  fields: ["id", "name", { owner: ["login"]}] as const
 }).then((tags) => {
   // typeof tags
   // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
