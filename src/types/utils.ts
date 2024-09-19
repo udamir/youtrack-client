@@ -153,11 +153,7 @@ type FilterNested<F extends FieldsSchema> = MergeType<{
 
 // Handle flat fields (string) and check if K exists in T
 type FilterStringFields<T, F extends Record<string, string>> = {
-  [K in keyof F]: K extends keyof T 
-    ? T[K] 
-    : T extends { [Q in K]: infer U }
-      ? U
-      : never
+  [K in keyof F]: K extends keyof T ? T[K] : T extends { [Q in K]: infer U } ? U : never
 }
 
 // Handle nested fields (object)
@@ -168,9 +164,9 @@ type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
         ? NonNullable<T[K]> extends Array<infer U>
           ? MergeType<FilterFields<U, F[K]> | { $type: ExtractTypeField<U> }>[]
           : MergeType<FilterFields<NonNullable<T[K]>, F[K]> | { $type: ExtractTypeField<T[K]> }>
-        : "c"
-      : "b"
-    : "a"
+        : never
+      : never
+    : never
 }
 
 export type FilterFields<T, F extends FieldsSchema> = 
