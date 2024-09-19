@@ -54,7 +54,7 @@ yt.Tags.getTags({
 ### Widget Client
 
 ```typescript
-import { YouTrack } from "youtrack-client"
+import { YouTrack, DashboardApi, WidgetApi } from "youtrack-client"
 
 DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: WidgetApi) => {
   
