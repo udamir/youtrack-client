@@ -1084,8 +1084,8 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     changeId: string,
     params?: FieldsParam<TSchema>,
-  ): Promise<void> {
-    await this.fetch<void>(
+  ): Promise<VcsChangeEntity<TSchema>> {
+    return this.fetch<VcsChangeEntity<TSchema>>(
       ...new RequestBuilder(`api/issues/${issueId}/vcsChanges/${changeId}`, { fields }, params).delete(),
     )
   }
