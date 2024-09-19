@@ -60,13 +60,13 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
   
   const yt = await YouTrack.widget(dashboardApi)
   const user = await yt.Users.getCurrentUserProfile({ 
-    fields: ["login", "avatarUrl", "email", "fullName"]
+    fields: ["login", "avatarUrl", "email", "fullName"] as const
   })
   // typeof user
   // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
 
   const tags = await yt.Tags.getTags({
-    fields: ["id", "name", { owner: ["login"]}]
+    fields: ["id", "name", { owner: ["login"]}] as const
   })
   // typeof tags
   // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
