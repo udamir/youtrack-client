@@ -1,26 +1,5 @@
 import type { EntityBase } from "./entities"
-
-/**
- * FieldSchema is a read-only array of Field, which allows for a mix of flat fields (strings)
- * and nested fields (objects).
- *
- * Example:
- * const personFields: FieldsSchema = [
- *   'name',  // flat field
- *   {
- *     address: [  // nested fields
- *       'city',
- *       {
- *         details: [
- *       'zip'
- *         ]
- *       }
- *     ]
- *   }
- * ]
- */
-export type FieldsSchema = ReadonlyArray<Field>
-type Field = string | Record<string, FieldsSchema>
+import type { FieldsSchema, ParseSchema } from "./fields"
 
 /**
  * Schema<T> takes an object type T and produces a schema for its fields.
@@ -62,16 +41,18 @@ type SchemaItem<T, K> = T extends Primitive
 
 type ToString<T> = T extends string | number ? `${T}` : never
 type SubSchema<T, K> = K extends string
-  ? { [P in K]-?: Schema<NonNullable<T>> }
+  ? { [P in K]-?: SchemaFromType<NonNullable<T>> }
   : never
 
-export type Schema<T> = {
+export type SchemaFromType<T> = {
   [K in keyof T]-?: T[K] extends Array<infer U> 
     ? SchemaItem<U, K>
     : SchemaItem<T[K], K>
 }[keyof T] extends infer U 
   ? Array<U>
   : never
+
+export type Schema<T> = string | SchemaFromType<T>
 
 /**
  * ExtendSchema<T, U> combines fields from an array type `T` with a union type `U` into a single array.
@@ -162,15 +143,15 @@ type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
     ? K extends keyof F
       ? F[K] extends FieldsSchema
         ? NonNullable<T[K]> extends Array<infer U>
-          ? MergeType<FilterFields<U, F[K]> | { $type: ExtractTypeField<U> }>[]
-          : MergeType<FilterFields<NonNullable<T[K]>, F[K]> | { $type: ExtractTypeField<T[K]> }>
+          ? MergeType<FilterFields<U, F[K]> | ExtractTypeField<U>>[]
+          : MergeType<FilterFields<NonNullable<T[K]>, F[K]> | ExtractTypeField<T[K]>>
         : never
       : never
     : never
 }
 
 export type FilterFields<T, F extends FieldsSchema> = 
-  MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>> | { $type: ExtractTypeField<T> }>
+  MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>> | ExtractTypeField<T>>
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
@@ -201,12 +182,14 @@ export type FilterFields<T, F extends FieldsSchema> =
  * type FullPerson = Entity<Person, undefined>;
  * // Resulting type: Schema<EntityBase>
  */
-type ExtractTypeField<T> = T extends { $type: infer U } ? U : never;
+type ExtractTypeField<T> = T extends { $type: infer U } ? { $type: U } : never;
 
 export type Entity<T, TSchema> = TSchema extends undefined
-  ? Schema<EntityBase>
+  ? SchemaFromType<EntityBase>
   : TSchema extends FieldsSchema
     ? FilterFields<T, TSchema>
-    : never
+    : TSchema extends string
+      ? FilterFields<T, ParseSchema<TSchema>>
+      : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]

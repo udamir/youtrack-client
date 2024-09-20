@@ -32,6 +32,7 @@ const token = "perm:your-token"
 const yt = YouTrack.client(baseUrl, token)
 
 yt.Users.getCurrentUserProfile({ 
+  // fields in FieldsSchema format
   fields: ["login", "avatarUrl", "email", "fullName"] as const
 }).then((user) => {
   // typeof user
@@ -41,7 +42,9 @@ yt.Users.getCurrentUserProfile({
 })
 
 yt.Tags.getTags({
-  fields: ["id", "name", { owner: ["login"]}] as const
+  // fields in string format
+  fields: "id,name,owner(login)",
+  $top: 5
 }).then((tags) => {
   // typeof tags
   // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
@@ -67,7 +70,8 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
   // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
 
   const tags = await yt.Tags.getTags({
-    fields: ["id", "name", { owner: ["login"]}] as const
+    fields: "id,name,owner(login)",
+    $top: 5
   })
   // typeof tags
   // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>

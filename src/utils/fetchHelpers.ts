@@ -1,4 +1,4 @@
-import type { QueryParamBuilder, Schema } from "../types"
+import type { FieldsSchema, QueryParamBuilder, Schema } from "../types"
 import { isObject } from "./common"
 
 // Function to build the URI with path parameters
@@ -18,7 +18,7 @@ export const createParamsMap = (keys: string[] = [], values: Array<string | numb
   )
 }
 
-const fieldsBuilder = (schema: Schema<any> = []): string => {
+const fieldsBuilder = (schema: FieldsSchema = []): string => {
   const _fields = schema.map((field) =>
     isObject(field)
       ? Object.keys(field)
@@ -30,8 +30,8 @@ const fieldsBuilder = (schema: Schema<any> = []): string => {
 }
 
 export const fields: QueryParamBuilder<Schema<any> | undefined> = (schema = []) => {
-  const _fields = fieldsBuilder(schema)
-  return _fields ? `fields=${fieldsBuilder(schema)}` : ""
+  const _fields = typeof schema === "string" ? schema : fieldsBuilder(schema)
+  return _fields ? `fields=${_fields}` : ""
 }
 
 export const buildQueryParam = (key: string, value?: string | number | boolean | string[] | number[] | boolean[]) => {
