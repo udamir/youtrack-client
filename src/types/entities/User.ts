@@ -1,3 +1,4 @@
+import type { DateFormatDescriptor, LocaleDescriptor, TimeZoneDescriptor } from "./Settings"
 import type { UserGroup } from "./UserGroup"
 import type { EntityBase } from "./Entity"
 import type { Issue } from "./Issue"
@@ -46,24 +47,6 @@ export type GeneralUserProfile = EntityBase<"GeneralUserProfile"> & {
   dateFieldFormat: DateFormatDescriptor // Format in which dates are shown to this user.
   timezone: TimeZoneDescriptor // Timezone of the user.
   locale: LocaleDescriptor // Personal locale selected by the user.
-}
-
-export type DateFormatDescriptor = EntityBase<"DateFormatDescriptor"> & {
-  presentation: string // Name of the date format.
-  pattern: string // Pattern that is applied when showing date with time.
-  datePattern: string // Pattern that is applied when showing date.
-}
-
-export type TimeZoneDescriptor = EntityBase<"TimeZoneDescriptor"> & {
-  presentation: string // The name of the time zone.
-  offset: number // Time zone offset in minutes.
-}
-
-export type LocaleDescriptor = EntityBase<"LocaleDescriptor"> & {
-  locale: string | null // Locale code.
-  language: string | null // Language abbreviation.
-  community: boolean // Indicates whether this locale is supported by the community.
-  name: string | null // Name of the locale.
 }
 
 export type NotificationsUserProfile = EntityBase<"NotificationsUserProfile"> & {

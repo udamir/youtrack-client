@@ -25,7 +25,16 @@ export class YouTrack {
     Projects: ResourceApi.ProjectsApi
     BuildBundles: ResourceApi.BuildBundlesApi
     EnumBundles: ResourceApi.EnumBundlesApi
+    OwnedBundles: ResourceApi.OwnedBundlesApi
+    StateBundles: ResourceApi.StateBundlesApi
+    UserBundles: ResourceApi.UserBundlesApi
+    VersionBundles: ResourceApi.VersionBundlesApi
     CustomFields: ResourceApi.CustomFieldsApi
+    BackupFiles: ResourceApi.BackupFilesApi
+    DatabaseBackupSettings: ResourceApi.DatabaseBackupSettingsApi
+    GlobalSettings: ResourceApi.GlobalSettingsApi
+    TelemetryData: ResourceApi.TelemetryDataApi
+    GlobalTimeTrackingSettings: ResourceApi.GlobalTimeTrackingSettingsApi
   }
 
   static client(baseUrl: string, token: string) {
@@ -84,7 +93,16 @@ export class YouTrack {
       Projects: new ResourceApi.ProjectsApi(this.fetch),
       BuildBundles: new ResourceApi.BuildBundlesApi(this.fetch),
       EnumBundles: new ResourceApi.EnumBundlesApi(this.fetch),
+      OwnedBundles: new ResourceApi.OwnedBundlesApi(this.fetch),
+      StateBundles: new ResourceApi.StateBundlesApi(this.fetch),
+      UserBundles: new ResourceApi.UserBundlesApi(this.fetch),
+      VersionBundles: new ResourceApi.VersionBundlesApi(this.fetch),
       CustomFields: new ResourceApi.CustomFieldsApi(this.fetch),
+      BackupFiles: new ResourceApi.BackupFilesApi(this.fetch),
+      DatabaseBackupSettings: new ResourceApi.DatabaseBackupSettingsApi(this.fetch),
+      GlobalSettings: new ResourceApi.GlobalSettingsApi(this.fetch),
+      TelemetryData: new ResourceApi.TelemetryDataApi(this.fetch),
+      GlobalTimeTrackingSettings: new ResourceApi.GlobalTimeTrackingSettingsApi(this.fetch),
     }
   }
 }

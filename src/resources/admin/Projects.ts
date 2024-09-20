@@ -362,7 +362,7 @@ export class ProjectsApi extends ResourceApi {
    * @param params.fields - A list of ProjectTimeTrackingSettings attributes that should be returned in the response. If no field is specified, only the entityID is returned.
    * @returns A promise that resolves to the updated time tracking settings of the project.
    */
-  async updateTimeTrackingSettings<TSchema extends ProjectTimeTrackingSettingsSchema>(
+  async updateProjectTimeTrackingSettings<TSchema extends ProjectTimeTrackingSettingsSchema>(
     projectId: string,
     body: Partial<Omit<ProjectTimeTrackingSettings, "id">>,
     params?: FieldsParam<TSchema>,
@@ -373,15 +373,15 @@ export class ProjectsApi extends ResourceApi {
   }
 
   /**
-   * Get the list of all work items of the specific issue.
-   * @param issueId - The ID of the issue.
+   * Get the list of all work items of the specific project.
+   * @param issueId - The ID of the project.
    * @param params - Optional parameters.
-   * @param params.fields - A list of IssueWorkItem attributes that should be returned in the response. If no field is specified, only the entityId is returned.
+   * @param params.fields - A list of WorkItemType attributes that should be returned in the response. If no field is specified, only the entityId is returned.
    * @param params.$top - Optional. Specifies the maximum number of entries to return. If not provided, the server limits the number of entries.
    * @param params.$skip - Optional. Specifies the number of entries to skip before returning the first one.
-   * @returns A promise that resolves to the list of work items for the issue.
+   * @returns A promise that resolves to the list of work items for the project.
    */
-  async getIssueWorkItems<TSchema extends WorkItemTypeSchema>(
+  async getProjectWorkItemTypes<TSchema extends WorkItemTypeSchema>(
     projectId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<WorkItemTypeEntity<TSchema>[]> {

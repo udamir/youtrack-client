@@ -54,6 +54,19 @@ export type ProjectTimeTrackingSettings = EntityBase<"ProjectTimeTrackingSetting
   attributes: WorkItemProjectAttribute[] // The list of work item attributes available in this project.
 }
 
+export type GlobalTimeTrackingSettings = EntityBase<"GlobalTimeTrackingSettings"> & {
+  workItemTypes: WorkItemType[] // The list of available work item types. Read-only.
+  workTimeSettings: WorkTimeSettings // Server's work schedule settings. Read-only.
+  attributePrototypes: WorkItemAttributePrototype[] // The list of available work item attributes. Read-only.
+}
+
+export type WorkTimeSettings = EntityBase<"WorkTimeSettings"> & {
+  minutesADay?: number // Number of minutes per working day. For example, for an 8-hour day, it would be 480.
+  workDays?: number[] // The indexes of the days of the week that are counted as working days. Sunday's index is 0, Monday's index is 1 and so on.
+  firstDayOfWeek: number // Index of the first day of week. It depends on server locale. Read-only.
+  daysAWeek: number // Number of working days a week. Read-only.
+}
+
 export type WorkItemAttributeValue = EntityBase<"WorkItemAttributeValue"> & {
   name?: string | null // The name of the value of a work item attribute. Can be null.
   description?: string | null // The description of the value of a work item attribute. Can be null.
@@ -61,8 +74,8 @@ export type WorkItemAttributeValue = EntityBase<"WorkItemAttributeValue"> & {
   prototype?: WorkItemAttributePrototype | null // The prototype for the work item attribute. Can be null.
 }
 
-export type WorkItemAttributePrototype = EntityBase<'WorkItemAttributePrototype'> & {
-  name?: string | null; // The name of the work item attribute. Can be null.
-  instances: WorkItemProjectAttribute[]; // Stores project-related settings for the work item attributes used in projects.
-  values: WorkItemAttributeValue[]; // The list of possible values of the work item attribute.
+export type WorkItemAttributePrototype = EntityBase<"WorkItemAttributePrototype"> & {
+  name?: string | null // The name of the work item attribute. Can be null.
+  instances: WorkItemProjectAttribute[] // Stores project-related settings for the work item attributes used in projects.
+  values: WorkItemAttributeValue[] // The list of possible values of the work item attribute.
 }
