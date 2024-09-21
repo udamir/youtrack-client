@@ -2,11 +2,11 @@
 <img alt="npm" src="https://img.shields.io/npm/v/youtrack-client"> <img alt="npm" src="https://img.shields.io/npm/dm/youtrack-client?label=npm"> 
  <img alt="npm type definitions" src="https://img.shields.io/npm/types/youtrack-client">  <img alt="GitHub" src="https://img.shields.io/github/license/udamir/youtrack-client">
 
-Client library for accessing the youtrack REST and Widget API
+JavaScript client library for accessing the youtrack REST and Widget API
 
 ## Features
 - All User API methods are supported
-- ~~All Admin API methodth are supported~~ (roadmap)
+- All Admin API methods are supported
 - Can be used in Youtrack Widgets (check [widget template](https://github.com/udamir/youtrack-widget-template))
 - Full Typescript support, including parameters and responses
 - All methods with full js documentation
@@ -91,11 +91,32 @@ interface YouTrack {
   Groups: ResourceApi.GroupsApi
   IssueLinkTypes: ResourceApi.IssueLinkTypesApi
   Issues: ResourceApi.IssuesApi
+  IssueComments: ResourceApi.IssueCommentsApi
+  IssueLinks: ResourceApi.IssueLinksApi
+  IssueTags: ResourceApi.IssueTagsApi
+  IssueTimeTracking: ResourceApi.IssueTimeTrackingApi
+  IssueVcsChanges: ResourceApi.IssueVcsChangesApi
+  IssueAttachments: ResourceApi.IssueAttechmentsApi
   SavedQueries: ResourceApi.SavedQueriesApi
   Search: ResourceApi.SearchApi
   Tags: ResourceApi.TagsApi
   Users: ResourceApi.UsersApi
   WorkItems: ResourceApi.WorkItemsApi
+  Admin: {
+    Projects: ResourceApi.ProjectsApi
+    BuildBundles: ResourceApi.BuildBundlesApi
+    EnumBundles: ResourceApi.EnumBundlesApi
+    OwnedBundles: ResourceApi.OwnedBundlesApi
+    StateBundles: ResourceApi.StateBundlesApi
+    UserBundles: ResourceApi.UserBundlesApi
+    VersionBundles: ResourceApi.VersionBundlesApi
+    CustomFields: ResourceApi.CustomFieldsApi
+    BackupFiles: ResourceApi.BackupFilesApi
+    DatabaseBackupSettings: ResourceApi.DatabaseBackupSettingsApi
+    GlobalSettings: ResourceApi.GlobalSettingsApi
+    TelemetryData: ResourceApi.TelemetryDataApi
+    GlobalTimeTrackingSettings: ResourceApi.GlobalTimeTrackingSettingsApi
+  }
 }
 ```
 
