@@ -36,7 +36,7 @@ yt.Users.getCurrentUserProfile({
   fields: ["login", "avatarUrl", "email", "fullName"] as const
 }).then((user) => {
   // typeof user
-  // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
+  // { login: string, avatarUrl: string, email: string, fullName: string }
 
   console.log(user)
 })
@@ -47,7 +47,7 @@ yt.Tags.getTags({
   $top: 5
 }).then((tags) => {
   // typeof tags
-  // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
+  // Array<{ id: string, name: string, owner: { login: string } }>
 
   console.log(tags)
 })
@@ -67,14 +67,14 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
     fields: ["login", "avatarUrl", "email", "fullName"] as const
   })
   // typeof user
-  // { $type: "User", login: string, avatarUrl: string, email: string, fullName: string }
+  // { login: string, avatarUrl: string, email: string, fullName: string }
 
   const tags = await yt.Tags.getTags({
     fields: "id,name,owner(login)",
     $top: 5
   })
   // typeof tags
-  // Array<{ $type: "Tag", id: string, name: string, owner: { $type: "User", login: string } }>
+  // Array<{ id: string, name: string, owner: { login: string } }>
 
 })
 ```
