@@ -1,7 +1,6 @@
 import type {
   ActivityCursorPage,
   ActivityItem,
-  CustomField,
   CustomFieldsParam,
   Entity,
   FieldsParam,
@@ -282,7 +281,7 @@ export class IssuesApi extends ResourceApi {
   async updateIssueCustomField<TSchema extends IssueCustomFieldSchema>(
     issueId: string,
     fieldId: string,
-    body: Partial<Omit<CustomField, "id">>,
+    body: Partial<Omit<IssueCustomField, "id">>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueCustomFieldEntity<TSchema>> {
     return this.fetch<IssueCustomFieldEntity<TSchema>>(
