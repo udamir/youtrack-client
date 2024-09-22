@@ -34,18 +34,19 @@ import type { EntityBase } from "./entities"
  */
 
 type Primitive = string | number | boolean | symbol | bigint | null | undefined
+type FilterPrimitive<T> = T extends Primitive ? T : never;
 
 type SchemaItem<T, K> = T extends Primitive
   ? ToString<K> // For primitive fields, return the key as string
   : SubSchema<T, K> // For object fields, recursively apply Schema
 
 type ToString<T> = T extends string | number ? `${T}` : never
-type SubSchema<T, K> = K extends string ? { [P in K]-?: SchemaFromType<NonNullable<T>> } : never
+type SubSchema<T, K> = K extends string ? { readonly [P in K]-?: SchemaFromType<NonNullable<T>> } : never
 
 export type SchemaFromType<T> = {
   [K in keyof T]-?: T[K] extends Array<infer U> ? SchemaItem<U, K> : SchemaItem<T[K], K>
 }[keyof T] extends infer U
-  ? Array<U>
+  ? ReadonlyArray<U>
   : never
 
 export type Schema<T> = string | SchemaFromType<T>
@@ -130,7 +131,9 @@ type FilterNested<F extends FieldsSchema> = MergeType<
 
 // Handle flat fields (string) and check if K exists in T
 type FilterStringFields<T, F extends Record<string, string>> = {
-  [K in keyof F]: K extends keyof T ? T[K] : T extends { [Q in K]: infer U } ? U : never
+  [K in keyof F]: K extends keyof T 
+  ? FilterPrimitive<T[K]>
+  : T extends { [Q in K]: infer U } ? U : never
 }
 
 // Handle nested fields (object)
