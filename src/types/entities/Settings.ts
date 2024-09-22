@@ -120,24 +120,24 @@ export type BackupFile = EntityBase<"BackupFile"> & {
   link: string // The link to the backup file.
 }
 
-export type DatabaseBackupSettings = EntityBase<'DatabaseBackupSettings'> & {
-  location?: string; // The location of the backups storage folder.
-  filesToKeep: number; // The number of backup files that should be stored.
-  cronExpression?: string; // The cron expression that defines the schedule of the automatic backups.
-  archiveFormat: 'TAR_GZ' | 'ZIP'; // The current selected format of backup files.
-  isOn: boolean; // If true, the automatic regular backup is enabled. Otherwise, false.
-  availableDiskSpace: number; // The size of available disk space.
-  notifiedUsers: User[]; // The list of users who get notifications about backup failures.
-  backupStatus: BackupStatus; // The current status of the backup.
-};
+export type DatabaseBackupSettings = EntityBase<"DatabaseBackupSettings"> & {
+  location?: string // The location of the backups storage folder.
+  filesToKeep: number // The number of backup files that should be stored.
+  cronExpression?: string // The cron expression that defines the schedule of the automatic backups.
+  archiveFormat: "TAR_GZ" | "ZIP" // The current selected format of backup files.
+  isOn: boolean // If true, the automatic regular backup is enabled. Otherwise, false.
+  availableDiskSpace: number // The size of available disk space.
+  notifiedUsers: User[] // The list of users who get notifications about backup failures.
+  backupStatus: BackupStatus // The current status of the backup.
+}
 
-export type BackupStatus = EntityBase<'BackupStatus'> & {
-  backupInProgress: boolean; // If true, the backup is currently running. Otherwise, false.
-  backupCancelled: boolean; // If true, the last backup operation was cancelled. Otherwise, false.
-  backupError?: BackupError; // The error that appeared during the previous backup process. Returns null, if there was no error.
-};
+export type BackupStatus = EntityBase<"BackupStatus"> & {
+  backupInProgress: boolean // If true, the backup is currently running. Otherwise, false.
+  backupCancelled: boolean // If true, the last backup operation was cancelled. Otherwise, false.
+  backupError?: BackupError // The error that appeared during the previous backup process. Returns null, if there was no error.
+}
 
-export type BackupError = EntityBase<'BackupError'> & {
-  date?: number; // The timestamp in milliseconds indicating the moment when the error appeared. Stored as a unix timestamp at UTC.
-  errorMessage?: string; // Description of the error.
-};
+export type BackupError = EntityBase<"BackupError"> & {
+  date?: number // The timestamp in milliseconds indicating the moment when the error appeared. Stored as a unix timestamp at UTC.
+  errorMessage?: string // Description of the error.
+}

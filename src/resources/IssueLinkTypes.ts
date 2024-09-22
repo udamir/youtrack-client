@@ -18,11 +18,11 @@ export class IssueLinkTypesApi extends ResourceApi {
    * @returns A list of available issue link types.
    */
   async getIssueLinkTypes<TSchema extends IssueLinkTypeSchema>(
-    params?: FieldsParam<TSchema> | ListParams
+    params?: FieldsParam<TSchema> | ListParams,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder('api/issueLinkTypes', { fields, ...queryParams("$top", "$skip") }, params).get()
-    );
+      ...new RequestBuilder("api/issueLinkTypes", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    )
   }
 
   /**
@@ -32,11 +32,11 @@ export class IssueLinkTypesApi extends ResourceApi {
    * @returns The created issue link type.
    */
   async createIssueLinkType<TSchema extends IssueLinkTypeSchema>(
-    body: { name: string, targetToSource: string, sourceToTarget: string } | Partial<Omit<IssueLinkType, "id">>,
-    params?: FieldsParam<TSchema>
+    body: { name: string; targetToSource: string; sourceToTarget: string } | Partial<Omit<IssueLinkType, "id">>,
+    params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder('api/issueLinkTypes', { fields }, params).post(body)
+      ...new RequestBuilder("api/issueLinkTypes", { fields }, params).post(body),
     )
   }
 
@@ -48,10 +48,10 @@ export class IssueLinkTypesApi extends ResourceApi {
    */
   async getIssueLinkType<TSchema extends IssueLinkTypeSchema>(
     typeId: string,
-    params?: FieldsParam<TSchema>
+    params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).get()
+      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).get(),
     )
   }
 
@@ -65,10 +65,10 @@ export class IssueLinkTypesApi extends ResourceApi {
   async updateIssueLinkType<TSchema extends IssueLinkTypeSchema>(
     typeId: string,
     body: Partial<Omit<IssueLinkType, "id">>,
-    params?: FieldsParam<TSchema>
+    params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).post(body)
+      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).post(body),
     )
   }
 
@@ -80,10 +80,8 @@ export class IssueLinkTypesApi extends ResourceApi {
    */
   async deleteIssueLinkType<TSchema extends IssueLinkTypeSchema>(
     typeId: string,
-    params?: FieldsParam<TSchema>
+    params?: FieldsParam<TSchema>,
   ): Promise<void> {
-    return this.fetch<void>(
-      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).delete()
-    )
+    return this.fetch<void>(...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).delete())
   }
 }

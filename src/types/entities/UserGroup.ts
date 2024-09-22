@@ -3,7 +3,7 @@ import type { Project } from "./Project"
 
 // https://www.jetbrains.com/help/youtrack/devportal/resource-api-groups.html
 
-export type UserGroup = EntityBase<'UserGroup'> & {
+export type UserGroup = EntityBase<"UserGroup"> & {
   name: string | null // The name of the group. Can be null. Read-only.
   ringId: string | null // ID of the group in Hub. Can be null. Read-only.
   usersCount: number // The number of users in the group. Read-only.

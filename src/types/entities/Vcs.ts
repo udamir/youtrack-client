@@ -27,6 +27,6 @@ export type ChangesProcessor = EntityBase<"ChangesProcessor"> & {
   lookupIssuesInBranchName: boolean // True when the "Issue ID lookup in VCS branch name" feature is enabled, false when disabled.
 }
 
-export type VcsServer = EntityBase<'VcsServer'> & {
-  url: string | null; // The URL of the server. Can be null.
+export type VcsServer = EntityBase<"VcsServer"> & {
+  url: string | null // The URL of the server. Can be null.
 }

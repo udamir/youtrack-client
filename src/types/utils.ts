@@ -1,5 +1,5 @@
-import type { EntityBase } from "./entities"
 import type { FieldsSchema, ParseSchema } from "./fields"
+import type { EntityBase } from "./entities"
 
 /**
  * Schema<T> takes an object type T and produces a schema for its fields.
@@ -40,15 +40,11 @@ type SchemaItem<T, K> = T extends Primitive
   : SubSchema<T, K> // For object fields, recursively apply Schema
 
 type ToString<T> = T extends string | number ? `${T}` : never
-type SubSchema<T, K> = K extends string
-  ? { [P in K]-?: SchemaFromType<NonNullable<T>> }
-  : never
+type SubSchema<T, K> = K extends string ? { [P in K]-?: SchemaFromType<NonNullable<T>> } : never
 
 export type SchemaFromType<T> = {
-  [K in keyof T]-?: T[K] extends Array<infer U> 
-    ? SchemaItem<U, K>
-    : SchemaItem<T[K], K>
-}[keyof T] extends infer U 
+  [K in keyof T]-?: T[K] extends Array<infer U> ? SchemaItem<U, K> : SchemaItem<T[K], K>
+}[keyof T] extends infer U
   ? Array<U>
   : never
 
@@ -65,16 +61,16 @@ export type ExtendSchema<T extends readonly any[], U> = (T[number] | U)[]
 
 /**
  * MergeType<T> takes a union type T and merges all its variants into a single object type.
- * 
+ *
  * This type recursively iterates through each union and merges the properties.
- * 
+ *
  * Example:
  * type Issue = {
  *   project: ["id"];
  * } | {
  *   customFields: ["id", "name"];
  * };
- * 
+ *
  * type MergedIssue = MergeType<Issue>;
  * // Resulting type:
  * // {
@@ -83,11 +79,9 @@ export type ExtendSchema<T extends readonly any[], U> = (T[number] | U)[]
  * // }
  */
 
-export type MergeType<T> = (
-  T extends any ? (x: T) => void : never
-) extends (x: infer U) => void
+export type MergeType<T> = (T extends any ? (x: T) => void : never) extends (x: infer U) => void
   ? { [K in keyof U]: U[K] }
-  : never;
+  : never
 
 /**
  * FilterFields<T, F> is a utility type that filters fields of object type T based on a given field schema F.
@@ -128,9 +122,11 @@ type FilterKeys<F extends FieldsSchema> = {
   [K in Extract<F[number], string>]: K
 }
 
-type FilterNested<F extends FieldsSchema> = MergeType<{
-  [K in keyof F]: F[K] extends string ? never : F[K]
-}[number]>
+type FilterNested<F extends FieldsSchema> = MergeType<
+  {
+    [K in keyof F]: F[K] extends string ? never : F[K]
+  }[number]
+>
 
 // Handle flat fields (string) and check if K exists in T
 type FilterStringFields<T, F extends Record<string, string>> = {
@@ -139,7 +135,7 @@ type FilterStringFields<T, F extends Record<string, string>> = {
 
 // Handle nested fields (object)
 type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
-  [K in keyof F]: K extends keyof T
+  -readonly [K in keyof F]: K extends keyof T
     ? K extends keyof F
       ? F[K] extends FieldsSchema
         ? NonNullable<T[K]> extends Array<infer U>
@@ -150,8 +146,9 @@ type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
     : never
 }
 
-export type FilterFields<T, F extends FieldsSchema> = 
-  MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>>
+export type FilterFields<T, F extends FieldsSchema> = MergeType<
+  FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>
+>
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.

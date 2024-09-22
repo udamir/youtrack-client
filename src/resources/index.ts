@@ -1,4 +1,4 @@
-export * from "./Activities" 
+export * from "./Activities"
 export * from "./Agiles"
 export * from "./Articles"
 export * from "./Commands"

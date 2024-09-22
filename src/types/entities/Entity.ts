@@ -5,5 +5,5 @@ export interface EntityBase<T extends string = string> {
 
 export type PeriodValue = EntityBase<"PeriodValue"> & {
   minutes: number // Value in minutes.
-  presentation: string // Human-readable representation. 
+  presentation: string // Human-readable representation.
 }

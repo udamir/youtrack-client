@@ -15,6 +15,6 @@ export type QueryParam = {
   query?: string
 }
 
-export type MuteUpdateNotificationsParam = { 
+export type MuteUpdateNotificationsParam = {
   muteUpdateNotifications?: boolean
 }

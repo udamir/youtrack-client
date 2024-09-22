@@ -19,10 +19,10 @@ export class CommandsApi extends ResourceApi {
    */
   async applyCommandToIssues<TSchema extends CommandListSchema>(
     body: Partial<Omit<CommandList, "id">>,
-    params?: FieldsParam<TSchema> | MuteUpdateNotificationsParam
+    params?: FieldsParam<TSchema> | MuteUpdateNotificationsParam,
   ): Promise<CommandListEntity<TSchema>> {
     return this.fetch<CommandListEntity<TSchema>>(
-      ...new RequestBuilder('api/commands', { fields, muteUpdateNotifications: "string" }, params).post(body)
+      ...new RequestBuilder("api/commands", { fields, muteUpdateNotifications: "string" }, params).post(body),
     )
   }
 
@@ -34,10 +34,10 @@ export class CommandsApi extends ResourceApi {
    */
   async getCommandSuggestions<TSchema extends CommandListSchema>(
     body: Partial<Omit<CommandList, "id">>,
-    params?: FieldsParam<TSchema>
+    params?: FieldsParam<TSchema>,
   ): Promise<CommandListEntity<TSchema>> {
     return this.fetch<CommandListEntity<TSchema>>(
-      ...new RequestBuilder('api/commands/assist', { fields }, params).post(body)
+      ...new RequestBuilder("api/commands/assist", { fields }, params).post(body),
     )
   }
 }

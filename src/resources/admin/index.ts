@@ -10,5 +10,4 @@ export * from "./BackupFiles"
 export * from "./GlobalSettings"
 export * from "./TelemetryData"
 export * from "./DatabaseBackupSettings"
-export * from "./GlobalTimeTrackingSettings﻿"
-
+export * from "./GlobalTimeTrackingSettings"

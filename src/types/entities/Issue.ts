@@ -91,7 +91,6 @@ export type IssueCustomFieldBase<T extends string = "IssueCustomField"> = Entity
   id: string // The ID of the custom field in the issue. Read-only.
   projectCustomField: ProjectCustomField // Reference to the custom field settings for the particular project. Read-only.
   name: string // The name of the custom field. Read-only.
-  value: any // The value assigned to the custom field in the issue. Depending on the type of the field, this attribute can store a single value or an array of values. Read-only.
 }
 
 export type SimpleIssueCustomField = IssueCustomFieldBase<"SimpleIssueCustomField"> & {

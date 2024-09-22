@@ -1,7 +1,7 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the YouTrack REST and Widget API",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "keywords": [
     "youtrack",
@@ -31,7 +31,8 @@
   "scripts": {
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
-    "check": "biome check"
+    "check": "biome check",
+    "format": "biome format"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
@@ -48,5 +49,8 @@
     "rollup-plugin-progress": "^1.1.2",
     "tsd": "^0.31.2",
     "typescript": "^5.5.4"
+  },
+  "tsd": {
+    "directory": "test/types"
   }
 }

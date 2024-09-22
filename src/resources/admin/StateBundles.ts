@@ -131,11 +131,9 @@ export class StateBundlesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<StateBundleElementEntity<TSchema>> {
     return this.fetch<StateBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
-        `api/admin/customFieldSettings/bundles/state/${bundleId}/values`,
-        { fields },
-        params,
-      ).post(body),
+      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/state/${bundleId}/values`, { fields }, params).post(
+        body,
+      ),
     )
   }
 

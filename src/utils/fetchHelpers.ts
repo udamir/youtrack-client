@@ -46,7 +46,9 @@ export const stringParam =
   (value?) =>
     buildQueryParam(key, value)
 
-export const queryParams = <TKey extends string, T extends string | number | boolean | string[] | number[] | boolean[]>(...keys: TKey[]): Record<TKey, QueryParamBuilder<T | undefined>> => {
+export const queryParams = <TKey extends string, T extends string | number | boolean | string[] | number[] | boolean[]>(
+  ...keys: TKey[]
+): Record<TKey, QueryParamBuilder<T | undefined>> => {
   return keys.reduce(
     (params, key) => {
       params[key] = (value?) => buildQueryParam(key, value)

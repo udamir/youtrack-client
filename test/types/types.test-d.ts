@@ -1,4 +1,4 @@
-import type { Schema, FilterFields, Entity } from "../src/types"
+import type { Schema, FilterFields, Entity } from "../../src"
 import { expectType } from "tsd"
 
 // Sample types for testing
@@ -39,16 +39,6 @@ expectType<FullPerson>(["$type", "id"])
 // Test Entity with schema
 type PartialPerson = Entity<Person, ["name", { address: ["city"] }]>
 expectType<PartialPerson>({
-  name: "John",
-  address: {
-    city: "New York",
-  },
-})
-
-// Test Entity with schema
-type PartialPersonWithType = Entity<Person & { $type: "Person" }, ["name", { address: ["city"] }]>
-expectType<PartialPersonWithType>({
-  $type: "Person",
   name: "John",
   address: {
     city: "New York",

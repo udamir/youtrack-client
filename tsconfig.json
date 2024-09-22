@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "importHelpers": false, 
+    "importHelpers": false,
     "outDir": "dist",
     "declaration": true,
 
@@ -21,8 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "./src/**/*",
-  ],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

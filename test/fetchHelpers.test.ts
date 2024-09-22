@@ -40,7 +40,9 @@ describe("fields", () => {
   })
 
   it("should handle complex nested schema", () => {
-    expect(fields([{ user: [{ profile: ["firstName", "lastName"] }] }])).toBe("fields=user(profile(firstName,lastName))")
+    expect(fields([{ user: [{ profile: ["firstName", "lastName"] }] }])).toBe(
+      "fields=user(profile(firstName,lastName))",
+    )
   })
 })
 
@@ -60,7 +62,7 @@ describe("queryParams", () => {
   it("should return an object with query parameter builders", () => {
     const params = queryParams("status", "category")
     expect(params.status("active")).toBe("status=active")
-    expect( params.category("electronics")).toBe("category=electronics")
+    expect(params.category("electronics")).toBe("category=electronics")
   })
 
   it("should return an empty string when no value is provided", () => {

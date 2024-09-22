@@ -17,7 +17,7 @@ export type Tag = EntityBase<"Tag"> & {
   name: string | null // The name of the tag. Can be null.
 }
 
-export type TagSharingSettings = EntityBase<'TagSharingSettings'> & {
-  permittedGroups: UserGroup[]; // The list of groups that can read or update a tag.
-  permittedUsers: User[]; // The list of users that can read or update a tag.
+export type TagSharingSettings = EntityBase<"TagSharingSettings"> & {
+  permittedGroups: UserGroup[] // The list of groups that can read or update a tag.
+  permittedUsers: User[] // The list of users that can read or update a tag.
 }

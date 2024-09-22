@@ -31,7 +31,8 @@ export class WorkItemsApi extends ResourceApi {
    */
   async getWorkItems<TSchema extends WorkItemSchema>(
     params?: FieldsParam<TSchema> &
-      ListParams & QueryParam & {
+      ListParams &
+      QueryParam & {
         startDate?: string
         endDate?: string
         start?: number

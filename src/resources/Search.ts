@@ -18,10 +18,10 @@ export class SearchApi extends ResourceApi {
    */
   async getSearchSuggestions<TSchema extends SearchSuggestionsSchema>(
     query: string,
-    params?: FieldsParam<TSchema>
+    params?: FieldsParam<TSchema>,
   ): Promise<SearchSuggestionsEntity<TSchema>> {
     return this.fetch<SearchSuggestionsEntity<TSchema>>(
-      ...new RequestBuilder("api/search/assist", { fields }, params).post({ query })
+      ...new RequestBuilder("api/search/assist", { fields }, params).post({ query }),
     )
   }
 }
