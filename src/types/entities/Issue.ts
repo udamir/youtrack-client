@@ -72,6 +72,7 @@ export type IssueCustomField =
   | DateIssueCustomField
   | PeriodIssueCustomField
   | SingleBuildIssueCustomField
+  | SingleEnumIssueCustomField
   | SingleGroupIssueCustomField
   | SingleOwnedIssueCustomField
   | SingleUserIssueCustomField
@@ -79,7 +80,6 @@ export type IssueCustomField =
   | StateIssueCustomField
   | StateMachineIssueCustomField
   | MultiBuildIssueCustomField
-  | MultiEnumIssueCustomField
   | MultiEnumIssueCustomField
   | MultiGroupIssueCustomField
   | MultiOwnedIssueCustomField
@@ -119,6 +119,10 @@ export type SingleGroupIssueCustomField = IssueCustomFieldBase<"SingleGroupIssue
 
 export type SingleOwnedIssueCustomField = IssueCustomFieldBase<"SingleOwnedIssueCustomField"> & {
   value: OwnedBundleElement // The value assigned to the custom field in the issue
+}
+
+export type SingleEnumIssueCustomField = IssueCustomFieldBase<"SingleEnumIssueCustomField"> & {
+  value: EnumBundleElement // The value assigned to the custom field in the issue
 }
 
 export type SingleUserIssueCustomField = IssueCustomFieldBase<"SingleUserIssueCustomField"> & {

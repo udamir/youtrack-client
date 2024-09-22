@@ -33,7 +33,7 @@ const yt = YouTrack.client(baseUrl, token)
 
 yt.Users.getCurrentUserProfile({ 
   // fields in FieldsSchema format
-  fields: ["login", "avatarUrl", "email", "fullName"] as const
+  fields: ["login", "avatarUrl", "email", "fullName"]
 }).then((user) => {
   // typeof user
   // { login: string, avatarUrl: string, email: string, fullName: string }
@@ -64,7 +64,7 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
   
   const yt = await YouTrack.widget(dashboardApi)
   const user = await yt.Users.getCurrentUserProfile({ 
-    fields: ["login", "avatarUrl", "email", "fullName"] as const
+    fields: ["login", "avatarUrl", "email", "fullName"]
   })
   // typeof user
   // { login: string, avatarUrl: string, email: string, fullName: string }

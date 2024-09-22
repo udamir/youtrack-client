@@ -70,7 +70,7 @@ type FindName<T, Name extends string = ""> = T extends `${Name}${infer Char}${in
  *
  * Example:
  * - Input: `"id,name),rest"`
- * - Output: `[[{ topic: ["id", "name"] }], ",rest"]`
+ * - Output: `[["id", "name"], ",rest"]`
  *
  * @template T - The input string to parse into a schema.
  * @template Items - The accumulator for parsed schema items, defaulting to an empty array.

@@ -1,4 +1,12 @@
-import type { ActivityCursorPage, ActivityItem, Entity, FieldsParam, ListParams, Schema } from "../types"
+import type {
+  ActivityCategory,
+  ActivityCursorPage,
+  ActivityItem,
+  Entity,
+  FieldsParam,
+  ListParams,
+  Schema,
+} from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -9,7 +17,7 @@ type ActivityItemEntity<TSchema extends ActivityItemSchema> = Entity<ActivityIte
 type ActivityCursorPageEntity<TSchema extends ActivityCursorPageSchema> = Entity<ActivityCursorPage, TSchema>
 
 type GetActivitiesParams = {
-  categories?: string[]
+  categories?: ActivityCategory[]
   reverse?: boolean
   start?: string
   end?: string
@@ -87,7 +95,7 @@ export class ActivitiesApi extends ResourceApi {
    * @returns A page of activities with pagination support, including cursors for navigation.
    */
   async getActivitiesPage<TSchema extends ActivityCursorPageSchema>(
-    params: GetActivitiesPageParams & FieldsParam<TSchema>,
+    params?: GetActivitiesPageParams & FieldsParam<TSchema>,
   ): Promise<ActivityCursorPageEntity<TSchema>> {
     // Perform the fetch request
     return this.fetch<ActivityCursorPageEntity<TSchema>>(

@@ -1,7 +1,7 @@
 export type FetchApiConfig = {
   method?: "POST" | "GET" | "PATCH" | "PUT" | "DELETE"
   headers?: Record<string, string>
-  body?: string | FormData
+  body?: string | object | FormData
   [key: string]: unknown
 }
 

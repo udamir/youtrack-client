@@ -1,6 +1,6 @@
 import type { DashboardApi, FetchApi, Service } from "./types"
 import * as ResourceApi from "./resources"
-import { joinUrl } from "./utils"
+import { encodeBody, joinUrl } from "./utils"
 
 export class YouTrack {
   public Agiles: ResourceApi.AgilesApi
@@ -38,16 +38,19 @@ export class YouTrack {
   }
 
   static client(baseUrl: string, token: string) {
-    return new YouTrack(async (url, options?) => {
-      const response = await fetch(joinUrl(baseUrl, url), {
+    return new YouTrack(async (url, options = {}) => {
+      const { body, headers, ...rest } = options
+      const params = {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
-          ...options?.headers,
+          ...headers,
         },
-        ...options,
-      })
+        ...(body ? { body: encodeBody(body) } : {}),
+        ...rest,
+      }
+      const response = await fetch(joinUrl(baseUrl, url), params)
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`)

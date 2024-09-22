@@ -1,6 +1,18 @@
 import type { FieldsSchema, QueryParamBuilder, Schema } from "../types"
 import { isObject } from "./common"
 
+export const encodeBody = (data?: string | object | FormData): string | FormData | undefined => {
+  if (data instanceof FormData) {
+    return data
+  }
+
+  if (typeof data === "object") {
+    return JSON.stringify(data)
+  }
+
+  return data
+}
+
 // Function to build the URI with path parameters
 export const buildUri = (baseUri: string, pathParams: Record<string, string> = {}): string =>
   Object.keys(pathParams).reduce(

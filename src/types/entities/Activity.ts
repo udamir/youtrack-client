@@ -53,7 +53,39 @@ export type ActivityCursorPage = EntityBase<"ActivityCursorPage"> & {
   reverse: boolean // Indicates whether the order of returning activities on the page is from newest to oldest or the opposite. If false, then the oldest activity item that matches a selected filter is returned first. If true, then the newest activity is returned first. By default, false. Read-only.
 }
 
-export type SimpleValueActivityItem<TCategory extends string, TValueType> = BaseActivityItem<TCategory, TValueType, any>
+export type ActivityCategory =
+  | "ArticleCommentAttachmentsCategory"
+  | "ArticleTagsCategory"
+  | "AttachmentRecognizedTextCategory"
+  | "AttachmentRenameCategory"
+  | "AttachmentVisibilityCategory"
+  | "AttachmentsCategory"
+  | "CommentAttachmentsCategory"
+  | "CommentTextCategory"
+  | "CommentUsesMarkdownCategory"
+  | "CommentVisibilityCategory"
+  | "CommentsCategory"
+  | "CustomFieldCategory"
+  | "DescriptionCategory"
+  | "IssueCreatedCategory"
+  | "IssueResolvedCategory"
+  | "IssueUsesMarkdownCategory"
+  | "IssueVisibilityCategory"
+  | "LinksCategory"
+  | "ProjectCategory"
+  | "SprintCategory"
+  | "SummaryCategory"
+  | "TagsCategory"
+  | "TotalVotesCategory"
+  | "VcsChangeCategory"
+  | "VcsChangeStateCategory"
+  | "VotersCategory"
+
+export type SimpleValueActivityItem<TCategory extends ActivityCategory, TValueType> = BaseActivityItem<
+  TCategory,
+  TValueType,
+  any
+>
 
 export type CommentAttachmentsActivityItem = BaseActivityItem<
   "ArticleCommentAttachmentsCategory" | "CommentAttachmentsCategory",

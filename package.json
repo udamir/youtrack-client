@@ -1,7 +1,7 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the YouTrack REST and Widget API",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "keywords": [
     "youtrack",
@@ -17,7 +17,7 @@
   "module": "dist/index.mjs",
   "main": "dist/index.cjs",
   "browser": "dist/youtrack-client.min.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -32,7 +32,8 @@
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
     "check": "biome check",
-    "format": "biome format"
+    "format": "biome format",
+    "test:types": "tsd"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

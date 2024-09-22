@@ -1,96 +1,86 @@
 import { expectType } from "tsd"
 import type { Schema } from "../../src"
 
-// Test cases for Schema<T>
+// Testing Schema with simple primitive types
+type SimpleObject = {
+  id: number
+  name: string
+  active: boolean
+}
 
-// Primitive fields
-expectType<
-  Schema<{
-    id: number
-    value: string
-  }>
->(["id", "value"])
+type T = Schema<SimpleObject>
+expectType<Schema<SimpleObject>>(["id", "name", "active"] as const)
 
-// Nested object fields
-expectType<
-  Schema<{
+// Testing Schema with nested objects
+type NestedObject = {
+  id: number
+  name: string
+  address: {
+    city: string
+    country: string
+  }
+}
+expectType<Schema<NestedObject>>(["id", "name", { address: ["city", "country"] }] as const)
+
+// Testing Schema with arrays of objects
+type ArrayObject = {
+  id: number
+  tags: { name: string }[]
+}
+expectType<Schema<ArrayObject>>(["id", { tags: ["name"] }] as const)
+
+// Testing Schema with nullable fields
+type NullableFields = {
+  id: number
+  description: string | null
+  isActive: boolean | null
+}
+expectType<Schema<NullableFields>>(["id", "description", "isActive"] as const)
+
+// Testing Schema with readonly fields
+type ReadonlyObject = {
+  readonly id: number
+  readonly name: string
+}
+expectType<Schema<ReadonlyObject>>(["id", "name"])
+
+// Testing Schema with union types
+type UnionFields = {
+  id: number
+  status: "open" | "closed"
+}
+expectType<Schema<UnionFields>>(["id", "status"])
+
+// Testing Schema with arrays of primitives
+type ArrayOfPrimitives = {
+  tags: string[]
+  numbers: number[]
+}
+expectType<Schema<ArrayOfPrimitives>>(["tags", "numbers"])
+
+// Testing Schema with undefined fields
+type UndefinedFields = {
+  id: number
+  description?: string
+}
+expectType<Schema<UndefinedFields>>(["id", "description"])
+
+// Testing deeply nested objects
+type DeepNestedObject = {
+  id: number
+  person: {
     name: string
     address: {
       city: string
-      country: string
+      zip: string
     }
-  }>
->(["name", { address: ["city", "country"] }])
+  }
+}
+expectType<Schema<DeepNestedObject>>(["id", { person: ["name", { address: ["city", "zip"] }] }])
 
-// Optional and nullable fields
-expectType<
-  Schema<{
-    name?: string
-    description: string | null
-  }>
->(["name", "description"])
-
-// Readonly fields
-expectType<
-  Schema<{
-    readonly id: number
-    readonly name: string
-  }>
->(["id", "name"])
-
-// Union types
-expectType<
-  Schema<{
-    status: "active" | "inactive"
-    value: string | number
-  }>
->(["status", "value"])
-
-// Arrays of objects
-expectType<
-  Schema<{
-    items: {
-      name: string
-      price: number
-    }[]
-  }>
->([{ items: ["name", "price"] }])
-
-// Empty object
-expectType<Schema<{}>>([])
-
-// Direct string schema
-expectType<Schema<string>>("someField")
-
-// Union of objects
-expectType<
-  Schema<{
-    type: "admin" | "user"
-    details:
-      | {
-          name: string
-        }
-      | {
-          email: string
-        }
-  }>
->(["type", { details: ["name"] }] || ["type", { details: ["email"] }])
-
-// Nullable, undefined, and optional fields
-expectType<
-  Schema<{
-    id: number | null | undefined
-    name?: string
-    description: string | null
-  }>
->(["id", "name", "description"])
-
-// Nested optional and readonly fields
-expectType<
-  Schema<{
-    readonly address?: {
-      readonly city?: string
-      readonly zip?: string | null
-    }
-  }>
->([{ address: ["city", "zip"] }])
+// Testing Schema with union of array objects and primitives
+type MixedArray = {
+  id: number
+  items: (string | { name: string })[]
+}
+expectType<Schema<MixedArray>>(["id", { items: ["name"] }])

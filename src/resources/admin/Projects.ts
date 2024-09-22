@@ -312,7 +312,7 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     issueId: string,
     body: DeepPartial<Issue>,
-    params: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
+    params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
       ...new RequestBuilder(

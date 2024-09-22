@@ -104,7 +104,7 @@ export class IssuesApi extends ResourceApi {
   async updateIssue<TSchema extends IssueSchema>(
     issueId: string,
     body: DeepPartial<Issue>,
-    params: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
+    params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
       ...new RequestBuilder(`api/issues/${issueId}`, { fields, muteUpdateNotifications: "boolean" }, params).post(body),
@@ -213,7 +213,7 @@ export class IssuesApi extends ResourceApi {
    */
   async getActivitiesPage<TSchema extends ActivityCursorPageSchema>(
     issueId: string,
-    params: FieldsParam<TSchema> & {
+    params?: FieldsParam<TSchema> & {
       categories: string
       reverse?: boolean
       start?: string
