@@ -1,4 +1,4 @@
-import type { Schema, FieldsParam, Entity, DatabaseBackupSettings, BackupStatus } from "../../types"
+import type { Schema, FieldsParam, Entity, DatabaseBackupSettings, BackupStatus, DeepPartial } from "../../types"
 import { fields, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -34,7 +34,7 @@ export class DatabaseBackupSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated database backup settings.
    */
   async updateDatabaseBackupSettings<TSchema extends DatabaseBackupSettingsSchema>(
-    body: Partial<DatabaseBackupSettings>,
+    body: DeepPartial<DatabaseBackupSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<DatabaseBackupSettingsEntity<TSchema>> {
     return this.fetch<DatabaseBackupSettingsEntity<TSchema>>(

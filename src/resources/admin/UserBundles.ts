@@ -1,4 +1,4 @@
-import type { Schema, UserBundle, FieldsParam, Entity, ListParams, User, UserGroup } from "../../types"
+import type { Schema, UserBundle, FieldsParam, Entity, ListParams, User, UserGroup, DeepPartial } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -39,7 +39,7 @@ export class UserBundlesApi extends ResourceApi {
    * @returns A promise that resolves to the created user bundle.
    */
   async createUserBundle<TSchema extends UserBundleSchema>(
-    body: Partial<Omit<UserBundle, "id">>,
+    body: DeepPartial<UserBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
     return this.fetch<UserBundleEntity<TSchema>>(
@@ -73,7 +73,7 @@ export class UserBundlesApi extends ResourceApi {
    */
   async updateUserBundle<TSchema extends UserBundleSchema>(
     bundleId: string,
-    body: Partial<Omit<UserBundle, "id">>,
+    body: DeepPartial<UserBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
     return this.fetch<UserBundleEntity<TSchema>>(

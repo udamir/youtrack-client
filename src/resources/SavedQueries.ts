@@ -1,4 +1,4 @@
-import type { Entity, FieldsParam, ListParams, SavedQuery, Schema } from "../types"
+import type { DeepPartial, Entity, FieldsParam, ListParams, SavedQuery, Schema } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -32,7 +32,7 @@ export class SavedQueriesApi extends ResourceApi {
    * @returns The created saved search.
    */
   async createSavedQuery<TSchema extends SavedQuerySchema>(
-    body: { name: string; query: string } | Partial<Omit<SavedQuery, "id">>,
+    body: { name: string; query: string } | DeepPartial<SavedQuery>,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
     return this.fetch<SavedQueryEntity<TSchema>>(
@@ -64,7 +64,7 @@ export class SavedQueriesApi extends ResourceApi {
    */
   async updateSavedQuery<TSchema extends SavedQuerySchema>(
     queryId: string,
-    body: Partial<Omit<SavedQuery, "id">>,
+    body: DeepPartial<SavedQuery>,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
     return this.fetch<SavedQueryEntity<TSchema>>(

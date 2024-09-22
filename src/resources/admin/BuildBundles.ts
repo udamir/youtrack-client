@@ -1,4 +1,4 @@
-import type { Schema, BuildBundle, FieldsParam, Entity, ListParams, BuildBundleElement } from "../../types"
+import type { Schema, BuildBundle, FieldsParam, Entity, ListParams, BuildBundleElement, DeepPartial } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -38,7 +38,7 @@ export class BuildBundlesApi extends ResourceApi {
    * @returns A promise that resolves to the created BuildBundle entity.
    */
   async createBuildBundle<TSchema extends BuildBundleSchema>(
-    body: Partial<Omit<BuildBundle, "id">>,
+    body: DeepPartial<BuildBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
     return this.fetch<BuildBundleEntity<TSchema>>(
@@ -73,7 +73,7 @@ export class BuildBundlesApi extends ResourceApi {
    */
   async updateBuildBundle<TSchema extends BuildBundleSchema>(
     bundleId: string,
-    body: Partial<Omit<BuildBundle, "id">>,
+    body: DeepPartial<BuildBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
     return this.fetch<BuildBundleEntity<TSchema>>(
@@ -125,7 +125,7 @@ export class BuildBundlesApi extends ResourceApi {
    */
   async addBuildToBundle<TSchema extends BuildBundleElementSchema>(
     bundleId: string,
-    body: { name: string } & Partial<Omit<BuildBundleElement, "id">>,
+    body: { name: string } & DeepPartial<BuildBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
     return this.fetch<BuildBundleElementEntity<TSchema>>(
@@ -167,7 +167,7 @@ export class BuildBundlesApi extends ResourceApi {
   async updateBuildInBundle<TSchema extends BuildBundleElementSchema>(
     bundleId: string,
     elementId: string,
-    body: Partial<Omit<BuildBundleElement, "id">>,
+    body: DeepPartial<BuildBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
     return this.fetch<BuildBundleElementEntity<TSchema>>(

@@ -1,4 +1,13 @@
-import type { Entity, FieldsParam, ListParams, MuteUpdateNotificationsParam, Schema, Issue, IssueLink } from "../types"
+import type {
+  Entity,
+  FieldsParam,
+  ListParams,
+  MuteUpdateNotificationsParam,
+  Schema,
+  Issue,
+  IssueLink,
+  DeepPartial,
+} from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -85,7 +94,7 @@ export class IssueLinksApi extends ResourceApi {
   async linkIssue<TSchema extends IssueSchema>(
     issueId: string,
     linkId: string,
-    body: { linkedIssueId: string } & Partial<Omit<IssueLink, "id">>,
+    body: { linkedIssueId: string } & DeepPartial<IssueLink>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(

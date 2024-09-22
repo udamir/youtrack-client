@@ -6,6 +6,7 @@ import type {
   ListParams,
   WorkItemType,
   WorkTimeSettings,
+  DeepPartial,
 } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
@@ -65,7 +66,7 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
    * @requires permissions Low-level Admin Write or Update Project.
    */
   async createWorkItemType<TSchema extends WorkItemTypeSchema>(
-    body: { name: string } | Partial<Omit<WorkItemType, "id">>,
+    body: { name: string } | DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
     return this.fetch<WorkItemTypeEntity<TSchema>>(
@@ -101,7 +102,7 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
    */
   async updateWorkItemType<TSchema extends WorkItemTypeSchema>(
     typeId: string,
-    body: Partial<Omit<WorkItemType, "id">>,
+    body: DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
     return this.fetch<WorkItemTypeEntity<TSchema>>(
@@ -150,7 +151,7 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
    * @requires permissions Low-level Admin Write.
    */
   async updateWorkTimeSettings<TSchema extends WorkTimeSettingsSchema>(
-    body: Partial<Omit<WorkTimeSettings, "id">>,
+    body: DeepPartial<WorkTimeSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkTimeSettingsEntity<TSchema>> {
     return this.fetch<WorkTimeSettingsEntity<TSchema>>(

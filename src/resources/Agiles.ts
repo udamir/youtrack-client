@@ -1,4 +1,4 @@
-import type { Agile, Sprint, Entity, FieldsParam, ListParams, Schema } from "../types"
+import type { Agile, Sprint, Entity, FieldsParam, ListParams, Schema, DeepPartial } from "../types"
 import { RequestBuilder, fields } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -74,7 +74,7 @@ export class AgilesApi extends ResourceApi {
    */
   async updateAgile<TSchema extends AgileSchema>(
     agileId: string,
-    body: Partial<Omit<Agile, "id">>,
+    body: DeepPartial<Agile>,
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
     return this.fetch<AgileEntity<TSchema>>(
@@ -130,7 +130,7 @@ export class AgilesApi extends ResourceApi {
    */
   async createAgileSprint<TSchema extends SprintSchema>(
     agileId: string,
-    body: { name: string } | Partial<Omit<Sprint, "id">>, // Required field: name
+    body: { name: string } | DeepPartial<Sprint>, // Required field: name
     params?: FieldsParam<TSchema> & { muteUpdateNotifications?: boolean },
   ): Promise<SprintEntity<TSchema>> {
     return this.fetch<SprintEntity<TSchema>>(
@@ -190,7 +190,7 @@ export class AgilesApi extends ResourceApi {
   async updateAgileSprint<TSchema extends SprintSchema>(
     agileId: string,
     sprintId: string | "current",
-    body: Partial<Omit<Sprint, "id">>, // Body contains the updated sprint settings
+    body: DeepPartial<Sprint>, // Body contains the updated sprint settings
     params?: FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>> {
     return this.fetch<SprintEntity<TSchema>>(

@@ -1,4 +1,4 @@
-import type { Schema, FieldsParam, Entity, ListParams, EnumBundle, EnumBundleElement } from "../../types"
+import type { Schema, FieldsParam, Entity, ListParams, EnumBundle, EnumBundleElement, DeepPartial } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -37,7 +37,7 @@ export class EnumBundlesApi extends ResourceApi {
    * @returns A promise that resolves to the created EnumBundle entity.
    */
   async createEnumBundle<TSchema extends EnumBundleSchema>(
-    body: { name: string } | Partial<Omit<EnumBundle, "id">>,
+    body: { name: string } | DeepPartial<EnumBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
     return this.fetch<EnumBundleEntity<TSchema>>(
@@ -71,7 +71,7 @@ export class EnumBundlesApi extends ResourceApi {
    */
   async updateEnumBundle<TSchema extends EnumBundleSchema>(
     bundleID: string,
-    body: Partial<Omit<EnumBundle, "id">>,
+    body: DeepPartial<EnumBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
     return this.fetch<EnumBundleEntity<TSchema>>(
@@ -126,7 +126,7 @@ export class EnumBundlesApi extends ResourceApi {
    */
   async addEnumBundleValue<TSchema extends EnumBundleElementSchema>(
     bundleId: string,
-    body: { name: string } & Partial<Omit<EnumBundleElement, "id">>,
+    body: { name: string } & DeepPartial<EnumBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
     return this.fetch<EnumBundleElementEntity<TSchema>>(
@@ -170,7 +170,7 @@ export class EnumBundlesApi extends ResourceApi {
   async updateEnumBundleValue<TSchema extends EnumBundleElementSchema>(
     bundleId: string,
     elementId: string,
-    body: { name: string } & Partial<Omit<EnumBundleElement, "id">>,
+    body: { name: string } & DeepPartial<EnumBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
     return this.fetch<EnumBundleElementEntity<TSchema>>(

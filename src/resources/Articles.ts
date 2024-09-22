@@ -2,6 +2,7 @@ import type {
   Article,
   ArticleAttachment,
   ArticleComment,
+  DeepPartial,
   Entity,
   FieldsParam,
   ListParams,
@@ -91,7 +92,7 @@ export class ArticlesApi extends ResourceApi {
    */
   async updateArticle<TSchema extends ArticleSchema>(
     articleId: string,
-    body: Partial<Omit<Article, "id">>,
+    body: DeepPartial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleEntity<TSchema>> {
     return this.fetch<ArticleEntity<TSchema>>(
@@ -187,7 +188,7 @@ export class ArticlesApi extends ResourceApi {
   async updateArticleAttachment<TSchema extends ArticleAttachmentSchema>(
     articleId: string,
     attachmentId: string,
-    body: Partial<Omit<ArticleAttachment, "id">>,
+    body: DeepPartial<ArticleAttachment>,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleAttachmentEntity<TSchema>> {
     return this.fetch<ArticleAttachmentEntity<TSchema>>(
@@ -284,7 +285,7 @@ export class ArticlesApi extends ResourceApi {
   async updateChildArticle<TSchema extends ArticleSchema>(
     articleId: string,
     subArticleId: string,
-    body: Partial<Omit<Article, "id">>,
+    body: DeepPartial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleEntity<TSchema>> {
     return this.fetch<ArticleEntity<TSchema>>(
@@ -346,7 +347,7 @@ export class ArticlesApi extends ResourceApi {
    */
   async createArticleComment<TSchema extends ArticleCommentSchema>(
     articleId: string,
-    body: { text: string } | Partial<Omit<ArticleComment, "id">>,
+    body: { text: string } | DeepPartial<ArticleComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<ArticleCommentEntity<TSchema>> {
     return this.fetch<ArticleCommentEntity<TSchema>>(
@@ -387,7 +388,7 @@ export class ArticlesApi extends ResourceApi {
   async updateArticleComment<TSchema extends ArticleCommentSchema>(
     articleId: string,
     commentId: string,
-    body: { text: string } | Partial<Omit<ArticleComment, "id">>,
+    body: { text: string } | DeepPartial<ArticleComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleCommentEntity<TSchema>> {
     return this.fetch<ArticleCommentEntity<TSchema>>(
@@ -450,7 +451,7 @@ export class ArticlesApi extends ResourceApi {
   async createCommentReaction<TSchema extends ReactionSchema>(
     articleId: string,
     commentId: string,
-    body: { reaction: string } | Partial<Omit<Reaction, "id">>,
+    body: { reaction: string } | DeepPartial<Reaction>,
     params?: FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>> {
     return this.fetch<ReactionEntity<TSchema>>(
@@ -549,7 +550,7 @@ export class ArticlesApi extends ResourceApi {
    */
   async createArticleTag<TSchema extends TagSchema>(
     articleId: string,
-    body: { id: string } | Partial<Omit<Tag, "id">>,
+    body: { id: string } | DeepPartial<Tag>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
     return this.fetch<TagEntity<TSchema>>(

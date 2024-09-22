@@ -7,6 +7,7 @@ import type {
   FieldType,
   CustomFieldDefaults,
   ProjectCustomField,
+  DeepPartial,
 } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
@@ -53,7 +54,7 @@ export class CustomFieldsApi extends ResourceApi {
     body: {
       name: string
       fieldType: FieldType
-    } & Partial<Omit<CustomField, "id">>,
+    } & DeepPartial<CustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
     return this.fetch<CustomFieldEntity<TSchema>>(
@@ -87,7 +88,7 @@ export class CustomFieldsApi extends ResourceApi {
    */
   async updateCustomField<TSchema extends CustomFieldSchema>(
     fieldId: string,
-    body: Partial<Omit<CustomField, "id">>,
+    body: DeepPartial<CustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
     return this.fetch<CustomFieldEntity<TSchema>>(
@@ -161,7 +162,7 @@ export class CustomFieldsApi extends ResourceApi {
    */
   async updateCustomFieldDefaults<TSchema extends CustomFieldDefaultsSchema>(
     fieldId: string,
-    body: Partial<Omit<CustomFieldDefaults, "id">>,
+    body: DeepPartial<CustomFieldDefaults>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldDefaultsEntity<TSchema>> {
     return this.fetch<CustomFieldDefaultsEntity<TSchema>>(

@@ -6,6 +6,7 @@ import type {
   Reaction,
   Schema,
   IssueComment,
+  DeepPartial,
 } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
@@ -55,7 +56,7 @@ export class IssueCommentsApi extends ResourceApi {
    */
   async createIssueComment<TSchema extends IssueCommentSchema>(
     issueId: string,
-    body: { text: string } & Partial<Omit<IssueComment, "id">>,
+    body: { text: string } & DeepPartial<IssueComment>,
     params?: FieldsParam<TSchema> &
       MuteUpdateNotificationsParam & {
         draftId?: string
@@ -100,7 +101,7 @@ export class IssueCommentsApi extends ResourceApi {
   async updateIssueComment<TSchema extends IssueCommentSchema>(
     issueId: string,
     commentId: string,
-    body: Partial<Omit<IssueComment, "id">>,
+    body: DeepPartial<IssueComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueCommentEntity<TSchema>> {
     return this.fetch<IssueCommentEntity<TSchema>>(

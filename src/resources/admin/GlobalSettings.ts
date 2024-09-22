@@ -9,6 +9,7 @@ import type {
   NotificationSettings,
   RestCorsSettings,
   SystemSettings,
+  DeepPartial,
 } from "../../types"
 import { fields, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
@@ -52,7 +53,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated global settings.
    */
   async updateGlobalSettings<TSchema extends GlobalSettingsSchema>(
-    body: Partial<GlobalSettingsEntity<TSchema>>,
+    body: DeepPartial<GlobalSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<GlobalSettingsEntity<TSchema>> {
     return this.fetch<GlobalSettingsEntity<TSchema>>(
@@ -82,7 +83,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated visual settings.
    */
   async updateAppearanceSettings<TSchema extends AppearanceSettingsSchema>(
-    body: Partial<Omit<AppearanceSettings, "id">>,
+    body: DeepPartial<AppearanceSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<AppearanceSettingsEntity<TSchema>> {
     return this.fetch<AppearanceSettingsEntity<TSchema>>(
@@ -110,7 +111,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated license settings.
    */
   async updateLicense<TSchema extends LicenseSchema>(
-    body: Partial<Omit<License, "id">>,
+    body: DeepPartial<License>,
     params?: FieldsParam<TSchema>,
   ): Promise<LicenseEntity<TSchema>> {
     return this.fetch<LicenseEntity<TSchema>>(
@@ -140,7 +141,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated locale settings.
    */
   async updateLocaleSettings<TSchema extends LocaleSettingsSchema>(
-    body: Partial<Omit<LocaleSettings, "id">>,
+    body: DeepPartial<LocaleSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<LocaleSettingsEntity<TSchema>> {
     return this.fetch<LocaleSettingsEntity<TSchema>>(
@@ -170,7 +171,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated notification settings.
    */
   async updateNotificationSettings<TSchema extends NotificationSettingsSchema>(
-    body: Partial<Omit<NotificationSettings, "id">>,
+    body: DeepPartial<NotificationSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationSettingsEntity<TSchema>> {
     return this.fetch<NotificationSettingsEntity<TSchema>>(
@@ -200,7 +201,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated RestCors settings.
    */
   async updateRestSettings<TSchema extends RestCorsSettingsSchema>(
-    body: Partial<Omit<RestCorsSettings, "id">>,
+    body: DeepPartial<RestCorsSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<RestCorsSettingsEntity<TSchema>> {
     return this.fetch<RestCorsSettingsEntity<TSchema>>(
@@ -230,7 +231,7 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the updated System settings.
    */
   async updateSystemSettings<TSchema extends SystemSettingsSchema>(
-    body: Partial<Omit<SystemSettings, "id">>,
+    body: DeepPartial<SystemSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<SystemSettingsEntity<TSchema>> {
     return this.fetch<SystemSettingsEntity<TSchema>>(

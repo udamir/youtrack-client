@@ -1,4 +1,4 @@
-import type { Entity, FieldsParam, IssueLinkType, ListParams, Schema } from "../types"
+import type { DeepPartial, Entity, FieldsParam, IssueLinkType, ListParams, Schema } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -32,7 +32,7 @@ export class IssueLinkTypesApi extends ResourceApi {
    * @returns The created issue link type.
    */
   async createIssueLinkType<TSchema extends IssueLinkTypeSchema>(
-    body: { name: string; targetToSource: string; sourceToTarget: string } | Partial<Omit<IssueLinkType, "id">>,
+    body: { name: string; targetToSource: string; sourceToTarget: string } | DeepPartial<IssueLinkType>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(
@@ -64,7 +64,7 @@ export class IssueLinkTypesApi extends ResourceApi {
    */
   async updateIssueLinkType<TSchema extends IssueLinkTypeSchema>(
     typeId: string,
-    body: Partial<Omit<IssueLinkType, "id">>,
+    body: DeepPartial<IssueLinkType>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
     return this.fetch<IssueLinkTypeEntity<TSchema>>(

@@ -9,6 +9,7 @@ import type {
   ListParams,
   Schema,
   Tag,
+  DeepPartial,
 } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
@@ -104,7 +105,7 @@ export class UsersApi extends ResourceApi {
    */
   async updateUserGeneralProfile<TSchema extends GeneralUserProfileSchema>(
     userID: string,
-    data: Partial<Omit<GeneralUserProfile, "id">>,
+    data: DeepPartial<GeneralUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
     return this.fetch<GeneralUserProfileEntity<TSchema>>(
@@ -144,7 +145,7 @@ export class UsersApi extends ResourceApi {
   async updateUserNotificationProfile<TSchema extends NotificationsUserProfileSchema>(
     userId: string,
     profileId: string,
-    body: Partial<Omit<NotificationsUserProfile, "id">>,
+    body: DeepPartial<NotificationsUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.fetch<NotificationsUserProfileEntity<TSchema>>(
@@ -180,7 +181,7 @@ export class UsersApi extends ResourceApi {
    */
   async updateUserTimeTrackingProfile<TSchema extends TimeTrackingUserProfileSchema>(
     userId: string,
-    data: Partial<Omit<TimeTrackingUserProfile, "id">>,
+    data: DeepPartial<TimeTrackingUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
     return this.fetch<TimeTrackingUserProfileEntity<TSchema>>(

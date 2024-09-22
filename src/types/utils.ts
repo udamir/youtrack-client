@@ -34,7 +34,7 @@ import type { EntityBase } from "./entities"
  */
 
 type Primitive = string | number | boolean | symbol | bigint | null | undefined
-type FilterPrimitive<T> = T extends Primitive ? T : never;
+type FilterPrimitive<T> = T extends Primitive ? T : never
 
 type SchemaItem<T, K> = T extends Primitive
   ? ToString<K> // For primitive fields, return the key as string
@@ -131,9 +131,7 @@ type FilterNested<F extends FieldsSchema> = MergeType<
 
 // Handle flat fields (string) and check if K exists in T
 type FilterStringFields<T, F extends Record<string, string>> = {
-  [K in keyof F]: K extends keyof T 
-  ? FilterPrimitive<T[K]>
-  : T extends { [Q in K]: infer U } ? U : never
+  [K in keyof F]: K extends keyof T ? FilterPrimitive<T[K]> : T extends { [Q in K]: infer U } ? U : never
 }
 
 // Handle nested fields (object)
@@ -192,3 +190,7 @@ export type Entity<T, TSchema> = TSchema extends undefined
       : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]
+
+export type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K]
+}

@@ -11,6 +11,7 @@ import type {
   MuteUpdateNotificationsParam,
   ProjectTimeTrackingSettings,
   WorkItemType,
+  DeepPartial,
 } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
@@ -58,7 +59,7 @@ export class ProjectsApi extends ResourceApi {
    * @returns A promise that resolves to the created Project entity.
    */
   async createProject<TSchema extends ProjectSchema>(
-    body: { name: string; shortName: string; leader: { id: string } } & Partial<Omit<Project, "id">>,
+    body: { name: string; shortName: string; leader: { id: string } } & DeepPartial<Project>,
     params?: FieldsParam<TSchema> & { template?: string },
   ): Promise<ProjectEntity<TSchema>> {
     return this.fetch<ProjectEntity<TSchema>>(
@@ -92,7 +93,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async updateProject<TSchema extends ProjectSchema>(
     projectId: string,
-    body: Partial<Omit<Project, "id">>,
+    body: DeepPartial<Project>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectEntity<TSchema>> {
     return this.fetch<ProjectEntity<TSchema>>(
@@ -170,7 +171,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async addCustomFieldToProject<TSchema extends ProjectCustomFieldSchema>(
     projectId: string,
-    body: { field: { id: string } } & Partial<Omit<ProjectCustomField, "id">>,
+    body: { field: { id: string } } & DeepPartial<ProjectCustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
     return this.fetch<ProjectCustomFieldEntity<TSchema>>(
@@ -208,7 +209,7 @@ export class ProjectsApi extends ResourceApi {
   async updateProjectCustomField<TSchema extends ProjectCustomFieldSchema>(
     projectId: string,
     fieldId: string,
-    body: Partial<Omit<ProjectCustomField, "id">>,
+    body: DeepPartial<ProjectCustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
     return this.fetch<ProjectCustomFieldEntity<TSchema>>(
@@ -271,7 +272,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async createProjectIssue<TSchema extends IssueSchema>(
     projectId: string,
-    body: { summary: string } & Partial<Omit<Issue, "id">>,
+    body: { summary: string } & DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
@@ -310,7 +311,7 @@ export class ProjectsApi extends ResourceApi {
   async updateProjectIssue<TSchema extends IssueSchema>(
     projectId: string,
     issueId: string,
-    body: Partial<Omit<Issue, "id">>,
+    body: DeepPartial<Issue>,
     params: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
@@ -364,7 +365,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async updateProjectTimeTrackingSettings<TSchema extends ProjectTimeTrackingSettingsSchema>(
     projectId: string,
-    body: Partial<Omit<ProjectTimeTrackingSettings, "id">>,
+    body: DeepPartial<ProjectTimeTrackingSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectTimeTrackingSettingsEntity<TSchema>> {
     return this.fetch<ProjectTimeTrackingSettingsEntity<TSchema>>(
@@ -405,7 +406,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async addProjectWorkItemType<TSchema extends WorkItemTypeSchema>(
     projectId: string,
-    body: { duration: number } & Partial<Omit<WorkItemType, "id">>,
+    body: { duration: number } & DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<WorkItemTypeEntity<TSchema>> {
     return this.fetch<WorkItemTypeEntity<TSchema>>(

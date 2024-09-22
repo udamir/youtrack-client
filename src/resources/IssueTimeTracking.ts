@@ -6,6 +6,7 @@ import type {
   MuteUpdateNotificationsParam,
   Schema,
   IssueTimeTracking,
+  DeepPartial,
 } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
@@ -75,7 +76,7 @@ export class IssueTimeTrackingApi extends ResourceApi {
    */
   async createIssueWorkItem<TSchema extends IssueWorkItemSchema>(
     issueId: string,
-    body: { duration: number } & Partial<Omit<IssueWorkItem, "id">>,
+    body: { duration: number } & DeepPartial<IssueWorkItem>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
     return this.fetch<IssueWorkItemEntity<TSchema>>(
@@ -121,7 +122,7 @@ export class IssueTimeTrackingApi extends ResourceApi {
   async updateWorkItem<TSchema extends IssueWorkItemSchema>(
     issueId: string,
     workItemId: string,
-    body: Partial<IssueWorkItem>,
+    body: DeepPartial<IssueWorkItem>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
     return this.fetch<IssueWorkItemEntity<TSchema>>(

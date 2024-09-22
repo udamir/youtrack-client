@@ -1,4 +1,12 @@
-import type { Entity, FieldsParam, ListParams, MuteUpdateNotificationsParam, Schema, IssueAttachment } from "../types"
+import type {
+  Entity,
+  FieldsParam,
+  ListParams,
+  MuteUpdateNotificationsParam,
+  Schema,
+  IssueAttachment,
+  DeepPartial,
+} from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -84,7 +92,7 @@ export class IssueAttechmentsApi extends ResourceApi {
   async updateIssueAttachment<TSchema extends IssueAttachmentSchema>(
     issueId: string,
     attachmentId: string,
-    body: Partial<Omit<IssueAttachment, "id">>,
+    body: DeepPartial<IssueAttachment>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueAttachmentEntity<TSchema>> {
     return this.fetch<IssueAttachmentEntity<TSchema>>(

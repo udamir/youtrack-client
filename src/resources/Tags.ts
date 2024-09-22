@@ -1,4 +1,14 @@
-import type { Tag, Entity, FieldsParam, Issue, ListParams, QueryParam, Schema, CustomFieldsParam } from "../types"
+import type {
+  Tag,
+  Entity,
+  FieldsParam,
+  Issue,
+  ListParams,
+  QueryParam,
+  Schema,
+  CustomFieldsParam,
+  DeepPartial,
+} from "../types"
 import { fields, RequestBuilder, queryParams } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -52,7 +62,7 @@ export class TagsApi extends ResourceApi {
    * @returns The newly created tag.
    */
   async createTag<TSchema extends TagSchema>(
-    body: Partial<Omit<Tag, "id">>,
+    body: DeepPartial<Tag>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
     return this.fetch<TagEntity<TSchema>>(...new RequestBuilder("api/tags", { fields }, params).post(body))
@@ -68,7 +78,7 @@ export class TagsApi extends ResourceApi {
    */
   async updateTag<TSchema extends TagSchema>(
     tagId: string,
-    body: Partial<Omit<Tag, "id">>,
+    body: DeepPartial<Tag>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
     return this.fetch<TagEntity<TSchema>>(...new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).post(body))

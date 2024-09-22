@@ -1,4 +1,4 @@
-import type { Schema, OwnedBundle, FieldsParam, Entity, ListParams, OwnedBundleElement } from "../../types"
+import type { Schema, OwnedBundle, FieldsParam, Entity, ListParams, OwnedBundleElement, DeepPartial } from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -37,7 +37,7 @@ export class OwnedBundlesApi extends ResourceApi {
    * @returns A promise that resolves to the created owned bundle.
    */
   async createOwnedBundle<TSchema extends OwnedBundleSchema>(
-    body: Partial<Omit<OwnedBundle, "id">>,
+    body: DeepPartial<OwnedBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
     return this.fetch<OwnedBundleEntity<TSchema>>(
@@ -71,7 +71,7 @@ export class OwnedBundlesApi extends ResourceApi {
    */
   async updateOwnedBundle<TSchema extends OwnedBundleSchema>(
     bundleId: string,
-    body: Partial<Omit<OwnedBundle, "id">>,
+    body: DeepPartial<OwnedBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
     return this.fetch<OwnedBundleEntity<TSchema>>(
@@ -127,7 +127,7 @@ export class OwnedBundlesApi extends ResourceApi {
    */
   async addOwnedToBundle<TSchema extends OwnedBundleElementSchema>(
     bundleId: string,
-    body: { name: string } & Partial<Omit<OwnedBundleElement, "id">>,
+    body: { name: string } & DeepPartial<OwnedBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleElementEntity<TSchema>> {
     return this.fetch<OwnedBundleElementEntity<TSchema>>(
@@ -149,7 +149,7 @@ export class OwnedBundlesApi extends ResourceApi {
   async updateOwnedBundleValue<TSchema extends OwnedBundleElementSchema>(
     bundleId: string,
     elementId: string,
-    body: Partial<Omit<OwnedBundleElement, "id">>,
+    body: DeepPartial<OwnedBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleElementEntity<TSchema>> {
     return this.fetch<OwnedBundleElementEntity<TSchema>>(

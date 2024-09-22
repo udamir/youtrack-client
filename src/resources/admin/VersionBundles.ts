@@ -1,4 +1,12 @@
-import type { Schema, VersionBundle, FieldsParam, Entity, ListParams, VersionBundleElement } from "../../types"
+import type {
+  Schema,
+  VersionBundle,
+  FieldsParam,
+  Entity,
+  ListParams,
+  VersionBundleElement,
+  DeepPartial,
+} from "../../types"
 import { fields, queryParams, RequestBuilder } from "../../utils"
 import { ResourceApi } from "../common"
 
@@ -37,7 +45,7 @@ export class VersionBundlesApi extends ResourceApi {
    * @returns A promise that resolves to the created version bundle.
    */
   async createVersionBundle<TSchema extends VersionBundleSchema>(
-    body: Partial<Omit<VersionBundle, "id">>,
+    body: DeepPartial<VersionBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
     return this.fetch<VersionBundleEntity<TSchema>>(
@@ -71,7 +79,7 @@ export class VersionBundlesApi extends ResourceApi {
    */
   async updateVersionBundle<TSchema extends VersionBundleSchema>(
     bundleId: string,
-    body: Partial<Omit<VersionBundle, "id">>,
+    body: DeepPartial<VersionBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
     return this.fetch<VersionBundleEntity<TSchema>>(
@@ -127,7 +135,7 @@ export class VersionBundlesApi extends ResourceApi {
    */
   async addVersionToBundle<TSchema extends VersionBundleElementSchema>(
     bundleId: string,
-    body: { name: string } & Partial<Omit<VersionBundleElement, "id">>,
+    body: { name: string } & DeepPartial<VersionBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleElementEntity<TSchema>> {
     return this.fetch<VersionBundleElementEntity<TSchema>>(
@@ -151,7 +159,7 @@ export class VersionBundlesApi extends ResourceApi {
   async updateVersionBundleValue<TSchema extends VersionBundleElementSchema>(
     bundleId: string,
     elementId: string,
-    body: Partial<Omit<VersionBundleElement, "id">>,
+    body: DeepPartial<VersionBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleElementEntity<TSchema>> {
     return this.fetch<VersionBundleElementEntity<TSchema>>(

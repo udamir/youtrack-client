@@ -13,6 +13,7 @@ import type {
   Issue,
   IssueCountResponse,
   IssueCustomField,
+  DeepPartial,
 } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
@@ -68,7 +69,7 @@ export class IssuesApi extends ResourceApi {
    * @returns The created issue.
    */
   async createIssue<TSchema extends IssueSchema>(
-    body: { summary: string; project: string } & Partial<Omit<Issue, "id">>,
+    body: { summary: string; project: string } & DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
@@ -102,7 +103,7 @@ export class IssuesApi extends ResourceApi {
    */
   async updateIssue<TSchema extends IssueSchema>(
     issueId: string,
-    body: Partial<Omit<Issue, "id">>,
+    body: DeepPartial<Issue>,
     params: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
     return this.fetch<IssueEntity<TSchema>>(
@@ -281,7 +282,7 @@ export class IssuesApi extends ResourceApi {
   async updateIssueCustomField<TSchema extends IssueCustomFieldSchema>(
     issueId: string,
     fieldId: string,
-    body: Partial<Omit<IssueCustomField, "id">>,
+    body: DeepPartial<IssueCustomField>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueCustomFieldEntity<TSchema>> {
     return this.fetch<IssueCustomFieldEntity<TSchema>>(

@@ -1,4 +1,4 @@
-import type { CommandList, Entity, FieldsParam, MuteUpdateNotificationsParam, Schema } from "../types"
+import type { CommandList, DeepPartial, Entity, FieldsParam, MuteUpdateNotificationsParam, Schema } from "../types"
 import { fields, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -18,7 +18,7 @@ export class CommandsApi extends ResourceApi {
    * @returns The result of the command application.
    */
   async applyCommandToIssues<TSchema extends CommandListSchema>(
-    body: Partial<Omit<CommandList, "id">>,
+    body: DeepPartial<CommandList>,
     params?: FieldsParam<TSchema> | MuteUpdateNotificationsParam,
   ): Promise<CommandListEntity<TSchema>> {
     return this.fetch<CommandListEntity<TSchema>>(
@@ -33,7 +33,7 @@ export class CommandsApi extends ResourceApi {
    * @returns A list of command suggestions based on the specified query.
    */
   async getCommandSuggestions<TSchema extends CommandListSchema>(
-    body: Partial<Omit<CommandList, "id">>,
+    body: DeepPartial<CommandList>,
     params?: FieldsParam<TSchema>,
   ): Promise<CommandListEntity<TSchema>> {
     return this.fetch<CommandListEntity<TSchema>>(
