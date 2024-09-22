@@ -1,4 +1,29 @@
-import { buildUri, createParamsMap, fields, stringParam, queryParams, customField } from "../src/utils"
+import { buildUri, createParamsMap, fields, stringParam, queryParams, customField, encodeBody } from "../src/utils"
+
+describe('encodeBody', () => {
+  it('should return FormData unchanged if provided', () => {
+    const formData = new FormData();
+    formData.append('key', 'value');
+    
+    expect(encodeBody(formData)).toBe(formData);
+  });
+
+  it('should return JSON string if object is provided', () => {
+    const obj = { key: 'value' };
+    
+    expect(encodeBody(obj)).toBe(JSON.stringify(obj));
+  });
+
+  it('should return the original string if a string is provided', () => {
+    const str = 'test';
+    
+    expect(encodeBody(str)).toBe(str);
+  });
+
+  it('should return undefined if undefined is provided', () => {
+    expect(encodeBody(undefined)).toBeUndefined();
+  });
+});
 
 describe("buildUri", () => {
   it("should build a URI with path parameters", () => {

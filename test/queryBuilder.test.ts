@@ -38,7 +38,7 @@ describe("RequestBuilder test", () => {
     const params = { search: "test", limit: 10 }
     const rb = new RequestBuilder(baseUrl, builders, params)
     const body = { name: "new item" }
-    expect(rb.post(body)).toEqual([`${baseUrl}?search=test&limit=10`, { method: "POST", body: JSON.stringify(body) }])
+    expect(rb.post(body)).toEqual([`${baseUrl}?search=test&limit=10`, { method: "POST", body }])
   })
 
   it("should return POST request with FormData body", () => {
@@ -48,7 +48,7 @@ describe("RequestBuilder test", () => {
     formData.append("file", new Blob(["file content"]), "file.txt")
     expect(rb.postFile(formData)).toEqual([
       `${baseUrl}?search=test`,
-      { method: "POST", body: formData, "Content-Type": "multipart/form-data" },
+      { method: "POST", body: formData, headers: {"Content-Type": "multipart/form-data"} },
     ])
   })
 
