@@ -40,8 +40,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getGlobalSettings<TSchema extends GlobalSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<GlobalSettingsEntity<TSchema>> {
-    return this.fetch<GlobalSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings", { fields }, params).get(),
+    return this.youtrack.fetch<GlobalSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings", { fields }, params).get(),
     )
   }
 
@@ -56,8 +56,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<GlobalSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<GlobalSettingsEntity<TSchema>> {
-    return this.fetch<GlobalSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<GlobalSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings", { fields }, params).post(body),
     )
   }
 
@@ -70,8 +70,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getAppearanceSettings<TSchema extends AppearanceSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<AppearanceSettingsEntity<TSchema>> {
-    return this.fetch<AppearanceSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/appearanceSettings", { fields }, params).get(),
+    return this.youtrack.fetch<AppearanceSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/appearanceSettings", { fields }, params).get(),
     )
   }
 
@@ -86,8 +86,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<AppearanceSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<AppearanceSettingsEntity<TSchema>> {
-    return this.fetch<AppearanceSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/appearanceSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<AppearanceSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/appearanceSettings", { fields }, params).post(body),
     )
   }
 
@@ -98,8 +98,8 @@ export class GlobalSettingsApi extends ResourceApi {
    * @returns A promise that resolves to the current license settings.
    */
   async getLicense<TSchema extends LicenseSchema>(params?: FieldsParam<TSchema>): Promise<LicenseEntity<TSchema>> {
-    return this.fetch<LicenseEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/license", { fields }, params).get(),
+    return this.youtrack.fetch<LicenseEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/license", { fields }, params).get(),
     )
   }
 
@@ -114,8 +114,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<License>,
     params?: FieldsParam<TSchema>,
   ): Promise<LicenseEntity<TSchema>> {
-    return this.fetch<LicenseEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/license", { fields }, params).post(body),
+    return this.youtrack.fetch<LicenseEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/license", { fields }, params).post(body),
     )
   }
 
@@ -128,8 +128,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getLocaleSettings<TSchema extends LocaleSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<LocaleSettingsEntity<TSchema>> {
-    return this.fetch<LocaleSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/localeSettings", { fields }, params).get(),
+    return this.youtrack.fetch<LocaleSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/localeSettings", { fields }, params).get(),
     )
   }
 
@@ -144,8 +144,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<LocaleSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<LocaleSettingsEntity<TSchema>> {
-    return this.fetch<LocaleSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/localeSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<LocaleSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/localeSettings", { fields }, params).post(body),
     )
   }
 
@@ -158,8 +158,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getNotificationSettings<TSchema extends NotificationSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationSettingsEntity<TSchema>> {
-    return this.fetch<NotificationSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/notificationSettings", { fields }, params).get(),
+    return this.youtrack.fetch<NotificationSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/notificationSettings", { fields }, params).get(),
     )
   }
 
@@ -174,8 +174,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<NotificationSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationSettingsEntity<TSchema>> {
-    return this.fetch<NotificationSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/notificationSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<NotificationSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/notificationSettings", { fields }, params).post(body),
     )
   }
 
@@ -188,8 +188,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getRestSettings<TSchema extends RestCorsSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<RestCorsSettingsEntity<TSchema>> {
-    return this.fetch<RestCorsSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/restSettings", { fields }, params).get(),
+    return this.youtrack.fetch<RestCorsSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/restSettings", { fields }, params).get(),
     )
   }
 
@@ -204,8 +204,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<RestCorsSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<RestCorsSettingsEntity<TSchema>> {
-    return this.fetch<RestCorsSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/restSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<RestCorsSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/restSettings", { fields }, params).post(body),
     )
   }
 
@@ -218,8 +218,8 @@ export class GlobalSettingsApi extends ResourceApi {
   async getSystemSettings<TSchema extends SystemSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<SystemSettingsEntity<TSchema>> {
-    return this.fetch<SystemSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/systemSettings", { fields }, params).get(),
+    return this.youtrack.fetch<SystemSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/systemSettings", { fields }, params).get(),
     )
   }
 
@@ -234,8 +234,8 @@ export class GlobalSettingsApi extends ResourceApi {
     body: DeepPartial<SystemSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<SystemSettingsEntity<TSchema>> {
-    return this.fetch<SystemSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/globalSettings/systemSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<SystemSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/globalSettings/systemSettings", { fields }, params).post(body),
     )
   }
 }

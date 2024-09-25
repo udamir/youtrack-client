@@ -32,8 +32,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
   async getGlobalTimeTrackingSettings<TSchema extends TimeTrackingSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingSettingsEntity<TSchema>> {
-    return this.fetch<TimeTrackingSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/timeTrackingSettings", { fields }, params).get(),
+    return this.youtrack.fetch<TimeTrackingSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/timeTrackingSettings", { fields }, params).get(),
     )
   }
 
@@ -48,8 +48,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
   async getWorkItemTypes<TSchema extends WorkItemTypeSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<Array<WorkItemTypeEntity<TSchema>>> {
-    return this.fetch<Array<WorkItemTypeEntity<TSchema>>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<Array<WorkItemTypeEntity<TSchema>>>(
+      new RequestBuilder(
         "api/admin/timeTrackingSettings/workItemTypes",
         { fields, ...queryParams("$skip", "$top") },
         params,
@@ -69,8 +69,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
     body: { name: string } | DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/timeTrackingSettings/workItemTypes", { fields }, params).post(body),
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder("api/admin/timeTrackingSettings/workItemTypes", { fields }, params).post(body),
     )
   }
 
@@ -86,8 +86,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
     typeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).get(),
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).get(),
     )
   }
 
@@ -105,8 +105,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
     body: DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).post(body),
     )
   }
 
@@ -122,8 +122,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
     typeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(`api/admin/timeTrackingSettings/workItemTypes/${typeId}`, { fields }, params).delete(),
     )
   }
 
@@ -137,8 +137,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
   async getWorkTimeSettings<TSchema extends WorkTimeSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<WorkTimeSettingsEntity<TSchema>> {
-    return this.fetch<WorkTimeSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/timeTrackingSettings/workTimeSettings", { fields }, params).get(),
+    return this.youtrack.fetch<WorkTimeSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/timeTrackingSettings/workTimeSettings", { fields }, params).get(),
     )
   }
 
@@ -154,8 +154,8 @@ export class GlobalTimeTrackingSettingsApi extends ResourceApi {
     body: DeepPartial<WorkTimeSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkTimeSettingsEntity<TSchema>> {
-    return this.fetch<WorkTimeSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/timeTrackingSettings/workTimeSettings", { fields }, params).post(body),
+    return this.youtrack.fetch<WorkTimeSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/timeTrackingSettings/workTimeSettings", { fields }, params).post(body),
     )
   }
 }

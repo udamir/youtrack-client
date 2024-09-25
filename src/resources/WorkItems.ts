@@ -45,8 +45,8 @@ export class WorkItemsApi extends ResourceApi {
         creator?: string
       },
   ): Promise<WorkItemEntity<TSchema>[]> {
-    return this.fetch<WorkItemEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<WorkItemEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/workItems",
         {
           fields,
@@ -81,8 +81,8 @@ export class WorkItemsApi extends ResourceApi {
     itemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemEntity<TSchema>> {
-    return this.fetch<WorkItemEntity<TSchema>>(
-      ...new RequestBuilder(`api/workItems/${itemId}`, { fields }, params).get(),
+    return this.youtrack.fetch<WorkItemEntity<TSchema>>(
+      new RequestBuilder(`api/workItems/${itemId}`, { fields }, params).get(),
     )
   }
 }

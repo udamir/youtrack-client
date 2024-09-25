@@ -21,8 +21,8 @@ export class DatabaseBackupSettingsApi extends ResourceApi {
   async getDatabaseBackupSettings<TSchema extends DatabaseBackupSettingsSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<DatabaseBackupSettingsEntity<TSchema>> {
-    return this.fetch<DatabaseBackupSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/databaseBackup/settings", { fields }, params).get(),
+    return this.youtrack.fetch<DatabaseBackupSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/databaseBackup/settings", { fields }, params).get(),
     )
   }
 
@@ -37,8 +37,8 @@ export class DatabaseBackupSettingsApi extends ResourceApi {
     body: DeepPartial<DatabaseBackupSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<DatabaseBackupSettingsEntity<TSchema>> {
-    return this.fetch<DatabaseBackupSettingsEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/databaseBackup/settings", { fields: fields }, params).post(body),
+    return this.youtrack.fetch<DatabaseBackupSettingsEntity<TSchema>>(
+      new RequestBuilder("api/admin/databaseBackup/settings", { fields: fields }, params).post(body),
     )
   }
 
@@ -51,8 +51,8 @@ export class DatabaseBackupSettingsApi extends ResourceApi {
   async getBackupStatus<TSchema extends BackupStatusSchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<BackupStatusEntity<TSchema>> {
-    return this.fetch<BackupStatusEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/databaseBackup/settings/backupStatus", { fields }, params).get(),
+    return this.youtrack.fetch<BackupStatusEntity<TSchema>>(
+      new RequestBuilder("api/admin/databaseBackup/settings/backupStatus", { fields }, params).get(),
     )
   }
 }

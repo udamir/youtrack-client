@@ -1,8 +1,12 @@
-export type FetchApiConfig = {
-  method?: "POST" | "GET" | "PATCH" | "PUT" | "DELETE"
+export type HttpMethod = "GET" | "DELETE" | "HEAD" | "OPTIONS" | "POST" | "PUT" | "PATCH" | "PURGE" | "LINK" | "UNLINK"
+
+// Fetch compatible config
+export type FetchConfig = {
+  url: string
+  method?: HttpMethod
   headers?: Record<string, string>
-  body?: string | object | FormData
+  data?: object | FormData
   [key: string]: unknown
 }
 
-export type FetchApi = <T>(url: string, config?: FetchApiConfig) => Promise<T>
+export type FetchFunc = <T>(config: FetchConfig) => Promise<T>

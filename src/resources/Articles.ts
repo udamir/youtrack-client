@@ -41,8 +41,8 @@ export class ArticlesApi extends ResourceApi {
   async getArticles<TSchema extends ArticleSchema>(
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>[]> {
-    return this.fetch<ArticleEntity<TSchema>[]>(
-      ...new RequestBuilder("api/articles", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>[]>(
+      new RequestBuilder("api/articles", { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -58,12 +58,10 @@ export class ArticlesApi extends ResourceApi {
     body: { id: string } | Partial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(
-        "api/articles",
-        { fields, ...queryParams("muteUpdateNotifications", "draftId") },
-        params,
-      ).post(body),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder("api/articles", { fields, ...queryParams("muteUpdateNotifications", "draftId") }, params).post(
+        body,
+      ),
     )
   }
 
@@ -77,8 +75,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}`, { fields }, params).get(),
     )
   }
 
@@ -95,10 +93,8 @@ export class ArticlesApi extends ResourceApi {
     body: DeepPartial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}`, { fields, muteUpdateNotifications: "string" }, params).post(
-        body,
-      ),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}`, { fields, muteUpdateNotifications: "string" }, params).post(body),
     )
   }
 
@@ -112,8 +108,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}`, { fields }, params).delete(),
     )
   }
 
@@ -129,8 +125,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<ArticleAttachmentEntity<TSchema>[]> {
-    return this.fetch<ArticleAttachmentEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleAttachmentEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/articles/${articleId}/attachments`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -151,8 +147,8 @@ export class ArticlesApi extends ResourceApi {
     body: FormData,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleAttachmentEntity<TSchema>> {
-    return this.fetch<ArticleAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleAttachmentEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/attachments`,
         { fields, muteUpdateNotifications: "string" },
         params,
@@ -172,8 +168,8 @@ export class ArticlesApi extends ResourceApi {
     attachmentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleAttachmentEntity<TSchema>> {
-    return this.fetch<ArticleAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ArticleAttachmentEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).get(),
     )
   }
 
@@ -191,8 +187,8 @@ export class ArticlesApi extends ResourceApi {
     body: DeepPartial<ArticleAttachment>,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleAttachmentEntity<TSchema>> {
-    return this.fetch<ArticleAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<ArticleAttachmentEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).post(body),
     )
   }
 
@@ -208,8 +204,8 @@ export class ArticlesApi extends ResourceApi {
     attachmentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<void> {
-    return this.fetch<void>(
-      ...new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<void>(
+      new RequestBuilder(`api/articles/${articleId}/attachments/${attachmentId}`, { fields }, params).delete(),
     )
   }
 
@@ -225,8 +221,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>[]> {
-    return this.fetch<ArticleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/articles/${articleId}/childArticles`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -247,8 +243,8 @@ export class ArticlesApi extends ResourceApi {
     body: { id: string } | Partial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/childArticles`,
         { fields, ...queryParams("muteUpdateNotifications") },
         params,
@@ -268,8 +264,8 @@ export class ArticlesApi extends ResourceApi {
     subArticleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/childArticles/${subArticleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/childArticles/${subArticleId}`, { fields }, params).get(),
     )
   }
 
@@ -288,8 +284,8 @@ export class ArticlesApi extends ResourceApi {
     body: DeepPartial<Article>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/childArticles/${subArticleId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -310,8 +306,8 @@ export class ArticlesApi extends ResourceApi {
     subArticleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/childArticles/${subArticleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/childArticles/${subArticleId}`, { fields }, params).delete(),
     )
   }
 
@@ -327,8 +323,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<ArticleCommentEntity<TSchema>[]> {
-    return this.fetch<ArticleCommentEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleCommentEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -350,8 +346,8 @@ export class ArticlesApi extends ResourceApi {
     body: { text: string } | DeepPartial<ArticleComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<ArticleCommentEntity<TSchema>> {
-    return this.fetch<ArticleCommentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleCommentEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments`,
         { fields, ...queryParams("draftId", "muteUpdateNotifications") },
         params,
@@ -371,8 +367,8 @@ export class ArticlesApi extends ResourceApi {
     commentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleCommentEntity<TSchema>> {
-    return this.fetch<ArticleCommentEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/comments/${commentId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ArticleCommentEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/comments/${commentId}`, { fields }, params).get(),
     )
   }
 
@@ -391,8 +387,8 @@ export class ArticlesApi extends ResourceApi {
     body: { text: string } | DeepPartial<ArticleComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ArticleCommentEntity<TSchema>> {
-    return this.fetch<ArticleCommentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleCommentEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments/${commentId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -412,8 +408,8 @@ export class ArticlesApi extends ResourceApi {
     commentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleCommentEntity<TSchema>> {
-    return this.fetch<ArticleCommentEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/comments/${commentId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<ArticleCommentEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/comments/${commentId}`, { fields }, params).delete(),
     )
   }
 
@@ -431,8 +427,8 @@ export class ArticlesApi extends ResourceApi {
     commentId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>[]> {
-    return this.fetch<ReactionEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ReactionEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments/${commentId}/reactions`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -454,8 +450,8 @@ export class ArticlesApi extends ResourceApi {
     body: { reaction: string } | DeepPartial<Reaction>,
     params?: FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>> {
-    return this.fetch<ReactionEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/comments/${commentId}/reactions`, { fields }, params).post(body),
+    return this.youtrack.fetch<ReactionEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/comments/${commentId}/reactions`, { fields }, params).post(body),
     )
   }
 
@@ -473,8 +469,8 @@ export class ArticlesApi extends ResourceApi {
     reactionId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>> {
-    return this.fetch<ReactionEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ReactionEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments/${commentId}/reactions/${reactionId}`,
         { fields },
         params,
@@ -495,9 +491,9 @@ export class ArticlesApi extends ResourceApi {
     commentId: string,
     reactionId: string,
     params?: FieldsParam<TSchema>,
-  ): Promise<void> {
-    await this.fetch<void>(
-      ...new RequestBuilder(
+  ): Promise<ReactionEntity<TSchema>> {
+    return this.youtrack.fetch<ReactionEntity<TSchema>>(
+      new RequestBuilder(
         `api/articles/${articleId}/comments/${commentId}/reactions/${reactionId}`,
         { fields },
         params,
@@ -515,8 +511,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ArticleEntity<TSchema>> {
-    return this.fetch<ArticleEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/parentArticle`, { fields }, params).get(),
+    return this.youtrack.fetch<ArticleEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/parentArticle`, { fields }, params).get(),
     )
   }
 
@@ -532,12 +528,8 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>[]> {
-    return this.fetch<TagEntity<TSchema>[]>(
-      ...new RequestBuilder(
-        `api/articles/${articleId}/tags`,
-        { fields, ...queryParams("$top", "$skip") },
-        params,
-      ).get(),
+    return this.youtrack.fetch<TagEntity<TSchema>[]>(
+      new RequestBuilder(`api/articles/${articleId}/tags`, { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -553,8 +545,8 @@ export class ArticlesApi extends ResourceApi {
     body: { id: string } | DeepPartial<Tag>,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/tags`, { fields }, params).post(body),
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/tags`, { fields }, params).post(body),
     )
   }
 
@@ -570,8 +562,8 @@ export class ArticlesApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(`api/articles/${articleId}/tags/${tagId}`, { fields }, params).get(),
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/tags/${tagId}`, { fields }, params).get(),
     )
   }
 
@@ -586,9 +578,9 @@ export class ArticlesApi extends ResourceApi {
     articleId: string,
     tagId: string,
     params?: FieldsParam<TSchema>,
-  ): Promise<void> {
-    await this.fetch<void>(
-      ...new RequestBuilder(`api/articles/${articleId}/tags/${tagId}`, { fields }, params).delete(),
+  ): Promise<TagEntity<TSchema>> {
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(`api/articles/${articleId}/tags/${tagId}`, { fields }, params).delete(),
     )
   }
 }

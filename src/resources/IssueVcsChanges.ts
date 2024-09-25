@@ -23,12 +23,8 @@ export class IssueVcsChangesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<VcsChangeEntity<TSchema>[]> {
-    return this.fetch<VcsChangeEntity<TSchema>[]>(
-      ...new RequestBuilder(
-        `api/issues/${issueId}/vcsChanges`,
-        { fields, ...queryParams("$top", "$skip") },
-        params,
-      ).get(),
+    return this.youtrack.fetch<VcsChangeEntity<TSchema>[]>(
+      new RequestBuilder(`api/issues/${issueId}/vcsChanges`, { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -49,8 +45,8 @@ export class IssueVcsChangesApi extends ResourceApi {
     },
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<VcsChangeEntity<TSchema>> {
-    return this.fetch<VcsChangeEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VcsChangeEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/vcsChanges`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -71,8 +67,8 @@ export class IssueVcsChangesApi extends ResourceApi {
     changeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<VcsChangeEntity<TSchema>> {
-    return this.fetch<VcsChangeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/vcsChanges/${changeId}`, { fields }, params).get(),
+    return this.youtrack.fetch<VcsChangeEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/vcsChanges/${changeId}`, { fields }, params).get(),
     )
   }
 
@@ -92,8 +88,8 @@ export class IssueVcsChangesApi extends ResourceApi {
     body: { state: string },
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<VcsChangeEntity<TSchema>> {
-    return this.fetch<VcsChangeEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VcsChangeEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/vcsChanges/${changeId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -114,8 +110,8 @@ export class IssueVcsChangesApi extends ResourceApi {
     changeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<VcsChangeEntity<TSchema>> {
-    return this.fetch<VcsChangeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/vcsChanges/${changeId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<VcsChangeEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/vcsChanges/${changeId}`, { fields }, params).delete(),
     )
   }
 }

@@ -20,8 +20,8 @@ export class SearchApi extends ResourceApi {
     query: string,
     params?: FieldsParam<TSchema>,
   ): Promise<SearchSuggestionsEntity<TSchema>> {
-    return this.fetch<SearchSuggestionsEntity<TSchema>>(
-      ...new RequestBuilder("api/search/assist", { fields }, params).post({ query }),
+    return this.youtrack.fetch<SearchSuggestionsEntity<TSchema>>(
+      new RequestBuilder("api/search/assist", { fields }, params).post({ query }),
     )
   }
 }

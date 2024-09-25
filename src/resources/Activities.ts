@@ -52,8 +52,8 @@ export class ActivitiesApi extends ResourceApi {
   async getActivities<TSchema extends ActivityItemSchema>(
     params?: ListParams & FieldsParam<TSchema> & GetActivitiesParams,
   ): Promise<ActivityItemEntity<TSchema>[]> {
-    return this.fetch<ActivityItemEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ActivityItemEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/activities",
         {
           fields,
@@ -75,8 +75,8 @@ export class ActivitiesApi extends ResourceApi {
     itemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ActivityItemEntity<TSchema>> {
-    return this.fetch<ActivityItemEntity<TSchema>>(
-      ...new RequestBuilder(`/api/activities/${itemId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ActivityItemEntity<TSchema>>(
+      new RequestBuilder(`/api/activities/${itemId}`, { fields }, params).get(),
     )
   }
 
@@ -98,8 +98,8 @@ export class ActivitiesApi extends ResourceApi {
     params?: GetActivitiesPageParams & FieldsParam<TSchema>,
   ): Promise<ActivityCursorPageEntity<TSchema>> {
     // Perform the fetch request
-    return this.fetch<ActivityCursorPageEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ActivityCursorPageEntity<TSchema>>(
+      new RequestBuilder(
         "/api/activitiesPage",
         {
           fields,

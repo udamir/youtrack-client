@@ -21,8 +21,8 @@ export class CommandsApi extends ResourceApi {
     body: DeepPartial<CommandList>,
     params?: FieldsParam<TSchema> | MuteUpdateNotificationsParam,
   ): Promise<CommandListEntity<TSchema>> {
-    return this.fetch<CommandListEntity<TSchema>>(
-      ...new RequestBuilder("api/commands", { fields, muteUpdateNotifications: "string" }, params).post(body),
+    return this.youtrack.fetch<CommandListEntity<TSchema>>(
+      new RequestBuilder("api/commands", { fields, muteUpdateNotifications: "string" }, params).post(body),
     )
   }
 
@@ -36,8 +36,8 @@ export class CommandsApi extends ResourceApi {
     body: DeepPartial<CommandList>,
     params?: FieldsParam<TSchema>,
   ): Promise<CommandListEntity<TSchema>> {
-    return this.fetch<CommandListEntity<TSchema>>(
-      ...new RequestBuilder("api/commands/assist", { fields }, params).post(body),
+    return this.youtrack.fetch<CommandListEntity<TSchema>>(
+      new RequestBuilder("api/commands/assist", { fields }, params).post(body),
     )
   }
 }

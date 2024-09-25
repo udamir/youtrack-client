@@ -32,8 +32,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueTimeTrackingEntity<TSchema>> {
-    return this.fetch<IssueTimeTrackingEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueTimeTrackingEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/timeTracking`,
         {
           fields,
@@ -56,8 +56,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueWorkItemEntity<TSchema>[]> {
-    return this.fetch<IssueWorkItemEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueWorkItemEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/timeTracking/workItems`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -79,8 +79,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     body: { duration: number } & DeepPartial<IssueWorkItem>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
-    return this.fetch<IssueWorkItemEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/timeTracking/workItems`,
         {
           fields,
@@ -104,8 +104,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     workItemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueWorkItemEntity<TSchema>> {
-    return this.fetch<IssueWorkItemEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/timeTracking/workItems/${workItemId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/timeTracking/workItems/${workItemId}`, { fields }, params).get(),
     )
   }
 
@@ -125,8 +125,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     body: DeepPartial<IssueWorkItem>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
-    return this.fetch<IssueWorkItemEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/timeTracking/workItems/${workItemId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -147,8 +147,8 @@ export class IssueTimeTrackingApi extends ResourceApi {
     workItemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueWorkItemEntity<TSchema>> {
-    return this.fetch<IssueWorkItemEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/timeTracking/workItems/${workItemId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/timeTracking/workItems/${workItemId}`, { fields }, params).delete(),
     )
   }
 }

@@ -1,5 +1,5 @@
-import type { FetchApi } from "../types"
+import type { YouTrack } from "../youtrack"
 
 export class ResourceApi {
-  constructor(protected fetch: FetchApi) {}
+  constructor(protected youtrack: YouTrack) {}
 }

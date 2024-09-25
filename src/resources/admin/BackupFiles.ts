@@ -17,8 +17,8 @@ export class BackupFilesApi extends ResourceApi {
     fileId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<BackupFileEntity<TSchema>> {
-    return this.fetch<BackupFileEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/databaseBackup/backups/${fileId}`, { fields }, params).get(),
+    return this.youtrack.fetch<BackupFileEntity<TSchema>>(
+      new RequestBuilder(`api/admin/databaseBackup/backups/${fileId}`, { fields }, params).get(),
     )
   }
 }

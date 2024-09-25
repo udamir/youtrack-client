@@ -20,8 +20,8 @@ export class BuildBundlesApi extends ResourceApi {
   async getBuildBundles<TSchema extends BuildBundleSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<BuildBundleEntity<TSchema>[]> {
-    return this.fetch<BuildBundleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<BuildBundleEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/bundles/build",
         { fields, ...queryParams("$skip", "$top") },
         params,
@@ -41,8 +41,8 @@ export class BuildBundlesApi extends ResourceApi {
     body: DeepPartial<BuildBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
-    return this.fetch<BuildBundleEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/bundles/build", { fields }, params).post(body),
+    return this.youtrack.fetch<BuildBundleEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/bundles/build", { fields }, params).post(body),
     )
   }
 
@@ -58,8 +58,8 @@ export class BuildBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
-    return this.fetch<BuildBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<BuildBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).get(),
     )
   }
 
@@ -76,8 +76,8 @@ export class BuildBundlesApi extends ResourceApi {
     body: DeepPartial<BuildBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
-    return this.fetch<BuildBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<BuildBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).post(body),
     )
   }
 
@@ -92,8 +92,8 @@ export class BuildBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleEntity<TSchema>> {
-    return this.fetch<BuildBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<BuildBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}`, { fields }, params).delete(),
     )
   }
 
@@ -107,8 +107,8 @@ export class BuildBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<BuildBundleElementEntity<TSchema>[]> {
-    return this.fetch<BuildBundleElementEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<BuildBundleElementEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/build/${bundleId}/values`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -128,8 +128,8 @@ export class BuildBundlesApi extends ResourceApi {
     body: { name: string } & DeepPartial<BuildBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
-    return this.fetch<BuildBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}/values`, { fields }, params).post(
+    return this.youtrack.fetch<BuildBundleElementEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/build/${bundleId}/values`, { fields }, params).post(
         body,
       ),
     )
@@ -147,8 +147,8 @@ export class BuildBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
-    return this.fetch<BuildBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<BuildBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/build/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -170,8 +170,8 @@ export class BuildBundlesApi extends ResourceApi {
     body: DeepPartial<BuildBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
-    return this.fetch<BuildBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<BuildBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/build/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -191,8 +191,8 @@ export class BuildBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<BuildBundleElementEntity<TSchema>> {
-    return this.fetch<BuildBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<BuildBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/build/${bundleId}/values/${elementId}`,
         { fields },
         params,

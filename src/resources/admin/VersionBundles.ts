@@ -28,8 +28,8 @@ export class VersionBundlesApi extends ResourceApi {
   async getVersionBundles<TSchema extends VersionBundleSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<VersionBundleEntity<TSchema>[]> {
-    return this.fetch<VersionBundleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VersionBundleEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/bundles/version",
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -48,8 +48,8 @@ export class VersionBundlesApi extends ResourceApi {
     body: DeepPartial<VersionBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
-    return this.fetch<VersionBundleEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/bundles/version", { fields }, params).post(body),
+    return this.youtrack.fetch<VersionBundleEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/bundles/version", { fields }, params).post(body),
     )
   }
 
@@ -64,8 +64,8 @@ export class VersionBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
-    return this.fetch<VersionBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<VersionBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).get(),
     )
   }
 
@@ -82,8 +82,8 @@ export class VersionBundlesApi extends ResourceApi {
     body: DeepPartial<VersionBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
-    return this.fetch<VersionBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<VersionBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).post(body),
     )
   }
 
@@ -98,8 +98,8 @@ export class VersionBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleEntity<TSchema>> {
-    return this.fetch<VersionBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<VersionBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}`, { fields }, params).delete(),
     )
   }
 
@@ -116,8 +116,8 @@ export class VersionBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<VersionBundleElementEntity<TSchema>[]> {
-    return this.fetch<VersionBundleElementEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VersionBundleElementEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/version/${bundleId}/values`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -138,12 +138,10 @@ export class VersionBundlesApi extends ResourceApi {
     body: { name: string } & DeepPartial<VersionBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleElementEntity<TSchema>> {
-    return this.fetch<VersionBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
-        `api/admin/customFieldSettings/bundles/version/${bundleId}/values`,
-        { fields },
-        params,
-      ).post(body),
+    return this.youtrack.fetch<VersionBundleElementEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/version/${bundleId}/values`, { fields }, params).post(
+        body,
+      ),
     )
   }
 
@@ -162,8 +160,8 @@ export class VersionBundlesApi extends ResourceApi {
     body: DeepPartial<VersionBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleElementEntity<TSchema>> {
-    return this.fetch<VersionBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VersionBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/version/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -184,8 +182,8 @@ export class VersionBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<VersionBundleElementEntity<TSchema>> {
-    return this.fetch<VersionBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<VersionBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/version/${bundleId}/values/${elementId}`,
         { fields },
         params,

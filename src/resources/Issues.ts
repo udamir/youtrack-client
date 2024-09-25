@@ -51,8 +51,8 @@ export class IssuesApi extends ResourceApi {
   async getIssues<TSchema extends IssueSchema>(
     params?: FieldsParam<TSchema> | ListParams | CustomFieldsParam | QueryParam,
   ): Promise<IssueEntity<TSchema>[]> {
-    return this.fetch<IssueEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/issues",
         { fields, ...queryParams("$top", "$skip", "query", "customFields") },
         params,
@@ -72,12 +72,10 @@ export class IssuesApi extends ResourceApi {
     body: { summary: string; project: string } & DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(
-        "api/issues",
-        { fields, ...queryParams("draftId", "muteUpdateNotifications") },
-        params,
-      ).post(body),
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder("api/issues", { fields, ...queryParams("draftId", "muteUpdateNotifications") }, params).post(
+        body,
+      ),
     )
   }
 
@@ -91,7 +89,9 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(...new RequestBuilder(`api/issues/${issueId}`, { fields }, params).get())
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}`, { fields }, params).get(),
+    )
   }
 
   /**
@@ -106,8 +106,8 @@ export class IssuesApi extends ResourceApi {
     body: DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}`, { fields, muteUpdateNotifications: "boolean" }, params).post(body),
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}`, { fields, muteUpdateNotifications: "boolean" }, params).post(body),
     )
   }
 
@@ -121,7 +121,9 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(...new RequestBuilder(`api/issues/${issueId}`, { fields }, params).delete())
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}`, { fields }, params).delete(),
+    )
   }
 
   /**
@@ -134,8 +136,8 @@ export class IssuesApi extends ResourceApi {
     body: { query: string },
     params?: FieldsParam<TSchema>,
   ): Promise<{ count: number } & IssueCountResponseEntity<TSchema>> {
-    const response = await this.fetch<{ count: number } & IssueCountResponseEntity<TSchema>>(
-      ...new RequestBuilder("api/issuesGetter/count", { fields }).post(body),
+    const response = await this.youtrack.fetch<{ count: number } & IssueCountResponseEntity<TSchema>>(
+      new RequestBuilder("api/issuesGetter/count", { fields }).post(body),
     )
     if (response.count === -1) {
       // TODO: add pause
@@ -168,8 +170,8 @@ export class IssuesApi extends ResourceApi {
         author?: string
       },
   ): Promise<ActivityItemEntity<TSchema>[]> {
-    return this.fetch<ActivityItemEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ActivityItemEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/activities`,
         {
           fields,
@@ -192,8 +194,8 @@ export class IssuesApi extends ResourceApi {
     itemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ActivityItemEntity<TSchema>> {
-    return this.fetch<ActivityItemEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/activities/${itemId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ActivityItemEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/activities/${itemId}`, { fields }, params).get(),
     )
   }
 
@@ -223,8 +225,8 @@ export class IssuesApi extends ResourceApi {
       activityId?: string
     },
   ): Promise<ActivityCursorPageEntity<TSchema>> {
-    return this.fetch<ActivityCursorPageEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ActivityCursorPageEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/activitiesPage`,
         { fields, ...queryParams("categories", "reverse", "start", "end", "author", "cursor", "activityId") },
         params,
@@ -244,8 +246,8 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueCustomFieldEntity<TSchema>[]> {
-    return this.fetch<IssueCustomFieldEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueCustomFieldEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/customFields`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -265,8 +267,8 @@ export class IssuesApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueCustomFieldEntity<TSchema>> {
-    return this.fetch<IssueCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/customFields/${fieldId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueCustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/customFields/${fieldId}`, { fields }, params).get(),
     )
   }
 
@@ -285,8 +287,8 @@ export class IssuesApi extends ResourceApi {
     body: DeepPartial<IssueCustomField>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueCustomFieldEntity<TSchema>> {
-    return this.fetch<IssueCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueCustomFieldEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/customFields/${fieldId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -304,8 +306,8 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/project`,
         {
           fields,
@@ -328,8 +330,8 @@ export class IssuesApi extends ResourceApi {
     body: { id: string },
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/project`,
         {
           fields,
@@ -352,8 +354,8 @@ export class IssuesApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<SprintEntity<TSchema>[]> {
-    return this.fetch<SprintEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<SprintEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/sprints`,
         {
           fields,

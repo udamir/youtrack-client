@@ -1,4 +1,4 @@
-import type { FetchApi, FetchApiConfig, QueryParamBuilder } from "../types"
+import type { FetchConfig, QueryParamBuilder } from "../types"
 import { buildQueryParam } from "./fetchHelpers"
 
 export type Builders<T extends Record<string, any>> = {
@@ -26,22 +26,24 @@ export class RequestBuilder<T extends Record<string, any>> {
   }
 
   // Method to build the query string
-  private build(options?: FetchApiConfig): Parameters<FetchApi> {
+  private build(options?: Omit<FetchConfig, "url">): FetchConfig {
     const query = this._args.join("&")
-    const uri = query ? `${this.baseUrl}?${query}` : this.baseUrl
-    return [uri, options]
+    return {
+      ...options,
+      url: query ? `${this.baseUrl}?${query}` : this.baseUrl,
+    }
   }
 
   public get() {
     return this.build()
   }
 
-  public post<TBody extends object>(body: TBody) {
-    return this.build({ method: "POST", body })
+  public post<TBody extends object>(data: TBody) {
+    return this.build({ method: "POST", data })
   }
 
-  public postFile(body: FormData) {
-    return this.build({ method: "POST", body, headers: { "Content-Type": "multipart/form-data" } })
+  public postFile(data: FormData) {
+    return this.build({ method: "POST", data, headers: { "Content-Type": "multipart/form-data" } })
   }
 
   public delete() {

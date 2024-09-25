@@ -20,8 +20,8 @@ export class IssueLinkTypesApi extends ResourceApi {
   async getIssueLinkTypes<TSchema extends IssueLinkTypeSchema>(
     params?: FieldsParam<TSchema> | ListParams,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
-    return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder("api/issueLinkTypes", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<IssueLinkTypeEntity<TSchema>>(
+      new RequestBuilder("api/issueLinkTypes", { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -35,8 +35,8 @@ export class IssueLinkTypesApi extends ResourceApi {
     body: { name: string; targetToSource: string; sourceToTarget: string } | DeepPartial<IssueLinkType>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
-    return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder("api/issueLinkTypes", { fields }, params).post(body),
+    return this.youtrack.fetch<IssueLinkTypeEntity<TSchema>>(
+      new RequestBuilder("api/issueLinkTypes", { fields }, params).post(body),
     )
   }
 
@@ -50,8 +50,8 @@ export class IssueLinkTypesApi extends ResourceApi {
     typeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
-    return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueLinkTypeEntity<TSchema>>(
+      new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).get(),
     )
   }
 
@@ -67,8 +67,8 @@ export class IssueLinkTypesApi extends ResourceApi {
     body: DeepPartial<IssueLinkType>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkTypeEntity<TSchema>> {
-    return this.fetch<IssueLinkTypeEntity<TSchema>>(
-      ...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<IssueLinkTypeEntity<TSchema>>(
+      new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).post(body),
     )
   }
 
@@ -82,6 +82,6 @@ export class IssueLinkTypesApi extends ResourceApi {
     typeId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<void> {
-    return this.fetch<void>(...new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).delete())
+    return this.youtrack.fetch<void>(new RequestBuilder(`api/issueLinkTypes/${typeId}`, { fields }, params).delete())
   }
 }

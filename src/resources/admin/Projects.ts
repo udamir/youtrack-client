@@ -45,8 +45,8 @@ export class ProjectsApi extends ResourceApi {
   async getProjects<TSchema extends ProjectSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<ProjectEntity<TSchema>[]> {
-    return this.fetch<ProjectEntity<TSchema>[]>(
-      ...new RequestBuilder("api/admin/projects", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<ProjectEntity<TSchema>[]>(
+      new RequestBuilder("api/admin/projects", { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -62,8 +62,8 @@ export class ProjectsApi extends ResourceApi {
     body: { name: string; shortName: string; leader: { id: string } } & DeepPartial<Project>,
     params?: FieldsParam<TSchema> & { template?: string },
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/projects", { fields, template: "string" }, params).post(body),
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder("api/admin/projects", { fields, template: "string" }, params).post(body),
     )
   }
 
@@ -78,8 +78,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).get(),
     )
   }
 
@@ -96,8 +96,8 @@ export class ProjectsApi extends ResourceApi {
     body: DeepPartial<Project>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).post(body),
     )
   }
 
@@ -112,8 +112,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectEntity<TSchema>> {
-    return this.fetch<ProjectEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<ProjectEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}`, { fields }, params).delete(),
     )
   }
 
@@ -130,8 +130,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<ArticleEntity<TSchema>[]> {
-    return this.fetch<ArticleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ArticleEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/articles`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -152,8 +152,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<ProjectCustomFieldEntity<TSchema>[]> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/customFields`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -174,8 +174,8 @@ export class ProjectsApi extends ResourceApi {
     body: { field: { id: string } } & DeepPartial<ProjectCustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/customFields`, { fields }, params).post(body),
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/customFields`, { fields }, params).post(body),
     )
   }
 
@@ -192,8 +192,8 @@ export class ProjectsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).get(),
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).get(),
     )
   }
 
@@ -212,8 +212,8 @@ export class ProjectsApi extends ResourceApi {
     body: DeepPartial<ProjectCustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).post(body),
     )
   }
 
@@ -230,8 +230,8 @@ export class ProjectsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/customFields/${fieldId}`, { fields }, params).delete(),
     )
   }
 
@@ -251,8 +251,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema> | ListParams | CustomFieldsParam,
   ): Promise<IssueEntity<TSchema>[]> {
-    return this.fetch<IssueEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/issues`,
         { fields, ...queryParams("$top", "$skip", "customFields") },
         params,
@@ -275,8 +275,8 @@ export class ProjectsApi extends ResourceApi {
     body: { summary: string } & DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/issues`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -296,8 +296,8 @@ export class ProjectsApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/issues/${issueId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/issues/${issueId}`, { fields }, params).get(),
     )
   }
 
@@ -314,8 +314,8 @@ export class ProjectsApi extends ResourceApi {
     body: DeepPartial<Issue>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/issues/${issueId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -334,8 +334,8 @@ export class ProjectsApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/issues/${issueId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/issues/${issueId}`, { fields }, params).delete(),
     )
   }
 
@@ -350,8 +350,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectTimeTrackingSettingsEntity<TSchema>> {
-    return this.fetch<ProjectTimeTrackingSettingsEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/timeTrackingSettings`, { fields }, params).get(),
+    return this.youtrack.fetch<ProjectTimeTrackingSettingsEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/timeTrackingSettings`, { fields }, params).get(),
     )
   }
 
@@ -368,8 +368,8 @@ export class ProjectsApi extends ResourceApi {
     body: DeepPartial<ProjectTimeTrackingSettings>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectTimeTrackingSettingsEntity<TSchema>> {
-    return this.fetch<ProjectTimeTrackingSettingsEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/projects/${projectId}/timeTrackingSettings`, { fields }, params).post(body),
+    return this.youtrack.fetch<ProjectTimeTrackingSettingsEntity<TSchema>>(
+      new RequestBuilder(`api/admin/projects/${projectId}/timeTrackingSettings`, { fields }, params).post(body),
     )
   }
 
@@ -386,8 +386,8 @@ export class ProjectsApi extends ResourceApi {
     projectId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<WorkItemTypeEntity<TSchema>[]> {
-    return this.fetch<WorkItemTypeEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>[]>(
+      new RequestBuilder(
         `/api/admin/projects/${projectId}/timeTrackingSettings/workItemTypes`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -409,8 +409,8 @@ export class ProjectsApi extends ResourceApi {
     body: { duration: number } & DeepPartial<WorkItemType>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/timeTrackingSettings/workItems`,
         {
           fields,
@@ -434,8 +434,8 @@ export class ProjectsApi extends ResourceApi {
     workItemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/timeTrackingSettings/workItems/${workItemId}`,
         { fields },
         params,
@@ -456,8 +456,8 @@ export class ProjectsApi extends ResourceApi {
     workItemId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<WorkItemTypeEntity<TSchema>> {
-    return this.fetch<WorkItemTypeEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<WorkItemTypeEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/projects/${projectId}/timeTrackingSettings/workItems/${workItemId}`,
         { fields },
         params,

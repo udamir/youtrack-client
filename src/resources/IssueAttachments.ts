@@ -31,8 +31,8 @@ export class IssueAttechmentsApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueAttachmentEntity<TSchema>[]> {
-    return this.fetch<IssueAttachmentEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueAttachmentEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/attachments`,
         { fields, ...queryParams("$skip", "$top") },
         params,
@@ -54,8 +54,8 @@ export class IssueAttechmentsApi extends ResourceApi {
     body: FormData,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueAttachmentEntity<TSchema>> {
-    return this.fetch<IssueAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueAttachmentEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/attachments`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -76,8 +76,8 @@ export class IssueAttechmentsApi extends ResourceApi {
     attachmentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueAttachmentEntity<TSchema>> {
-    return this.fetch<IssueAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueAttachmentEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).get(),
     )
   }
 
@@ -95,8 +95,8 @@ export class IssueAttechmentsApi extends ResourceApi {
     body: DeepPartial<IssueAttachment>,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueAttachmentEntity<TSchema>> {
-    return this.fetch<IssueAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<IssueAttachmentEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).post(body),
     )
   }
 
@@ -113,8 +113,8 @@ export class IssueAttechmentsApi extends ResourceApi {
     attachmentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueAttachmentEntity<TSchema>> {
-    return this.fetch<IssueAttachmentEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<IssueAttachmentEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/attachments/${attachmentId}`, { fields }, params).delete(),
     )
   }
 }

@@ -20,8 +20,8 @@ export class OwnedBundlesApi extends ResourceApi {
   async getOwnedBundles<TSchema extends OwnedBundleSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<OwnedBundleEntity<TSchema>[]> {
-    return this.fetch<OwnedBundleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<OwnedBundleEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/bundles/owned",
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -40,8 +40,8 @@ export class OwnedBundlesApi extends ResourceApi {
     body: DeepPartial<OwnedBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
-    return this.fetch<OwnedBundleEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/bundles/owned", { fields }, params).post(body),
+    return this.youtrack.fetch<OwnedBundleEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/bundles/owned", { fields }, params).post(body),
     )
   }
 
@@ -56,8 +56,8 @@ export class OwnedBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
-    return this.fetch<OwnedBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<OwnedBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).get(),
     )
   }
 
@@ -74,8 +74,8 @@ export class OwnedBundlesApi extends ResourceApi {
     body: DeepPartial<OwnedBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
-    return this.fetch<OwnedBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<OwnedBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).post(body),
     )
   }
 
@@ -90,8 +90,8 @@ export class OwnedBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleEntity<TSchema>> {
-    return this.fetch<OwnedBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<OwnedBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}`, { fields }, params).delete(),
     )
   }
 
@@ -108,8 +108,8 @@ export class OwnedBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<OwnedBundleElementEntity<TSchema>[]> {
-    return this.fetch<OwnedBundleElementEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<OwnedBundleElementEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/owned/${bundleId}/values`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -130,8 +130,8 @@ export class OwnedBundlesApi extends ResourceApi {
     body: { name: string } & DeepPartial<OwnedBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleElementEntity<TSchema>> {
-    return this.fetch<OwnedBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}/values`, { fields }, params).post(
+    return this.youtrack.fetch<OwnedBundleElementEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/owned/${bundleId}/values`, { fields }, params).post(
         body,
       ),
     )
@@ -152,8 +152,8 @@ export class OwnedBundlesApi extends ResourceApi {
     body: DeepPartial<OwnedBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleElementEntity<TSchema>> {
-    return this.fetch<OwnedBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<OwnedBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/owned/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -174,8 +174,8 @@ export class OwnedBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<OwnedBundleElementEntity<TSchema>> {
-    return this.fetch<OwnedBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<OwnedBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/owned/${bundleId}/values/${elementId}`,
         { fields },
         params,

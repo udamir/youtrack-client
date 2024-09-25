@@ -20,8 +20,8 @@ export class EnumBundlesApi extends ResourceApi {
   async getEnumBundles<TSchema extends EnumBundleSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<EnumBundleEntity<TSchema>[]> {
-    return this.fetch<EnumBundleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<EnumBundleEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/bundles/enum",
         { fields, ...queryParams("$skip", "$top") },
         params,
@@ -40,8 +40,8 @@ export class EnumBundlesApi extends ResourceApi {
     body: { name: string } | DeepPartial<EnumBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
-    return this.fetch<EnumBundleEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/bundles/enum", { fields }, params).post(body),
+    return this.youtrack.fetch<EnumBundleEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/bundles/enum", { fields }, params).post(body),
     )
   }
 
@@ -56,8 +56,8 @@ export class EnumBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
-    return this.fetch<EnumBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<EnumBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}`, { fields }, params).get(),
     )
   }
 
@@ -74,8 +74,8 @@ export class EnumBundlesApi extends ResourceApi {
     body: DeepPartial<EnumBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
-    return this.fetch<EnumBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleID}`, { fields }, params).post(body),
+    return this.youtrack.fetch<EnumBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleID}`, { fields }, params).post(body),
     )
   }
   /**
@@ -89,8 +89,8 @@ export class EnumBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleEntity<TSchema>> {
-    return this.fetch<EnumBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<EnumBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}`, { fields }, params).delete(),
     )
   }
 
@@ -107,8 +107,8 @@ export class EnumBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<EnumBundleElementEntity<TSchema>[]> {
-    return this.fetch<EnumBundleElementEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<EnumBundleElementEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/enum/${bundleId}/values`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -129,8 +129,8 @@ export class EnumBundlesApi extends ResourceApi {
     body: { name: string } & DeepPartial<EnumBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
-    return this.fetch<EnumBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}/values`, { fields }, params).post(
+    return this.youtrack.fetch<EnumBundleElementEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/enum/${bundleId}/values`, { fields }, params).post(
         body,
       ),
     )
@@ -149,8 +149,8 @@ export class EnumBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
-    return this.fetch<EnumBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<EnumBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/enum/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -173,8 +173,8 @@ export class EnumBundlesApi extends ResourceApi {
     body: { name: string } & DeepPartial<EnumBundleElement>,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
-    return this.fetch<EnumBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<EnumBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/enum/${bundleId}/values/${elementId}`,
         { fields },
         params,
@@ -195,8 +195,8 @@ export class EnumBundlesApi extends ResourceApi {
     elementId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<EnumBundleElementEntity<TSchema>> {
-    return this.fetch<EnumBundleElementEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<EnumBundleElementEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/enum/${bundleId}/values/${elementId}`,
         { fields },
         params,

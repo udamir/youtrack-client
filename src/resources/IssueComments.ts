@@ -35,12 +35,8 @@ export class IssueCommentsApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueCommentEntity<TSchema>[]> {
-    return this.fetch<IssueCommentEntity<TSchema>[]>(
-      ...new RequestBuilder(
-        `api/issues/${issueId}/comments`,
-        { fields, ...queryParams("$top", "$skip") },
-        params,
-      ).get(),
+    return this.youtrack.fetch<IssueCommentEntity<TSchema>[]>(
+      new RequestBuilder(`api/issues/${issueId}/comments`, { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -62,8 +58,8 @@ export class IssueCommentsApi extends ResourceApi {
         draftId?: string
       },
   ): Promise<IssueCommentEntity<TSchema>> {
-    return this.fetch<IssueCommentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueCommentEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/comments`,
         { fields, ...queryParams("draftId", "muteUpdateNotifications") },
         params,
@@ -84,8 +80,8 @@ export class IssueCommentsApi extends ResourceApi {
     commentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueCommentEntity<TSchema>> {
-    return this.fetch<IssueCommentEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/comments/${commentId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueCommentEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/comments/${commentId}`, { fields }, params).get(),
     )
   }
 
@@ -104,8 +100,8 @@ export class IssueCommentsApi extends ResourceApi {
     body: DeepPartial<IssueComment>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueCommentEntity<TSchema>> {
-    return this.fetch<IssueCommentEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueCommentEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/comments/${commentId}`,
         { fields, muteUpdateNotifications: "boolean" },
         params,
@@ -127,8 +123,8 @@ export class IssueCommentsApi extends ResourceApi {
     commentId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueCommentEntity<TSchema>> {
-    return this.fetch<IssueCommentEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/comments/${commentId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<IssueCommentEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/comments/${commentId}`, { fields }, params).delete(),
     )
   }
 
@@ -147,8 +143,8 @@ export class IssueCommentsApi extends ResourceApi {
     reactionId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>> {
-    return this.fetch<ReactionEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ReactionEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/comments/${commentId}/reactions/${reactionId}`,
         { fields },
         params,
@@ -171,8 +167,8 @@ export class IssueCommentsApi extends ResourceApi {
     reactionId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<ReactionEntity<TSchema>> {
-    return this.fetch<ReactionEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ReactionEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/comments/${commentId}/reactions/${reactionId}`,
         { fields },
         params,

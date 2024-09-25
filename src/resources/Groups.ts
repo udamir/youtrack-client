@@ -21,8 +21,8 @@ export class GroupsApi extends ResourceApi {
   async getUserGroups<TSchema extends UserGroupSchema>(
     params?: FieldsParam<TSchema> | ListParams,
   ): Promise<UserGroupEntity<TSchema>> {
-    return this.fetch<UserGroupEntity<TSchema>>(
-      ...new RequestBuilder("api/groups", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<UserGroupEntity<TSchema>>(
+      new RequestBuilder("api/groups", { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -36,8 +36,8 @@ export class GroupsApi extends ResourceApi {
     groupId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserGroupEntity<TSchema>> {
-    return this.fetch<UserGroupEntity<TSchema>>(
-      ...new RequestBuilder(`api/groups/${groupId}`, { fields }, params).get(),
+    return this.youtrack.fetch<UserGroupEntity<TSchema>>(
+      new RequestBuilder(`api/groups/${groupId}`, { fields }, params).get(),
     )
   }
 }

@@ -34,8 +34,8 @@ export class CustomFieldsApi extends ResourceApi {
   async getCustomFields<TSchema extends CustomFieldSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<CustomFieldEntity<TSchema>[]> {
-    return this.fetch<CustomFieldEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<CustomFieldEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/customFields",
         { fields, ...queryParams("$skip", "$top") },
         params,
@@ -57,8 +57,8 @@ export class CustomFieldsApi extends ResourceApi {
     } & DeepPartial<CustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
-    return this.fetch<CustomFieldEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/customFields", { fields }, params).post(body),
+    return this.youtrack.fetch<CustomFieldEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/customFields", { fields }, params).post(body),
     )
   }
 
@@ -73,8 +73,8 @@ export class CustomFieldsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
-    return this.fetch<CustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).get(),
+    return this.youtrack.fetch<CustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).get(),
     )
   }
 
@@ -91,8 +91,8 @@ export class CustomFieldsApi extends ResourceApi {
     body: DeepPartial<CustomField>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
-    return this.fetch<CustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<CustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).post(body),
     )
   }
 
@@ -107,8 +107,8 @@ export class CustomFieldsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldEntity<TSchema>> {
-    return this.fetch<CustomFieldEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<CustomFieldEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/customFields/${fieldId}`, { fields }, params).delete(),
     )
   }
 
@@ -123,8 +123,8 @@ export class CustomFieldsApi extends ResourceApi {
   async getFieldTypes<TSchema extends FieldTypeSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<FieldTypeEntity<TSchema>[]> {
-    return this.fetch<FieldTypeEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<FieldTypeEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/types",
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -143,8 +143,8 @@ export class CustomFieldsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldDefaultsEntity<TSchema>> {
-    return this.fetch<CustomFieldDefaultsEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<CustomFieldDefaultsEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/customFields/${fieldId}/fieldDefaults`,
         { fields },
         params,
@@ -165,8 +165,8 @@ export class CustomFieldsApi extends ResourceApi {
     body: DeepPartial<CustomFieldDefaults>,
     params?: FieldsParam<TSchema>,
   ): Promise<CustomFieldDefaultsEntity<TSchema>> {
-    return this.fetch<CustomFieldDefaultsEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<CustomFieldDefaultsEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/customFields/${fieldId}/fieldDefaults`,
         { fields },
         params,
@@ -188,8 +188,8 @@ export class CustomFieldsApi extends ResourceApi {
     fieldId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<ProjectCustomFieldEntity<TSchema>[]> {
-    return this.fetch<ProjectCustomFieldEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/customFields/${fieldId}/instances`,
         { fields, ...queryParams("$top", "$skip") },
         params,

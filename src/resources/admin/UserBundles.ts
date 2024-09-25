@@ -22,8 +22,8 @@ export class UserBundlesApi extends ResourceApi {
   async getUserBundles<TSchema extends UserBundleSchema>(
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<UserBundleEntity<TSchema>[]> {
-    return this.fetch<UserBundleEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserBundleEntity<TSchema>[]>(
+      new RequestBuilder(
         "api/admin/customFieldSettings/bundles/user",
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -42,8 +42,8 @@ export class UserBundlesApi extends ResourceApi {
     body: DeepPartial<UserBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
-    return this.fetch<UserBundleEntity<TSchema>>(
-      ...new RequestBuilder("api/admin/customFieldSettings/bundles/user", { fields }, params).post(body),
+    return this.youtrack.fetch<UserBundleEntity<TSchema>>(
+      new RequestBuilder("api/admin/customFieldSettings/bundles/user", { fields }, params).post(body),
     )
   }
 
@@ -58,8 +58,8 @@ export class UserBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
-    return this.fetch<UserBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).get(),
+    return this.youtrack.fetch<UserBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).get(),
     )
   }
 
@@ -76,8 +76,8 @@ export class UserBundlesApi extends ResourceApi {
     body: DeepPartial<UserBundle>,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
-    return this.fetch<UserBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<UserBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).post(body),
     )
   }
 
@@ -92,8 +92,8 @@ export class UserBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserBundleEntity<TSchema>> {
-    return this.fetch<UserBundleEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<UserBundleEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}`, { fields }, params).delete(),
     )
   }
 
@@ -110,8 +110,8 @@ export class UserBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<UserEntity<TSchema>[]> {
-    return this.fetch<UserEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/aggregatedUsers`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -132,8 +132,8 @@ export class UserBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<UserGroupEntity<TSchema>[]> {
-    return this.fetch<UserGroupEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserGroupEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/groups`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -154,8 +154,8 @@ export class UserBundlesApi extends ResourceApi {
     body: { id: string },
     params?: FieldsParam<TSchema>,
   ): Promise<UserGroupEntity<TSchema>> {
-    return this.fetch<UserGroupEntity<TSchema>>(
-      ...new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}/groups`, { fields }, params).post(
+    return this.youtrack.fetch<UserGroupEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}/groups`, { fields }, params).post(
         body,
       ),
     )
@@ -174,8 +174,8 @@ export class UserBundlesApi extends ResourceApi {
     groupId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserGroupEntity<TSchema>> {
-    return this.fetch<UserGroupEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserGroupEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/groups/${groupId}`,
         { fields },
         params,
@@ -196,8 +196,8 @@ export class UserBundlesApi extends ResourceApi {
     groupId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserGroupEntity<TSchema>> {
-    return this.fetch<UserGroupEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserGroupEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/groups/${groupId}`,
         { fields },
         params,
@@ -218,8 +218,8 @@ export class UserBundlesApi extends ResourceApi {
     bundleId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<UserEntity<TSchema>[]> {
-    return this.fetch<UserEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/individuals`,
         { fields, ...queryParams("$top", "$skip") },
         params,
@@ -240,12 +240,10 @@ export class UserBundlesApi extends ResourceApi {
     body: { id: string },
     params?: FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(
-      ...new RequestBuilder(
-        `api/admin/customFieldSettings/bundles/user/${bundleId}/individuals`,
-        { fields },
-        params,
-      ).post(body),
+    return this.youtrack.fetch<UserEntity<TSchema>>(
+      new RequestBuilder(`api/admin/customFieldSettings/bundles/user/${bundleId}/individuals`, { fields }, params).post(
+        body,
+      ),
     )
   }
 
@@ -262,8 +260,8 @@ export class UserBundlesApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/individuals/${userId}`,
         { fields },
         params,
@@ -284,8 +282,8 @@ export class UserBundlesApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserEntity<TSchema>>(
+      new RequestBuilder(
         `api/admin/customFieldSettings/bundles/user/${bundleId}/individuals/${userId}`,
         { fields },
         params,

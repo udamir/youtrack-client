@@ -34,8 +34,8 @@ export class IssueLinksApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueLinkEntity<TSchema>[]> {
-    return this.fetch<IssueLinkEntity<TSchema>[]>(
-      ...new RequestBuilder(`api/issues/${issueId}/links`, { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<IssueLinkEntity<TSchema>[]>(
+      new RequestBuilder(`api/issues/${issueId}/links`, { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -51,8 +51,8 @@ export class IssueLinksApi extends ResourceApi {
     linkId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueLinkEntity<TSchema>> {
-    return this.fetch<IssueLinkEntity<TSchema>>(
-      ...new RequestBuilder(`api/issues/${issueId}/links/${linkId}`, { fields }, params).get(),
+    return this.youtrack.fetch<IssueLinkEntity<TSchema>>(
+      new RequestBuilder(`api/issues/${issueId}/links/${linkId}`, { fields }, params).get(),
     )
   }
 
@@ -70,8 +70,8 @@ export class IssueLinksApi extends ResourceApi {
     linkId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<IssueEntity<TSchema>[]> {
-    return this.fetch<IssueEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/links/${linkId}/issues`,
         {
           fields,
@@ -97,8 +97,8 @@ export class IssueLinksApi extends ResourceApi {
     body: { linkedIssueId: string } & DeepPartial<IssueLink>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/links/${linkId}/issues`,
         {
           fields,
@@ -123,8 +123,8 @@ export class IssueLinksApi extends ResourceApi {
     linkedIssueId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<IssueEntity<TSchema>> {
-    return this.fetch<IssueEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<IssueEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/links/${linkId}/issues/${linkedIssueId}`,
         {
           fields,

@@ -50,8 +50,8 @@ export class UsersApi extends ResourceApi {
   async getUsers<TSchema extends UserSchema>(
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>[]> {
-    return this.fetch<UserEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<UserEntity<TSchema>[]>(
+      new RequestBuilder(
         "/api/users",
         {
           fields,
@@ -74,7 +74,9 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(...new RequestBuilder(`/api/users/${userId}`, { fields }, params).get())
+    return this.youtrack.fetch<UserEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}`, { fields }, params).get(),
+    )
   }
 
   /**
@@ -89,8 +91,8 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
-    return this.fetch<GeneralUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/general`, { fields }, params).get(),
+    return this.youtrack.fetch<GeneralUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}/profiles/general`, { fields }, params).get(),
     )
   }
 
@@ -108,8 +110,8 @@ export class UsersApi extends ResourceApi {
     data: DeepPartial<GeneralUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
-    return this.fetch<GeneralUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userID}/profiles/general`, { fields }, params).post(data),
+    return this.youtrack.fetch<GeneralUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userID}/profiles/general`, { fields }, params).post(data),
     )
   }
 
@@ -127,8 +129,8 @@ export class UsersApi extends ResourceApi {
     profileId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
-    return this.fetch<NotificationsUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
+    return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
     )
   }
 
@@ -148,8 +150,8 @@ export class UsersApi extends ResourceApi {
     body: DeepPartial<NotificationsUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
-    return this.fetch<NotificationsUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
     )
   }
 
@@ -165,8 +167,8 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
-    return this.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).get(),
+    return this.youtrack.fetch<TimeTrackingUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).get(),
     )
   }
 
@@ -184,8 +186,8 @@ export class UsersApi extends ResourceApi {
     data: DeepPartial<TimeTrackingUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
-    return this.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      ...new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).post(data),
+    return this.youtrack.fetch<TimeTrackingUserProfileEntity<TSchema>>(
+      new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).post(data),
     )
   }
 
@@ -202,8 +204,8 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>[]> {
-    return this.fetch<SavedQueryEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>[]>(
+      new RequestBuilder(
         `/api/users/${userId}/savedQueries`,
         {
           fields,
@@ -228,8 +230,8 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>[]> {
-    return this.fetch<TagEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<TagEntity<TSchema>[]>(
+      new RequestBuilder(
         `/api/users/${userId}/tags`,
         {
           fields,
@@ -247,6 +249,6 @@ export class UsersApi extends ResourceApi {
    * @returns The profile settings of the currently logged-in user.
    */
   async getCurrentUserProfile<TSchema extends UserSchema>(params?: FieldsParam<TSchema>): Promise<UserEntity<TSchema>> {
-    return this.fetch<UserEntity<TSchema>>(...new RequestBuilder("/api/users/me", { fields }, params).get())
+    return this.youtrack.fetch<UserEntity<TSchema>>(new RequestBuilder("/api/users/me", { fields }, params).get())
   }
 }

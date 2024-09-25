@@ -22,8 +22,8 @@ export class IssueTagsApi extends ResourceApi {
     issueId: string,
     params?: FieldsParam<TSchema> & ListParams,
   ): Promise<TagEntity<TSchema>[]> {
-    return this.fetch<TagEntity<TSchema>[]>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<TagEntity<TSchema>[]>(
+      new RequestBuilder(
         `api/issues/${issueId}/tags`,
         {
           fields,
@@ -46,8 +46,8 @@ export class IssueTagsApi extends ResourceApi {
     body: { id: string },
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/tags`,
         {
           fields,
@@ -69,8 +69,8 @@ export class IssueTagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/tags/${tagId}`,
         {
           fields,
@@ -92,8 +92,8 @@ export class IssueTagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.fetch<TagEntity<TSchema>>(
-      ...new RequestBuilder(
+    return this.youtrack.fetch<TagEntity<TSchema>>(
+      new RequestBuilder(
         `api/issues/${issueId}/tags/${tagId}`,
         {
           fields,

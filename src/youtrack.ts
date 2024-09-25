@@ -1,6 +1,8 @@
-import type { DashboardApi, FetchApi, Service } from "./types"
-import * as ResourceApi from "./resources"
+import type { Axios } from "axios"
+
+import type { DashboardApi, FetchConfig, FetchFunc, Service } from "./types"
 import { encodeBody, joinUrl } from "./utils"
+import * as ResourceApi from "./resources"
 
 export class YouTrack {
   public Agiles: ResourceApi.AgilesApi
@@ -38,25 +40,40 @@ export class YouTrack {
   }
 
   static client(baseUrl: string, token: string) {
-    return new YouTrack(async (url, options = {}) => {
-      const { body, headers, ...rest } = options
-      const params = {
+    return new YouTrack(async ({ url, headers, data, ...rest }: FetchConfig) => {
+      const response = await fetch(joinUrl(baseUrl, url), {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
           ...headers,
         },
-        ...(body ? { body: encodeBody(body) } : {}),
+        ...(data ? { body: encodeBody(data) } : {}),
         ...rest,
-      }
-      const response = await fetch(joinUrl(baseUrl, url), params)
+      })
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`)
       }
 
       return response.json()
+    })
+  }
+
+  static axiosClient(axios: Axios, baseUrl: string, token: string) {
+    return new YouTrack(async ({ url, headers, ...rest }: FetchConfig) => {
+      const params = {
+        url: joinUrl(baseUrl, url),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json;charset=utf-8",
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        ...rest,
+      }
+      const { data } = await axios.request(params)
+      return typeof data === "string" ? JSON.parse(data) : data
     })
   }
 
@@ -70,42 +87,48 @@ export class YouTrack {
       throw new Error("YouTrack application not found")
     }
 
-    return new YouTrack((url, config?) => api.fetch(app.id, url, config))
+    return new YouTrack((config) => {
+      const { url, data, ...rest } = config
+      return api.fetch(app.id, url, {
+        ...(data ? { body: encodeBody(data) } : {}),
+        ...rest,
+      })
+    })
   }
 
-  constructor(public fetch: FetchApi) {
-    this.Agiles = new ResourceApi.AgilesApi(this.fetch)
-    this.Activities = new ResourceApi.ActivitiesApi(this.fetch)
-    this.Articles = new ResourceApi.ArticlesApi(this.fetch)
-    this.Commands = new ResourceApi.CommandsApi(this.fetch)
-    this.Groups = new ResourceApi.GroupsApi(this.fetch)
-    this.IssueLinkTypes = new ResourceApi.IssueLinkTypesApi(this.fetch)
-    this.Issues = new ResourceApi.IssuesApi(this.fetch)
-    this.IssueComments = new ResourceApi.IssueCommentsApi(this.fetch)
-    this.IssueLinks = new ResourceApi.IssueLinksApi(this.fetch)
-    this.IssueTags = new ResourceApi.IssueTagsApi(this.fetch)
-    this.IssueTimeTracking = new ResourceApi.IssueTimeTrackingApi(this.fetch)
-    this.IssueVcsChanges = new ResourceApi.IssueVcsChangesApi(this.fetch)
-    this.IssueAttachments = new ResourceApi.IssueAttechmentsApi(this.fetch)
-    this.SavedQueries = new ResourceApi.SavedQueriesApi(this.fetch)
-    this.Search = new ResourceApi.SearchApi(this.fetch)
-    this.Tags = new ResourceApi.TagsApi(this.fetch)
-    this.Users = new ResourceApi.UsersApi(this.fetch)
-    this.WorkItems = new ResourceApi.WorkItemsApi(this.fetch)
+  constructor(public fetch: FetchFunc) {
+    this.Agiles = new ResourceApi.AgilesApi(this)
+    this.Activities = new ResourceApi.ActivitiesApi(this)
+    this.Articles = new ResourceApi.ArticlesApi(this)
+    this.Commands = new ResourceApi.CommandsApi(this)
+    this.Groups = new ResourceApi.GroupsApi(this)
+    this.IssueLinkTypes = new ResourceApi.IssueLinkTypesApi(this)
+    this.Issues = new ResourceApi.IssuesApi(this)
+    this.IssueComments = new ResourceApi.IssueCommentsApi(this)
+    this.IssueLinks = new ResourceApi.IssueLinksApi(this)
+    this.IssueTags = new ResourceApi.IssueTagsApi(this)
+    this.IssueTimeTracking = new ResourceApi.IssueTimeTrackingApi(this)
+    this.IssueVcsChanges = new ResourceApi.IssueVcsChangesApi(this)
+    this.IssueAttachments = new ResourceApi.IssueAttechmentsApi(this)
+    this.SavedQueries = new ResourceApi.SavedQueriesApi(this)
+    this.Search = new ResourceApi.SearchApi(this)
+    this.Tags = new ResourceApi.TagsApi(this)
+    this.Users = new ResourceApi.UsersApi(this)
+    this.WorkItems = new ResourceApi.WorkItemsApi(this)
     this.Admin = {
-      Projects: new ResourceApi.ProjectsApi(this.fetch),
-      BuildBundles: new ResourceApi.BuildBundlesApi(this.fetch),
-      EnumBundles: new ResourceApi.EnumBundlesApi(this.fetch),
-      OwnedBundles: new ResourceApi.OwnedBundlesApi(this.fetch),
-      StateBundles: new ResourceApi.StateBundlesApi(this.fetch),
-      UserBundles: new ResourceApi.UserBundlesApi(this.fetch),
-      VersionBundles: new ResourceApi.VersionBundlesApi(this.fetch),
-      CustomFields: new ResourceApi.CustomFieldsApi(this.fetch),
-      BackupFiles: new ResourceApi.BackupFilesApi(this.fetch),
-      DatabaseBackupSettings: new ResourceApi.DatabaseBackupSettingsApi(this.fetch),
-      GlobalSettings: new ResourceApi.GlobalSettingsApi(this.fetch),
-      TelemetryData: new ResourceApi.TelemetryDataApi(this.fetch),
-      GlobalTimeTrackingSettings: new ResourceApi.GlobalTimeTrackingSettingsApi(this.fetch),
+      Projects: new ResourceApi.ProjectsApi(this),
+      BuildBundles: new ResourceApi.BuildBundlesApi(this),
+      EnumBundles: new ResourceApi.EnumBundlesApi(this),
+      OwnedBundles: new ResourceApi.OwnedBundlesApi(this),
+      StateBundles: new ResourceApi.StateBundlesApi(this),
+      UserBundles: new ResourceApi.UserBundlesApi(this),
+      VersionBundles: new ResourceApi.VersionBundlesApi(this),
+      CustomFields: new ResourceApi.CustomFieldsApi(this),
+      BackupFiles: new ResourceApi.BackupFilesApi(this),
+      DatabaseBackupSettings: new ResourceApi.DatabaseBackupSettingsApi(this),
+      GlobalSettings: new ResourceApi.GlobalSettingsApi(this),
+      TelemetryData: new ResourceApi.TelemetryDataApi(this),
+      GlobalTimeTrackingSettings: new ResourceApi.GlobalTimeTrackingSettingsApi(this),
     }
   }
 }

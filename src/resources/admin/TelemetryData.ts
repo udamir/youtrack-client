@@ -15,6 +15,8 @@ export class TelemetryDataApi extends ResourceApi {
   async getTelemetryData<TSchema extends TelemetrySchema>(
     params?: FieldsParam<TSchema>,
   ): Promise<TelemetryEntity<TSchema>> {
-    return this.fetch<TelemetryEntity<TSchema>>(...new RequestBuilder("api/admin/telemetry", { fields }, params).get())
+    return this.youtrack.fetch<TelemetryEntity<TSchema>>(
+      new RequestBuilder("api/admin/telemetry", { fields }, params).get(),
+    )
   }
 }

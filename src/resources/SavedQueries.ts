@@ -20,8 +20,8 @@ export class SavedQueriesApi extends ResourceApi {
   async getSavedQueries<TSchema extends SavedQuerySchema>(
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>[]> {
-    return this.fetch<SavedQueryEntity<TSchema>[]>(
-      ...new RequestBuilder("api/savedQueries", { fields, ...queryParams("$top", "$skip") }, params).get(),
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>[]>(
+      new RequestBuilder("api/savedQueries", { fields, ...queryParams("$top", "$skip") }, params).get(),
     )
   }
 
@@ -35,8 +35,8 @@ export class SavedQueriesApi extends ResourceApi {
     body: { name: string; query: string } | DeepPartial<SavedQuery>,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
-    return this.fetch<SavedQueryEntity<TSchema>>(
-      ...new RequestBuilder("api/savedQueries", { fields }, params).post(body),
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>>(
+      new RequestBuilder("api/savedQueries", { fields }, params).post(body),
     )
   }
 
@@ -50,8 +50,8 @@ export class SavedQueriesApi extends ResourceApi {
     queryId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
-    return this.fetch<SavedQueryEntity<TSchema>>(
-      ...new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).get(),
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>>(
+      new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).get(),
     )
   }
 
@@ -67,8 +67,8 @@ export class SavedQueriesApi extends ResourceApi {
     body: DeepPartial<SavedQuery>,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
-    return this.fetch<SavedQueryEntity<TSchema>>(
-      ...new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).post(body),
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>>(
+      new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).post(body),
     )
   }
 
@@ -82,8 +82,8 @@ export class SavedQueriesApi extends ResourceApi {
     queryId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<SavedQueryEntity<TSchema>> {
-    return this.fetch<SavedQueryEntity<TSchema>>(
-      ...new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).delete(),
+    return this.youtrack.fetch<SavedQueryEntity<TSchema>>(
+      new RequestBuilder(`api/savedQueries/${queryId}`, { fields }, params).delete(),
     )
   }
 }
