@@ -97,7 +97,7 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
 ### Custom client
 
 ```typescript
-import { YouTrack, joinUrl } from "youtrack-client"
+import { YouTrack, joinUrl, FetchFunc } from "youtrack-client"
 
 const baseUrl = "http://example.myjetbrains.com"
 const token = "perm:your-token"
