@@ -7,7 +7,7 @@ JavaScript client library for accessing the youtrack REST and Widget API
 ## Features
 - All User API methods are supported
 - All Admin API methods are supported
-- Axios and custom HTTP clients support
+- Axios and custom HTTP clients supported
 - Can be used in Youtrack Widgets (check [widget template](https://github.com/udamir/youtrack-widget-template))
 - Full Typescript support, including parameters and responses
 - All methods with full js documentation
