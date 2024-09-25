@@ -94,6 +94,30 @@ DashboardAddons.registerWidget(async (dashboardApi: DashboardApi, widgetApi: Wid
 })
 ```
 
+### Custom client
+
+```typescript
+import { YouTrack, joinUrl } from "youtrack-client"
+
+const baseUrl = "http://example.myjetbrains.com"
+const token = "perm:your-token"
+
+const fetchFunc: FetchFunc = async ({ url, method, headers, data }) => {
+  const _url = joinUrl(baseUrl, url)
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/json;charset=utf-8",
+    "Content-Type": "application/json",
+    ...headers,
+  }
+
+  // TODO: fetch response via custom client and return parsed response
+ }
+
+const yt = new YouTrack(fetchFunc)
+
+```
+
 ## Documentation
 
 The following resources are avaliable in Youtrack instance:
