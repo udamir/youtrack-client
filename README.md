@@ -111,13 +111,13 @@ const fetchFunc: FetchFunc = async (config) => {
     Authorization: `Bearer ${token}`,
     Accept: "application/json;charset=utf-8",
     "Content-Type": "application/json",
-    ...headers,
+    ...config.headers,
   }
   // encode body from config.data (object or FormData)
   const body = encodeBody(config.data)
 
   // fetch response via custom client
-  const response = await client[method](url, { data, headers })
+  const response = await client[method](url, { body, headers })
 
   // return parsed response
   return response.data
