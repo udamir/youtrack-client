@@ -247,6 +247,6 @@ export class UsersApi extends ResourceApi {
    * @returns The profile settings of the currently logged-in user.
    */
   async getCurrentUserProfile<TSchema extends UserSchema>(params?: FieldsParam<TSchema>): Promise<UserEntity<TSchema>> {
-    return this.youtrack.fetch<UserEntity<TSchema>>(new RequestBuilder("/api/users/me", { fields }, params).get())
+    return this.youtrack.fetch<UserEntity<TSchema>>(new RequestBuilder("api/users/me", { fields }, params).get())
   }
 }

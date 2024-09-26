@@ -27,8 +27,8 @@ describe("encodeBody", () => {
 
 describe("buildUri", () => {
   it("should build a URI with path parameters", () => {
-    expect(buildUri("/api/items/:itemId", { itemId: "123" })).toBe("/api/items/123")
-    expect(buildUri("/api/items/:itemId/:foo", { itemId: "123", foo: "bar" })).toBe("/api/items/123/bar")
+    expect(buildUri("api/items/:itemId", { itemId: "123" })).toBe("api/items/123")
+    expect(buildUri("api/items/:itemId/:foo", { itemId: "123", foo: "bar" })).toBe("api/items/123/bar")
   })
 
   it("should return base URI when no path parameters are provided", () => {
