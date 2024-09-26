@@ -32,7 +32,7 @@ describe("buildUri", () => {
   })
 
   it("should return base URI when no path parameters are provided", () => {
-    const baseUri = "/api/items"
+    const baseUri = "api/items"
     expect(buildUri(baseUri)).toBe(baseUri)
   })
 })

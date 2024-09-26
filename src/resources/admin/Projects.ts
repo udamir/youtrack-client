@@ -388,7 +388,7 @@ export class ProjectsApi extends ResourceApi {
   ): Promise<WorkItemTypeEntity<TSchema>[]> {
     return this.youtrack.fetch<WorkItemTypeEntity<TSchema>[]>(
       new RequestBuilder(
-        `/api/admin/projects/${projectId}/timeTrackingSettings/workItemTypes`,
+        `api/admin/projects/${projectId}/timeTrackingSettings/workItemTypes`,
         { fields, ...queryParams("$top", "$skip") },
         params,
       ).get(),

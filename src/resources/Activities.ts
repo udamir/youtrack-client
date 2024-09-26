@@ -76,7 +76,7 @@ export class ActivitiesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<ActivityItemEntity<TSchema>> {
     return this.youtrack.fetch<ActivityItemEntity<TSchema>>(
-      new RequestBuilder(`/api/activities/${itemId}`, { fields }, params).get(),
+      new RequestBuilder(`api/activities/${itemId}`, { fields }, params).get(),
     )
   }
 
@@ -100,7 +100,7 @@ export class ActivitiesApi extends ResourceApi {
     // Perform the fetch request
     return this.youtrack.fetch<ActivityCursorPageEntity<TSchema>>(
       new RequestBuilder(
-        "/api/activitiesPage",
+        "api/activitiesPage",
         {
           fields,
           ...queryParams("categories", "reverse", "author", "start", "end", "issueQuery", "cursor", "activityId"),

@@ -51,7 +51,7 @@ export class TagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.youtrack.fetch<TagEntity<TSchema>>(new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).get())
+    return this.youtrack.fetch<TagEntity<TSchema>>(new RequestBuilder(`api/tags/${tagId}`, { fields }, params).get())
   }
 
   /**
@@ -82,7 +82,7 @@ export class TagsApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
     return this.youtrack.fetch<TagEntity<TSchema>>(
-      new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).post(body),
+      new RequestBuilder(`api/tags/${tagId}`, { fields }, params).post(body),
     )
   }
 
@@ -97,9 +97,7 @@ export class TagsApi extends ResourceApi {
     tagId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<TagEntity<TSchema>> {
-    return this.youtrack.fetch<TagEntity<TSchema>>(
-      new RequestBuilder(`/api/tags/${tagId}`, { fields }, params).delete(),
-    )
+    return this.youtrack.fetch<TagEntity<TSchema>>(new RequestBuilder(`api/tags/${tagId}`, { fields }, params).delete())
   }
 
   /**
@@ -118,7 +116,7 @@ export class TagsApi extends ResourceApi {
   ): Promise<IssueEntity<TSchema>[]> {
     return this.youtrack.fetch<IssueEntity<TSchema>[]>(
       new RequestBuilder(
-        `/api/tags/${tagId}/issues`,
+        `api/tags/${tagId}/issues`,
         {
           fields,
           ...queryParams("$skip", "$top", "customFields"),

@@ -62,7 +62,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
     return this.youtrack.fetch<AgileEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).get(),
+      new RequestBuilder(`api/agiles/${agileId}`, { fields }, params).get(),
     )
   }
 
@@ -80,7 +80,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
     return this.youtrack.fetch<AgileEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).post(body),
+      new RequestBuilder(`api/agiles/${agileId}`, { fields }, params).post(body),
     )
   }
 
@@ -96,7 +96,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<AgileEntity<TSchema>> {
     return this.youtrack.fetch<AgileEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}`, { fields }, params).delete(),
+      new RequestBuilder(`api/agiles/${agileId}`, { fields }, params).delete(),
     )
   }
   /**
@@ -113,7 +113,7 @@ export class AgilesApi extends ResourceApi {
     params?: ListParams & FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>[]> {
     return this.youtrack.fetch<SprintEntity<TSchema>[]>(
-      new RequestBuilder(`/api/agiles/${agileId}/sprints`, { fields, $skip: "number", $top: "number" }, params).get(),
+      new RequestBuilder(`api/agiles/${agileId}/sprints`, { fields, $skip: "number", $top: "number" }, params).get(),
     )
   }
 
@@ -132,7 +132,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema> & { muteUpdateNotifications?: boolean },
   ): Promise<SprintEntity<TSchema>> {
     return this.youtrack.fetch<SprintEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}/sprints`, { fields, muteUpdateNotifications: "boolean" }, params).post(
+      new RequestBuilder(`api/agiles/${agileId}/sprints`, { fields, muteUpdateNotifications: "boolean" }, params).post(
         body,
       ),
     )
@@ -152,7 +152,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>> {
     return this.youtrack.fetch<SprintEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).get(),
+      new RequestBuilder(`api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).get(),
     )
   }
 
@@ -170,7 +170,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>> {
     return this.youtrack.fetch<SprintEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).delete(),
+      new RequestBuilder(`api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).delete(),
     )
   }
 
@@ -190,7 +190,7 @@ export class AgilesApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<SprintEntity<TSchema>> {
     return this.youtrack.fetch<SprintEntity<TSchema>>(
-      new RequestBuilder(`/api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).post(body),
+      new RequestBuilder(`api/agiles/${agileId}/sprints/${sprintId}`, { fields }, params).post(body),
     )
   }
 }

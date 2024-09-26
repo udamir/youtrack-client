@@ -52,7 +52,7 @@ export class UsersApi extends ResourceApi {
   ): Promise<UserEntity<TSchema>[]> {
     return this.youtrack.fetch<UserEntity<TSchema>[]>(
       new RequestBuilder(
-        "/api/users",
+        "api/users",
         {
           fields,
           ...queryParams("$skip", "$top"),
@@ -74,9 +74,7 @@ export class UsersApi extends ResourceApi {
     userId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<UserEntity<TSchema>> {
-    return this.youtrack.fetch<UserEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}`, { fields }, params).get(),
-    )
+    return this.youtrack.fetch<UserEntity<TSchema>>(new RequestBuilder(`api/users/${userId}`, { fields }, params).get())
   }
 
   /**
@@ -92,7 +90,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<GeneralUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}/profiles/general`, { fields }, params).get(),
+      new RequestBuilder(`api/users/${userId}/profiles/general`, { fields }, params).get(),
     )
   }
 
@@ -111,7 +109,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<GeneralUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<GeneralUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userID}/profiles/general`, { fields }, params).post(data),
+      new RequestBuilder(`api/users/${userID}/profiles/general`, { fields }, params).post(data),
     )
   }
 
@@ -130,7 +128,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
+      new RequestBuilder(`api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
     )
   }
 
@@ -151,7 +149,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
+      new RequestBuilder(`api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
     )
   }
 
@@ -168,7 +166,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).get(),
+      new RequestBuilder(`api/users/${userId}/profiles/timetracking`, { fields }, params).get(),
     )
   }
 
@@ -187,7 +185,7 @@ export class UsersApi extends ResourceApi {
     params?: FieldsParam<TSchema>,
   ): Promise<TimeTrackingUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<TimeTrackingUserProfileEntity<TSchema>>(
-      new RequestBuilder(`/api/users/${userId}/profiles/timetracking`, { fields }, params).post(data),
+      new RequestBuilder(`api/users/${userId}/profiles/timetracking`, { fields }, params).post(data),
     )
   }
 
@@ -206,7 +204,7 @@ export class UsersApi extends ResourceApi {
   ): Promise<SavedQueryEntity<TSchema>[]> {
     return this.youtrack.fetch<SavedQueryEntity<TSchema>[]>(
       new RequestBuilder(
-        `/api/users/${userId}/savedQueries`,
+        `api/users/${userId}/savedQueries`,
         {
           fields,
           $skip: "number",
@@ -232,7 +230,7 @@ export class UsersApi extends ResourceApi {
   ): Promise<TagEntity<TSchema>[]> {
     return this.youtrack.fetch<TagEntity<TSchema>[]>(
       new RequestBuilder(
-        `/api/users/${userId}/tags`,
+        `api/users/${userId}/tags`,
         {
           fields,
           ...queryParams("$skip", "$top"),
