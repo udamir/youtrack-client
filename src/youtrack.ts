@@ -40,7 +40,7 @@ export class YouTrack {
   }
 
   static client(baseUrl: string, token: string) {
-    return new YouTrack(async ({ url, headers, data, ...rest }: FetchConfig) => {
+    return new YouTrack(baseUrl, async ({ url, headers, data, ...rest }: FetchConfig) => {
       const response = await fetch(joinUrl(baseUrl, url), {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ export class YouTrack {
   }
 
   static axiosClient(axios: Axios, baseUrl: string, token: string) {
-    return new YouTrack(async ({ url, headers, ...rest }: FetchConfig) => {
+    return new YouTrack(baseUrl, async ({ url, headers, ...rest }: FetchConfig) => {
       const params = {
         url: joinUrl(baseUrl, url),
         headers: {
@@ -87,7 +87,7 @@ export class YouTrack {
       throw new Error("YouTrack application not found")
     }
 
-    return new YouTrack((config) => {
+    return new YouTrack(app.homeUrl, (config) => {
       const { url, data, ...rest } = config
       return api.fetch(app.id, url, {
         ...(data ? { body: encodeBody(data) } : {}),
@@ -96,7 +96,10 @@ export class YouTrack {
     })
   }
 
-  constructor(public fetch: FetchFunc) {
+  constructor(
+    public baseUrl: string,
+    public fetch: FetchFunc,
+  ) {
     this.Agiles = new ResourceApi.AgilesApi(this)
     this.Activities = new ResourceApi.ActivitiesApi(this)
     this.Articles = new ResourceApi.ArticlesApi(this)

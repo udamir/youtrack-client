@@ -123,7 +123,7 @@ const fetchFunc: FetchFunc = async (config) => {
   return response.data
  }
 
-const yt = new YouTrack(fetchFunc)
+const yt = new YouTrack(baseUrl, fetchFunc)
 
 ```
 
