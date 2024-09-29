@@ -6,6 +6,7 @@
     "module": "ESNext",
     "allowJs": false,
     "skipLibCheck": true,
+    "typeRoots": ["types"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

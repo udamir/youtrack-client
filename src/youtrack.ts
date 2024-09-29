@@ -1,6 +1,7 @@
+import type { DashboardApi, HubService } from "hub-dashboard-addons"
 import type { Axios } from "axios"
 
-import type { DashboardApi, FetchConfig, FetchFunc, Service } from "./types"
+import type { FetchConfig, FetchFunc } from "./types"
 import { encodeBody, joinUrl } from "./utils"
 import * as ResourceApi from "./resources"
 
@@ -78,7 +79,7 @@ export class YouTrack {
   }
 
   static async widget(api: DashboardApi) {
-    const { services } = await api.fetchHub<{ services: Service[] }>(
+    const { services } = await api.fetchHub<{ services: HubService[] }>(
       `api/rest/services?query=applicationName:${"YouTrack"}`,
     )
 

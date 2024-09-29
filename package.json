@@ -1,7 +1,7 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the YouTrack REST and Widget API",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "type": "module",
   "keywords": [
     "youtrack",
@@ -19,7 +19,8 @@
   "browser": "dist/youtrack-client.min.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "exports": {
     ".": {
@@ -48,6 +49,7 @@
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/jest": "^29.5.13",
     "axios": "^1.7.7",
+    "hub-dashboard-addons": "^1.0.2",
     "rimraf": "^6.0.1",
     "rollup": "^4.21.3",
     "rollup-plugin-filesize": "^10.0.0",
