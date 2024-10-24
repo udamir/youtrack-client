@@ -1,4 +1,4 @@
-import type { SearchSuggestions, Entity, FieldsParam, Schema } from "../types"
+import type { SearchSuggestions, Entity, FieldsParam, Schema, SearchSuggestionsMutable } from "../types"
 import { fields, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
 
@@ -17,11 +17,11 @@ export class SearchApi extends ResourceApi {
    * @returns Search query suggestions.
    */
   async getSearchSuggestions<TSchema extends SearchSuggestionsSchema>(
-    query: string,
+    body: Partial<SearchSuggestionsMutable>,
     params?: FieldsParam<TSchema>,
   ): Promise<SearchSuggestionsEntity<TSchema>> {
     return this.youtrack.fetch<SearchSuggestionsEntity<TSchema>>(
-      new RequestBuilder("api/search/assist", { fields }, params).post({ query }),
+      new RequestBuilder("api/search/assist", { fields }, params).post(body),
     )
   }
 }

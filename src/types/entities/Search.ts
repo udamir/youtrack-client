@@ -4,6 +4,7 @@ export type SearchSuggestionsMutable = {
   caret?: number // The current caret position. The end of the current search query by default.
   ignoreUnresolvedSetting: boolean // When false, the Hide unresolved issues setting is taken into account for creating search suggestions. When true, this setting is ignored.
   query?: string // The current search query for which the suggestions are being requested. Can be null.
+  folder?: IssueFolder
   folders: Array<IssueFolder> // The current search context.
 }
 
