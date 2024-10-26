@@ -91,7 +91,7 @@ export class YouTrack {
     return new YouTrack(app.homeUrl, (config) => {
       const { url, data, ...rest } = config
       return api.fetch(app.id, url, {
-        ...(data ? { body: encodeBody(data) } : {}),
+        ...(data ? { body: data } : {}),
         ...rest,
       })
     })
