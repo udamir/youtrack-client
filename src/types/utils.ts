@@ -85,6 +85,50 @@ export type MergeType<T> = (T extends any ? (x: T) => void : never) extends (x: 
   : never
 
 /**
+ * ExcludeNever<T>
+ * 
+ * This recursive utility type filters out union members in `T` that contain only properties with the `never` type. 
+ * It is particularly useful for removing deeply nested structures where all fields are `never`, 
+ * effectively cleaning up types with irrelevant `never` branches.
+ * 
+ * @template T - The type to process, which may include union members, nested objects, or primitive types.
+ * 
+ * Example:
+ * type A = {
+ *   a: {
+ *     aa: {
+ *       aaa: number;
+ *     };
+ *   };
+ * } | {
+ *   a: never;
+ * } | {
+ *   a: {
+ *     aa: never;
+ *   };
+ * };
+ * 
+ * type Result = ExcludeNever<A>;
+ * // Result is now: 
+ * // {
+ * //   a: {
+ * //     aa: {
+ * //       aaa: number;
+ * //     };
+ * //   };
+ * // }
+ */
+export type ExcludeNever<T> = T extends object
+  ? {
+      [K in keyof T]: ExcludeNever<T[K]>
+    } extends infer O
+    ? { [K in keyof O]: O[K] } extends Record<string, never>
+      ? never
+      : O
+    : never
+  : T
+
+/**
  * FilterFields<T, F> is a utility type that filters fields of object type T based on a given field schema F.
  * F can be a mix of flat fields (strings) and nested fields (objects).
  * It recursively extracts the specified fields, handling both flat and nested objects.
@@ -147,8 +191,8 @@ type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
     : never
 }
 
-export type FilterFields<T, F extends FieldsSchema> = MergeType<
-  FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>
+export type FilterFields<T, F extends FieldsSchema> = ExcludeNever<
+  T extends any ? MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>> : never
 >
 
 /**
