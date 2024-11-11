@@ -10,8 +10,8 @@ export type ColorCoding = FieldBasedColorCoding | ProjectBasedColorCoding
 
 // Mutable Agile entity
 export type AgileMutable = {
-  name?: string // The name of the agile board. Can be null.
-  owner?: User // The owner of the agile board. Can be null.
+  name: string // The name of the agile board. Can be null.
+  owner: User // The owner of the agile board. Can be null.
   // visibleFor?: UserGroup // Deprecated: The group of users that can view this board. Can be null.
   // visibleForProjectBased?: boolean // Deprecated: When true, the board is visible to anyone who can view all associated projects.
   // updateableBy?: UserGroup // Deprecated: The group of users who can update the settings of this board. Can be null.
@@ -56,27 +56,27 @@ export type AgileSharingSettings = EntityBase<"AgileSharingSettings"> & {
 }
 
 export type ColumnSettings = EntityBase<"ColumnSettings"> & {
-  field?: CustomField // Custom field, which values are used for columns. Can be null.
+  field: CustomField | null // Custom field, which values are used for columns. Can be null.
   columns: AgileColumn[] // Columns that are shown on the board.
 }
 
 export type AgileColumn = EntityBase<"AgileColumn"> & {
-  presentation?: string // Text presentation of values stored in a column. Read-only. Can be null.
+  presentation: string | null // Text presentation of values stored in a column. Read-only. Can be null.
   isResolved: boolean // True if a column represents resolved state of an issue. Read-only.
   ordinal: number // Order of this column on board, counting from left to right.
-  parent?: ColumnSettings // Link to agile column settings this column belongs to. Read-only. Can be null.
-  wipLimit?: WIPLimit // WIP limit for this column. Can be null.
+  parent: ColumnSettings | null // Link to agile column settings this column belongs to. Read-only. Can be null.
+  wipLimit: WIPLimit | null // WIP limit for this column. Can be null.
   fieldValues: AgileColumnFieldValue[] // Field values represented by this column.
 }
 
 export type WIPLimit = EntityBase<"WIPLimit"> & {
-  max?: number // Maximum number of cards in column. Can be null.
-  min?: number // Minimum number of cards in column. Can be null.
-  column?: AgileColumn // A column, this WIP is applied to. Can be null.
+  max: number | null // Maximum number of cards in column. Can be null.
+  min: number | null // Minimum number of cards in column. Can be null.
+  column: AgileColumn | null // A column, this WIP is applied to. Can be null.
 }
 
 export type AgileColumnFieldValue = EntityBase<"AgileColumnFieldValue"> & {
-  name?: string // Presentation of a field value or values. Can be null.
+  name: string | null // Presentation of a field value or values. Can be null.
   isResolved: boolean // True if field has type State and the value is resolved or all values are resolved. Read-only.
 }
 

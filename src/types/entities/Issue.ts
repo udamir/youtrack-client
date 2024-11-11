@@ -221,10 +221,10 @@ export type IssueWatcher = EntityBase<"IssueWatcher"> & {
 }
 
 export type IssueCountResponse = EntityBase<"IssueCountResponse"> & {
-  count?: number // The number of issues found by the search. If this number equals -1, it means that YouTrack hasn't finished counting the issues yet. Can be null.
-  unresolvedOnly?: boolean // true when the Hide resolved issues control is enabled. Can be null.
-  query?: string // The search query. Can be null.
-  folder?: IssueFolder // The currently selected search context. Can be null.
+  count: number // The number of issues found by the search. If this number equals -1, it means that YouTrack hasn't finished counting the issues yet. Can be null.
+  unresolvedOnly: boolean // true when the Hide resolved issues control is enabled. Can be null.
+  query: string // The search query. Can be null.
+  folder: IssueFolder // The currently selected search context. Can be null.
 }
 
 export type IssueTimeTracking = EntityBase<"IssueTimeTracking"> & {
