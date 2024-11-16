@@ -86,47 +86,53 @@ export type MergeType<T> = (T extends any ? (x: T) => void : never) extends (x: 
 
 /**
  * ExcludeNever<T>
- * 
- * This recursive utility type filters out union members in `T` that contain only properties with the `never` type. 
- * It is particularly useful for removing deeply nested structures where all fields are `never`, 
- * effectively cleaning up types with irrelevant `never` branches.
- * 
+ *
+ * A recursive utility type that removes:
+ * 1. Properties within an object where the value is `never` or `never[]`.
+ * 2. Entire union members if all properties are `never` or `never[]`.
+ *
  * @template T - The type to process, which may include union members, nested objects, or primitive types.
- * 
- * Example:
- * type A = {
+ *
+ * Usage Example:
+ *
+ * ```typescript
+ * type A = ExcludeNever<{
  *   a: {
  *     aa: {
  *       aaa: number;
+ *       xx: never;
+ *       yy: never[];
  *     };
  *   };
  * } | {
- *   a: never;
- * } | {
- *   a: {
- *     aa: never;
- *   };
- * };
- * 
- * type Result = ExcludeNever<A>;
- * // Result is now: 
+ *   a: number;
+ *   b: never[];
+ * }>;
+ *
+ * // Result:
  * // {
  * //   a: {
  * //     aa: {
  * //       aaa: number;
  * //     };
  * //   };
+ * // } | {
+ * //   a: number;
  * // }
+ * ```
  */
-export type ExcludeNever<T> = T extends object
-  ? {
-      [K in keyof T]: ExcludeNever<T[K]>
-    } extends infer O
-    ? { [K in keyof O]: O[K] } extends Record<string, never>
-      ? never
-      : O
-    : never
-  : T
+type ExcludeNever<T> = T extends Array<infer U>
+  ? ExcludeNever<U>[] // If T is an array, apply ExcludeNever to its element type and make it an array again
+  : T extends object
+    ? {
+        // Exclude keys where T[K] is either `never` or `never[]`
+        [K in keyof T as [T[K]] extends [never | never[]] ? never : K]: ExcludeNever<T[K]>
+      } extends infer O
+      ? { [K in keyof O]: O[K] } extends Record<string, never>
+        ? never
+        : O
+      : never
+    : T
 
 /**
  * FilterFields<T, F> is a utility type that filters fields of object type T based on a given field schema F.
