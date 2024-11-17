@@ -33,7 +33,7 @@ import type { EntityBase } from "./entities"
  * // ]
  */
 
-type Primitive = string | number | boolean | symbol | bigint | null | undefined
+type Primitive = string | number | boolean | symbol | bigint
 type FilterPrimitive<T> = T extends Primitive ? T : never
 
 type SchemaItem<T, K> = T extends Primitive
@@ -170,7 +170,7 @@ type ExcludeNever<T> = T extends Array<infer U>
  */
 
 type FilterKeys<F extends FieldsSchema> = {
-  [K in Extract<F[number], string>]: K
+  [K in F[number] extends infer T ? (T extends string ? T : T extends Record<string, any> ? keyof T : never) : never]: K
 }
 
 type FilterNested<F extends FieldsSchema> = MergeType<
@@ -180,12 +180,12 @@ type FilterNested<F extends FieldsSchema> = MergeType<
 >
 
 // Handle flat fields (string) and check if K exists in T
-type FilterStringFields<T, F extends Record<string, string>> = {
+type FilterStringFields<T, F extends Record<string, string>> = ExcludeNever<{
   [K in keyof F]: K extends keyof T ? FilterPrimitive<T[K]> : T extends { [Q in K]: infer U } ? U : never
-}
+}>
 
 // Handle nested fields (object)
-type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
+type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = ExcludeNever<{
   -readonly [K in keyof F]: K extends keyof T
     ? K extends keyof F
       ? F[K] extends FieldsSchema
@@ -195,11 +195,11 @@ type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = {
         : never
       : never
     : never
-}
+}>
 
-export type FilterFields<T, F extends FieldsSchema> = ExcludeNever<
-  T extends any ? MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>> : never
->
+export type FilterFields<T, F extends FieldsSchema> = T extends any
+  ? MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>>
+  : never
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
