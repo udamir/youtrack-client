@@ -10,7 +10,7 @@
  *       'city',
  *       {
  *         details: [
- *       'zip'
+ *           'zip'
  *         ]
  *       }
  *     ]

@@ -34,7 +34,6 @@ import type { EntityBase } from "./entities"
  */
 
 type Primitive = string | number | boolean | symbol | bigint
-type FilterPrimitive<T> = T extends Primitive ? T : never
 
 type SchemaItem<T, K> = T extends Primitive
   ? ToString<K> // For primitive fields, return the key as string
@@ -52,87 +51,46 @@ export type SchemaFromType<T> = {
 export type Schema<T> = string | SchemaFromType<T>
 
 /**
- * ExtendSchema<T, U> combines fields from an array type `T` with a union type `U` into a single array.
+ * Converts a `FieldsSchema` into a structured `FilteringSchema`.
  *
- * @template T - An array of fields (strings).
- * @template U - A union type of fields to extend the schema with.
- * @returns A new array type containing both the original fields in `T` and the fields in `U`.
- */
-export type ExtendSchema<T extends readonly any[], U> = (T[number] | U)[]
-
-/**
- * MergeType<T> takes a union type T and merges all its variants into a single object type.
+ * This utility is useful for transforming an array-based schema representation
+ * into a hierarchical object structure, preserving string fields and nested
+ * object fields for filtering purposes.
  *
- * This type recursively iterates through each union and merges the properties.
+ * @typeParam T - The input schema type, constrained to an array of fields (`FieldsSchema`).
  *
  * Example:
- * type Issue = {
- *   project: ["id"];
- * } | {
- *   customFields: ["id", "name"];
- * };
- *
- * type MergedIssue = MergeType<Issue>;
- * // Resulting type:
- * // {
- * //   project: ["id"];
- * //   customFields: ["id", "name"];
- * // }
- */
-
-export type MergeType<T> = (T extends any ? (x: T) => void : never) extends (x: infer U) => void
-  ? { [K in keyof U]: U[K] }
-  : never
-
-/**
- * ExcludeNever<T>
- *
- * A recursive utility type that removes:
- * 1. Properties within an object where the value is `never` or `never[]`.
- * 2. Entire union members if all properties are `never` or `never[]`.
- *
- * @template T - The type to process, which may include union members, nested objects, or primitive types.
- *
- * Usage Example:
- *
  * ```typescript
- * type A = ExcludeNever<{
- *   a: {
- *     aa: {
- *       aaa: number;
- *       xx: never;
- *       yy: never[];
- *     };
- *   };
- * } | {
- *   a: number;
- *   b: never[];
- * }>;
+ * type FieldsSchema = [
+ *   "name",
+ *   { details: ["zip", "city"] }
+ * ];
  *
- * // Result:
+ * type Result = ToFilteringSchema<FieldsSchema>;
+ *
+ * // Expected Result:
  * // {
- * //   a: {
- * //     aa: {
- * //       aaa: number;
- * //     };
+ * //   name: "name";
+ * //   details: {
+ * //     zip: "zip";
+ * //     city: "city";
  * //   };
- * // } | {
- * //   a: number;
  * // }
  * ```
  */
-type ExcludeNever<T> = T extends Array<infer U>
-  ? ExcludeNever<U>[] // If T is an array, apply ExcludeNever to its element type and make it an array again
-  : T extends object
-    ? {
-        // Exclude keys where T[K] is either `never` or `never[]`
-        [K in keyof T as [T[K]] extends [never | never[]] ? never : K]: ExcludeNever<T[K]>
-      } extends infer O
-      ? { [K in keyof O]: O[K] } extends Record<string, never>
-        ? never
-        : O
+
+export type FilteringSchema = Record<string, FilteringSchemaField>
+export type FilteringSchemaField = string | { [key: string]: FilteringSchemaField }
+
+export type ToFilteringSchema<T extends FieldsSchema> = {
+  [K in T[number] as K extends string ? K : K extends Record<string, FieldsSchema> ? keyof K : never]: K extends string
+    ? K
+    : K extends Record<string, FieldsSchema>
+      ? ToFilteringSchema<K[keyof K]>
       : never
-    : T
+} extends infer O
+  ? { [K in keyof O]: O[K] }
+  : never
 
 /**
  * FilterFields<T, F> is a utility type that filters fields of object type T based on a given field schema F.
@@ -156,7 +114,7 @@ type ExcludeNever<T> = T extends Array<infer U>
  *   }
  * };
  *
- * type FilteredPerson = FilterFields<typeof person, ['name', { address: ['city', { details: ['zip'] }] }]>;
+ * type FilteredPerson = FilterFields<typeof person, { name: 'name', { address: { city: 'city', { details: { zip: 'zip'}}}}]>;
  * // The resulting type will be:
  * // {
  * //   name: string;
@@ -169,37 +127,19 @@ type ExcludeNever<T> = T extends Array<infer U>
  * // }
  */
 
-type FilterKeys<F extends FieldsSchema> = {
-  [K in F[number] extends infer T ? (T extends string ? T : T extends Record<string, any> ? keyof T : never) : never]: K
-}
-
-type FilterNested<F extends FieldsSchema> = MergeType<
-  {
-    [K in keyof F]: F[K] extends string ? never : F[K]
-  }[number]
->
-
-// Handle flat fields (string) and check if K exists in T
-type FilterStringFields<T, F extends Record<string, string>> = ExcludeNever<{
-  [K in keyof F]: K extends keyof T ? FilterPrimitive<T[K]> : T extends { [Q in K]: infer U } ? U : never
-}>
-
-// Handle nested fields (object)
-type FilterObjectFields<T, F extends Record<string, FieldsSchema>> = ExcludeNever<{
-  -readonly [K in keyof F]: K extends keyof T
-    ? K extends keyof F
-      ? F[K] extends FieldsSchema
-        ? NonNullable<T[K]> extends Array<infer U>
-          ? FilterFields<U, F[K]>[]
-          : FilterFields<NonNullable<T[K]>, F[K]>
-        : never
+type FilterFields<T, Schema extends FilteringSchema> = T extends Array<infer U>
+  ? Array<FilterFields<U, Schema>>
+  : T extends object
+    ? {
+        [K in keyof T as K extends keyof Schema ? K : never]: K extends keyof Schema
+          ? Schema[K] extends FilteringSchema
+            ? FilterFields<T[K], Schema[K]>
+            : FilterFields<T[K], {}>
+          : never
+      } & (T extends { id: infer IdType } ? { id: IdType } : {}) extends infer O
+      ? { [K in keyof O]: O[K] }
       : never
-    : never
-}>
-
-export type FilterFields<T, F extends FieldsSchema> = T extends any
-  ? MergeType<FilterStringFields<T, FilterKeys<F>> | FilterObjectFields<T, FilterNested<F>>>
-  : never
+    : T
 
 /**
  * Entity<T, TSchema> is a type that represents an entity with optional schema-based filtering.
@@ -234,9 +174,9 @@ export type FilterFields<T, F extends FieldsSchema> = T extends any
 export type Entity<T, TSchema> = TSchema extends undefined
   ? SchemaFromType<EntityBase>
   : TSchema extends FieldsSchema
-    ? FilterFields<T, TSchema>
+    ? FilterFields<T, ToFilteringSchema<TSchema>>
     : TSchema extends string
-      ? FilterFields<T, ParseSchema<TSchema>>
+      ? FilterFields<T, ToFilteringSchema<ParseSchema<TSchema>>>
       : never
 
 export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string | string[]
