@@ -76,7 +76,7 @@ export class IssueTimeTrackingApi extends ResourceApi {
    */
   async createIssueWorkItem<TSchema extends IssueWorkItemSchema>(
     issueId: string,
-    body: { duration: number } & DeepPartial<IssueWorkItem>,
+    body: DeepPartial<IssueWorkItem>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
     return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
