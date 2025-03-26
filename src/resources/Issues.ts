@@ -61,11 +61,12 @@ export class IssuesApi extends ResourceApi {
   }
 
   /**
-   * Create an issue.
-   * @param body - Required fields: summary, project (id). Optional: other issue fields.
+   * Create a new issue.
+   * @param body.summary - The summary of the issue.
+   * @param body.project - The project identifier.
    * @param params.fields - A list of Issue attributes that should be returned in the response. If no field is specified, only the entityId is returned.
-   * @param params.draftId - ID of a draft to report as the new issue. If no draftId is provided, the issue is created from scratch. In this case, you must specify the summary and the project in the request payload.
-   * @param params.muteUpdateNotifications - Set this parameter to true if no notifications should be sent on changes made by this request. This doesn't mute notifications sent by any workflow rules. Using this parameter requires Apply Commands Silently permission in all projects affected by the request.
+   * @param params.muteUpdateNotifications - Set to true if no notifications should be sent on changes made by this request.
+   * @param params.draftId - The ID of the issue draft to create issue from.
    * @returns The created issue.
    */
   async createIssue<TSchema extends IssueSchema>(
