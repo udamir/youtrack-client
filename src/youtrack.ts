@@ -74,7 +74,7 @@ export class YouTrack {
         ...rest,
       }
       const { data } = await axios.request(params)
-      return typeof data === "string" ? JSON.parse(data) : data
+      return typeof data === "string" && data !== "" ? JSON.parse(data) : data
     })
   }
 

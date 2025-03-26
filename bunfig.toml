@@ -5,3 +5,15 @@ coverage = true
 
 # new
 coverageReporter = ["text", "lcov"]
+
+# disable colors to fix debug console encoding issues
+color = false
+
+[test.reporter]
+# Disable colors in all test reporting
+colors = false
+showSlowTests = 0
+
+[coverageReport]
+# Disable colors in coverage reports
+colors = false

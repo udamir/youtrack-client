@@ -117,18 +117,16 @@ export class UsersApi extends ResourceApi {
    * Get the notification settings of a user's profile.
    * Requires 'Read Self' permission to read own profile and 'Read User Full' to read another user's profile.
    * @param userId - The Id of the user in YouTrack.
-   * @param profileId - The Id of the NotificationsUserProfile.
    * @param params - Optional parameters for the request.
    * @param params.fields - A list of NotificationsUserProfile attributes to include in the response. If not specified, only the entityId is returned.
    * @returns The notification settings of the specified user's profile.
    */
   async getUserNotificationProfile<TSchema extends NotificationsUserProfileSchema>(
     userId: string,
-    profileId: string,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
-      new RequestBuilder(`api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).get(),
+      new RequestBuilder(`api/users/${userId}/profiles/notifications`, { fields }, params).get(),
     )
   }
 
@@ -136,7 +134,6 @@ export class UsersApi extends ResourceApi {
    * Change the notification settings of a user's profile.
    * Requires 'Update Self' permission to update own profile and 'Update User' to update another user's profile.
    * @param userId - The Id of the user in YouTrack.
-   * @param profileId - The Id of the NotificationsUserProfile.
    * @param body - The updated notification settings for the user profile.
    * @param params - Optional parameters for the request.
    * @param params.fields - A list of NotificationsUserProfile attributes to include in the response. If not specified, only the entityId is returned.
@@ -144,12 +141,11 @@ export class UsersApi extends ResourceApi {
    */
   async updateUserNotificationProfile<TSchema extends NotificationsUserProfileSchema>(
     userId: string,
-    profileId: string,
     body: DeepPartial<NotificationsUserProfile>,
     params?: FieldsParam<TSchema>,
   ): Promise<NotificationsUserProfileEntity<TSchema>> {
     return this.youtrack.fetch<NotificationsUserProfileEntity<TSchema>>(
-      new RequestBuilder(`api/users/${userId}/profiles/notifications/${profileId}`, { fields }, params).post(body),
+      new RequestBuilder(`api/users/${userId}/profiles/notifications`, { fields }, params).post(body),
     )
   }
 
