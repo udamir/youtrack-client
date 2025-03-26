@@ -69,7 +69,7 @@ export class IssuesApi extends ResourceApi {
    * @returns The created issue.
    */
   async createIssue<TSchema extends IssueSchema>(
-    body: { summary: string; project: string } & DeepPartial<Omit<Issue, "project">>,
+    body: { summary: string; project: {id: string } } & DeepPartial<Omit<Issue, "project">>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam & { draftId?: string },
   ): Promise<IssueEntity<TSchema>> {
     return this.youtrack.fetch<IssueEntity<TSchema>>(
