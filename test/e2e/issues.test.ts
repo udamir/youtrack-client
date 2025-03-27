@@ -5,6 +5,24 @@ import { YouTrack } from "../../src"
 // load environment variables from .env file
 dotenv.config()
 
+
+interface ErrorWithResponseData extends Error {
+  response: {
+    data?: Record<string, string>;
+  };
+}
+
+function isErrorWithResponseData(
+  error: unknown,
+): error is ErrorWithResponseData {
+  return (
+    error instanceof Error &&
+    "response" in error &&
+    "data" in (error.response as ErrorWithResponseData["response"])
+  );
+}
+
+
 // define test youtrack project and token from environment variables
 const { 
   YOUTRACK_BASE_URL = "", 
@@ -125,5 +143,77 @@ describe("Basic issue cases", () => {
         await yt.Issues.deleteIssue(testIssueId)
       }
     }
-  })
+  });
+
+  it("should add work item", async () => {
+    // This test may need to create a test issue first to have a guaranteed ID to fetch
+    let testIssueId: string | null = null;
+    let shouldDeleteIssue = false;
+
+    try {
+      // First try to get any existing issue
+      const issues = await yt.Issues.getIssues({
+        fields: "id",
+        $top: 1,
+      });
+
+      if (issues.length > 0) {
+        testIssueId = issues[0].id;
+      } else if (enableUpdates) {
+        // If no issues exist and we're allowed to create one
+        const issue = await yt.Issues.createIssue(
+          {
+            project: { id: TEST_PROJECT_ID },
+            summary: "Test issue for createWorkItem test",
+            description:
+              "This is a test issue created to test the createWorkItem API",
+          },
+          { fields: "id" },
+        );
+
+        testIssueId = issue.id;
+        shouldDeleteIssue = true;
+      } else {
+        console.log(
+          "Skipping createWorkItem test - no issues found and ENABLE_UPDATES is false",
+        );
+        return;
+      }
+
+      // Now test adding work item
+      await yt.IssueTimeTracking.createIssueWorkItem(
+        testIssueId,
+        {
+          duration: {presentation:'1d'},
+          text: 'Test work item',
+        },
+      );
+
+      const fetchedIssue = await yt.Issues.getIssueById(testIssueId, {
+        fields: "id,summary,description,created,updated,project(id,name)",
+      });
+
+      expect(fetchedIssue.id).toBe(testIssueId);
+      expect(fetchedIssue.summary).toBeDefined();
+
+      const fetchedIssueWorkItems = await yt.IssueTimeTracking.getIssueWorkItems(testIssueId, {fields: "text,duration(presentation,minutes)"})
+      const createdWorkItem = fetchedIssueWorkItems.find(wi => wi.text === "Test work item")
+      expect(createdWorkItem).toBeDefined()
+      expect(createdWorkItem?.duration.presentation).toBe("1d")
+      expect(createdWorkItem?.duration.minutes).toBe(480)
+      expect(createdWorkItem?.text).toBe("Test work item")
+
+    } catch (error: unknown) {
+      if (isErrorWithResponseData(error)) {
+        throw new Error(
+          `Error: ${error.message}. ${error.response.data?.error_description}`,
+        );
+      }
+    } finally {
+      // Clean up any issue we created for this test
+      if (shouldDeleteIssue && testIssueId && restoreStateAfterTest) {
+        await yt.Issues.deleteIssue(testIssueId);
+      }
+    }
+  });
 })
