@@ -34,7 +34,10 @@
     "build": "rollup -c",
     "check": "biome check",
     "format": "biome format",
-    "test:types": "tsd"
+    "test": "bun test",
+    "pretest": "bun run type-check",
+    "test:types": "tsd",
+    "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "axios": "^1.7.7"
