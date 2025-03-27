@@ -1,4 +1,5 @@
 import type { ProjectCustomField } from "./CustomFields"
+import type { DurationPresentation } from "../utils"
 import type { EntityBase } from "./Entity"
 import type { Project } from "./Project"
 import type { Issue } from "./Issue"
@@ -34,7 +35,7 @@ export type WorkItemType = EntityBase<"WorkItemType"> & {
 
 export type DurationValue = EntityBase<"DurationValue"> & {
   minutes: number // Number of minutes in the time interval. Read-only.
-  presentation: string // Presentation of the time interval according to the user settings of duration format and user locale. Read-only.
+  presentation: DurationPresentation // Presentation of the time interval according to the user settings of duration format and user locale. Read-only.
 }
 
 export type WorkItemProjectAttribute = EntityBase<"WorkItemProjectAttribute"> & {

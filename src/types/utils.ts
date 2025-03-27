@@ -184,3 +184,82 @@ export type QueryParamBuilder<T = unknown | undefined> = (value?: T) => string |
 export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K]
 }
+
+/**
+ * DurationPresentation is a type that enforces valid YouTrack time duration formats
+ * with support for different language unit abbreviations
+ *
+ * Supports the following patterns:
+ * - Single unit format: "90m", "2w", "34h", "5d"
+ * - Multi-unit format: "1w 5d 4h 30m", "2d 4h", "1w 2d", etc.
+ *
+ * Language units can be specified via the generic type parameter:
+ * - Default (English): ["w", "d", "h", "m"] (weeks, days, hours, minutes)
+ * - Other languages can use their own abbreviations
+ *
+ * Example:
+ * ```typescript
+ * // Default English units
+ * const valid1: DurationPresentation = "90m";
+ * const valid2: DurationPresentation = "2w 5d 4h 30m";
+ *
+ * // Russian units
+ * type RussianUnits = ["н", "д", "ч", "м"];
+ * const russianTime: DurationPresentation<RussianUnits> = "2н 5д 4ч 30м";
+ *
+ * // German units
+ * type GermanUnits = ["w", "t", "s", "m"];
+ * const germanTime: DurationPresentation<GermanUnits> = "2w 5t 4s 30m";
+ *
+ * // Invalid presentations
+ * const invalid1: DurationPresentation = "90"; // Missing unit
+ * const invalid2: DurationPresentation = "2h 5m 1d"; // Incorrect order
+ * const invalid3: DurationPresentation = "2m 2m"; // Duplicate unit
+ * ```
+ */
+
+// Default English units type
+export type EnglishUnits = ["w", "d", "h", "m"]
+export type RussianUnits = ["н", "д", "ч", "м"]
+export type GermanUnits = ["w", "t", "s", "m"]
+
+// Generic DurationPresentation type with language support
+export type DurationPresentation<T extends [string, string, string, string] = EnglishUnits> =
+  | `${number}${T[0]}`
+  | `${number}${T[1]}`
+  | `${number}${T[2]}`
+  | `${number}${T[3]}`
+  | `${number}${T[0]} ${number}${T[1]}`
+  | `${number}${T[0]} ${number}${T[2]}`
+  | `${number}${T[0]} ${number}${T[3]}`
+  | `${number}${T[1]} ${number}${T[2]}`
+  | `${number}${T[1]} ${number}${T[3]}`
+  | `${number}${T[2]} ${number}${T[3]}`
+  | `${number}${T[0]} ${number}${T[1]} ${number}${T[2]}`
+  | `${number}${T[0]} ${number}${T[1]} ${number}${T[3]}`
+  | `${number}${T[0]} ${number}${T[2]} ${number}${T[3]}`
+  | `${number}${T[1]} ${number}${T[2]} ${number}${T[3]}`
+  | `${number}${T[0]} ${number}${T[1]} ${number}${T[2]} ${number}${T[3]}`
+
+/**
+ * AtLeastOne type makes all properties of T optional but requires at least one of them to be present
+ *
+ * @template T - The object type whose properties should be made optional but at least one required
+ *
+ * Example:
+ * ```typescript
+ * interface User {
+ *   name: string;
+ *   email: string;
+ *   phone: string;
+ * }
+ *
+ * // This allows any combination of properties, but at least one must be present
+ * type UserUpdate = AtLeastOne<User>;
+ *
+ * const validUpdate1: UserUpdate = { name: "John" }; // Valid - has name
+ * const validUpdate2: UserUpdate = { email: "john@example.com", phone: "123-456-7890" }; // Valid - has email and phone
+ * const invalidUpdate: UserUpdate = {}; // Invalid - empty object not allowed
+ * ```
+ */
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]

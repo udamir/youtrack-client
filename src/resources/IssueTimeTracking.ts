@@ -7,6 +7,8 @@ import type {
   Schema,
   IssueTimeTracking,
   DeepPartial,
+  DurationValue,
+  AtLeastOne,
 } from "../types"
 import { fields, queryParams, RequestBuilder } from "../utils"
 import { ResourceApi } from "./common"
@@ -76,7 +78,7 @@ export class IssueTimeTrackingApi extends ResourceApi {
    */
   async createIssueWorkItem<TSchema extends IssueWorkItemSchema>(
     issueId: string,
-    body: { duration: { presentation: string } } & DeepPartial<Omit<IssueWorkItem, "duration">>,
+    body: { duration: AtLeastOne<DurationValue> } & DeepPartial<Omit<IssueWorkItem, "duration">>,
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
     return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
@@ -122,7 +124,7 @@ export class IssueTimeTrackingApi extends ResourceApi {
   async updateWorkItem<TSchema extends IssueWorkItemSchema>(
     issueId: string,
     workItemId: string,
-    body: DeepPartial<IssueWorkItem>,
+    body: DeepPartial<Omit<IssueWorkItem, "duration">> & { duration?: AtLeastOne<DurationValue> },
     params?: FieldsParam<TSchema> & MuteUpdateNotificationsParam,
   ): Promise<IssueWorkItemEntity<TSchema>> {
     return this.youtrack.fetch<IssueWorkItemEntity<TSchema>>(
