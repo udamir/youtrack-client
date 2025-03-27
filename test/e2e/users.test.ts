@@ -103,16 +103,15 @@ describe("User profile management", () => {
 describe("User notification profiles", () => {
   const fields = "id,profiles(notifications(id))" as const
   let user: Entity<User, typeof fields>
- 
+
   beforeAll(async () => {
     // Get current user ID
     user = await yt.Users.getCurrentUserProfile({ fields })
   })
 
   it("should get user notification profile", async () => {
-    const notificationProfile = await yt.Users.getUserNotificationProfile(
-      user.id, 
-      { fields: [
+    const notificationProfile = await yt.Users.getUserNotificationProfile(user.id, {
+      fields: [
         "id",
         "notifyOnOwnChanges",
         "emailNotificationsEnabled",
@@ -124,8 +123,8 @@ describe("User notification profiles", () => {
         "autoWatchOnCreate",
         "autoWatchOnVote",
         "autoWatchOnUpdate",
-      ]}
-    )
+      ],
+    })
 
     expect(notificationProfile.id).toBeDefined()
     expect(typeof notificationProfile.emailNotificationsEnabled).toBe("boolean")
@@ -165,29 +164,36 @@ describe("User tags", () => {
 describe("User profile updates", () => {
   if (!enableUpdates) return
 
-  const fields = ["id", { profiles: [{
-    general: ["id", {timezone: ["id", "offset", "presentation"] }],
-    notifications: [
-      "id",
-      "notifyOnOwnChanges",
-      "emailNotificationsEnabled",
-      "mentionNotificationsEnabled",
-      "duplicateClusterNotificationsEnabled",
-      "mailboxIntegrationNotificationsEnabled",
-      "usePlainTextEmails",
-      "autoWatchOnComment",
-      "autoWatchOnCreate",
-      "autoWatchOnVote",
-      "autoWatchOnUpdate",
-    ],
-    timetracking: ["id", { periodFormat: ["id"] }],
-  }]}] as const
+  const fields = [
+    "id",
+    {
+      profiles: [
+        {
+          general: ["id", { timezone: ["id", "offset", "presentation"] }],
+          notifications: [
+            "id",
+            "notifyOnOwnChanges",
+            "emailNotificationsEnabled",
+            "mentionNotificationsEnabled",
+            "duplicateClusterNotificationsEnabled",
+            "mailboxIntegrationNotificationsEnabled",
+            "usePlainTextEmails",
+            "autoWatchOnComment",
+            "autoWatchOnCreate",
+            "autoWatchOnVote",
+            "autoWatchOnUpdate",
+          ],
+          timetracking: ["id", { periodFormat: ["id"] }],
+        },
+      ],
+    },
+  ] as const
 
   let me: Entity<User, typeof fields>
 
   beforeAll(async () => {
     // Get current user ID
-    me = await yt.Users.getCurrentUserProfile({fields})
+    me = await yt.Users.getCurrentUserProfile({ fields })
   })
 
   it("should update user general profile", async () => {
@@ -207,10 +213,13 @@ describe("User profile updates", () => {
 
     // Restore original timezone
     if (restoreStateAfterTest) {
-      const restoredProfile = await yt.Users.updateUserGeneralProfile(me.id, {
-        timezone: me.profiles.general.timezone,
-      },
-      { fields: "id,$type,timezone(id,offset,presentation)" })
+      const restoredProfile = await yt.Users.updateUserGeneralProfile(
+        me.id,
+        {
+          timezone: me.profiles.general.timezone,
+        },
+        { fields: "id,$type,timezone(id,offset,presentation)" },
+      )
 
       // Check if restore was successful
       expect(restoredProfile.timezone.id).toBe(me.profiles.general.timezone.id)
@@ -227,7 +236,7 @@ describe("User profile updates", () => {
     const updatedProfile = await yt.Users.updateUserTimeTrackingProfile(
       me.id,
       { periodFormat: { id: newFormat } },
-      { fields: "id,$type,periodFormat(id)" }
+      { fields: "id,$type,periodFormat(id)" },
     )
 
     // Check if update was successful
@@ -236,9 +245,9 @@ describe("User profile updates", () => {
     // Restore original setting
     if (restoreStateAfterTest) {
       const restoredProfile = await yt.Users.updateUserTimeTrackingProfile(
-        me.id, 
-        { periodFormat: { id: currentFormat }}, 
-        { fields: "id,$type,periodFormat(id)" }
+        me.id,
+        { periodFormat: { id: currentFormat } },
+        { fields: "id,$type,periodFormat(id)" },
       )
 
       // Check if restore was successful
@@ -247,7 +256,6 @@ describe("User profile updates", () => {
   })
 
   it("should update user notification profile", async () => {
-
     // Save original state to restore later
     const originalState = me.profiles.notifications.emailNotificationsEnabled
 
