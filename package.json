@@ -50,7 +50,7 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.0",
-    "@types/jest": "^29.5.13",
+    "@types/jest": "^30.0.0",
     "axios": "^1.7.7",
     "dotenv": "^16.4.7",
     "hub-dashboard-addons": "1.1.0",
