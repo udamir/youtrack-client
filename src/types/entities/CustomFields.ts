@@ -59,4 +59,5 @@ export type ProjectCustomField = EntityBase<"ProjectCustomField"> & {
   isPublic: boolean // If true, the basic Read Issue and Update Issue permissions are sufficient to access this field. If false, the Read Issue Private Fields and Update Issue Private Fields permissions are required.
   hasRunningJob: boolean // If true, there is a background job running for this field. In this case, some field operations may be temporary inaccessible.
   condition: CustomFieldCondition | null // The condition for showing the custom field. Can be null.
+  bundle: EntityBase<"CustomFieldBundle"> | null // The bundle for the custom field. Can be null.
 }
