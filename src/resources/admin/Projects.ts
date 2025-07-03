@@ -59,7 +59,7 @@ export class ProjectsApi extends ResourceApi {
    * @returns A promise that resolves to the created Project entity.
    */
   async createProject<TSchema extends ProjectSchema>(
-    body: { name: string; shortName: string; leader: { id: string } } & DeepPartial<Project>,
+    body: { name: string; shortName: string; leader: { id: string } } & DeepPartial<Omit<Project, "leader">>,
     params?: FieldsParam<TSchema> & { template?: string },
   ): Promise<ProjectEntity<TSchema>> {
     return this.youtrack.fetch<ProjectEntity<TSchema>>(
@@ -171,7 +171,7 @@ export class ProjectsApi extends ResourceApi {
    */
   async addCustomFieldToProject<TSchema extends ProjectCustomFieldSchema>(
     projectId: string,
-    body: { field: { id: string } } & DeepPartial<ProjectCustomField>,
+    body: { field: { id: string } } & DeepPartial<Omit<ProjectCustomField, "field">>,
     params?: FieldsParam<TSchema>,
   ): Promise<ProjectCustomFieldEntity<TSchema>> {
     return this.youtrack.fetch<ProjectCustomFieldEntity<TSchema>>(

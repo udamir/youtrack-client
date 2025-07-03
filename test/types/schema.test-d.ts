@@ -8,7 +8,6 @@ type SimpleObject = {
   active: boolean
 }
 
-type T = Schema<SimpleObject>
 expectType<Schema<SimpleObject>>(["id", "name", "active"] as const)
 
 // Testing Schema with nested objects

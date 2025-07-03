@@ -15,6 +15,7 @@ dist-ssr
 *.local
 .env
 .vuepress
+.windsurf
 
 # Editor directories and files
 .vscode/*

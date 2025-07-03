@@ -1,7 +1,7 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the YouTrack REST and Widget API",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "type": "module",
   "keywords": [
     "youtrack",
@@ -43,14 +43,14 @@
     "axios": "^1.7.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
+    "@biomejs/biome": "^2.0.6",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.0",
-    "@types/jest": "^29.5.13",
+    "@types/bun": "^1.2.18",
     "axios": "^1.7.7",
     "dotenv": "^16.4.7",
     "hub-dashboard-addons": "1.1.0",
@@ -59,7 +59,7 @@
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-progress": "^1.1.2",
     "tsd": "^0.31.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.8.3"
   },
   "tsd": {
     "directory": "test/types"

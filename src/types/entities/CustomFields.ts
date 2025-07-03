@@ -1,3 +1,4 @@
+import type { ProjectCustomFieldBundle } from "./BundleElement"
 import type { CustomFieldCondition, Project } from "./Project"
 import type { IssueCustomField } from "./Issue"
 import type { EntityBase } from "./Entity"
@@ -51,6 +52,7 @@ export type CustomFieldDefaults = EntityBase<"CustomFieldDefaults"> & {
 }
 
 export type ProjectCustomField = EntityBase<"ProjectCustomField"> & {
+  bundle: ProjectCustomFieldBundle | null // The bundle that the custom field belongs to. Can be null.
   field: CustomField | null // The custom field in the project. Can be null.
   project: Project | null // The project where the custom field belongs. Can be null.
   canBeEmpty: boolean // If true, the custom field can have empty value, otherwise false.
