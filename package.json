@@ -52,7 +52,7 @@
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/bun": "^1.2.18",
     "axios": "^1.7.7",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.1.0",
     "hub-dashboard-addons": "1.1.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.21.3",
