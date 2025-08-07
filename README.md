@@ -164,6 +164,7 @@ interface YouTrack {
     GlobalSettings: ResourceApi.GlobalSettingsApi
     TelemetryData: ResourceApi.TelemetryDataApi
     GlobalTimeTrackingSettings: ResourceApi.GlobalTimeTrackingSettingsApi
+    Workflows: ResourceApi.WorkflowsApi
   }
 }
 ```

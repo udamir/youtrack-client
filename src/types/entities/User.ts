@@ -12,11 +12,18 @@ export type User = EntityBase<"User"> & {
   guest: boolean // Indicates whether the user is a guest.
   online: boolean // Indicates whether the user is currently online.
   banned: boolean // Indicates whether the user is banned.
+  banBadge: string | null
+  isEmailVerified: boolean
+  canReadProfile: boolean
+  isLocked: boolean
+  userType: UserType
   tags: Tag[] // Tags that belong to this user.
   savedQueries: SavedQuery[] // Saved searches that belong to this user.
   avatarUrl: string // The URL of the user avatar.
   profiles: UserProfiles // The profiles of the user.
 }
+
+export type UserType = EntityBase<"UserType">
 
 export type Reaction = EntityBase<"Reaction"> & {
   author: User | null // The user who put the reaction. Can be null.

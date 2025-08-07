@@ -1,7 +1,7 @@
 {
   "name": "youtrack-client",
   "description": "Client library for accessing the YouTrack REST and Widget API",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "type": "module",
   "keywords": [
     "youtrack",

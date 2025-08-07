@@ -38,6 +38,7 @@ export class YouTrack {
     GlobalSettings: ResourceApi.GlobalSettingsApi
     TelemetryData: ResourceApi.TelemetryDataApi
     GlobalTimeTrackingSettings: ResourceApi.GlobalTimeTrackingSettingsApi
+    Workflows: ResourceApi.WorkflowsApi
   }
 
   static client(baseUrl: string, token: string) {
@@ -57,7 +58,11 @@ export class YouTrack {
         throw new Error(`Error: ${response.status} ${response.statusText}`)
       }
 
-      return response.json()
+      if (response.headers.get("content-type")?.startsWith("application/json")) {
+        return response.json()
+      }
+
+      return response.blob()
     })
   }
 
@@ -73,8 +78,12 @@ export class YouTrack {
         },
         ...rest,
       }
-      const { data } = await axios.request(params)
-      return typeof data === "string" && data !== "" ? JSON.parse(data) : data
+      const response = await axios.request(params)
+
+      if (response.headers["content-type"]?.startsWith("application/json")) {
+        return typeof response.data === "string" && response.data !== "" ? JSON.parse(response.data) : response.data
+      }
+      return response.data
     })
   }
 
@@ -133,6 +142,7 @@ export class YouTrack {
       GlobalSettings: new ResourceApi.GlobalSettingsApi(this),
       TelemetryData: new ResourceApi.TelemetryDataApi(this),
       GlobalTimeTrackingSettings: new ResourceApi.GlobalTimeTrackingSettingsApi(this),
+      Workflows: new ResourceApi.WorkflowsApi(this),
     }
   }
 }
