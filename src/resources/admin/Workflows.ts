@@ -36,6 +36,27 @@ export class WorkflowsApi extends ResourceApi {
   }
 
   /**
+   * Get workflow by id.
+   * @param params - Optional parameters for response filtering.
+   * @param params.fields - A list of attributes that should be returned in the response. If no field is specified, only the entityId is returned.
+   * @returns A promise that resolves to a Workflow entity.
+   */
+  async getWorkflowById<TSchema extends WorkflowSchema>(
+    workflowId: string,
+    params?: FieldsParam<TSchema>,
+  ): Promise<WorkflowEntity<TSchema>> {
+    return this.youtrack.fetch<WorkflowEntity<TSchema>>(
+      new RequestBuilder(
+        `api/admin/workflows/${workflowId}`,
+        {
+          fields,
+        },
+        params,
+      ).get(),
+    )
+  }
+
+  /**
    * Download a workflow as a zip file.
    * @param workflowName - The name of the workflow to download.
    * @returns A promise that resolves to a Blob containing the workflow zip file.
