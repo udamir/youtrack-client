@@ -1,5 +1,5 @@
 import type { ProjectCustomField } from "./CustomFields"
-import type { EntityBase, PeriodValue } from "./Entity"
+import type { EntityBase, PeriodValue, TextFieldValue } from "./Entity"
 import type {
   BuildBundleElement,
   BundleElement,
@@ -98,7 +98,7 @@ export type SimpleIssueCustomField = IssueCustomFieldBase<"SimpleIssueCustomFiel
 }
 
 export type TextIssueCustomField = IssueCustomFieldBase<"TextIssueCustomField"> & {
-  value: string
+  value: TextFieldValue
 }
 
 export type DateIssueCustomField = IssueCustomFieldBase<"DateIssueCustomField"> & {
