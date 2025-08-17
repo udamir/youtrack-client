@@ -4,11 +4,11 @@ import type { FetchConfig, FetchFunc } from "./types"
 import { encodeBody, joinUrl } from "./utils"
 import * as ResourceApi from "./resources"
 
-export interface RequestParams<RawBody extends boolean = true | false> extends Omit<RequestInit, 'body' | 'headers'> {
-  body?: RawBody extends true ? BodyInit | null : unknown;
-  query?: Record<string, unknown> | undefined;
-  headers?: HeadersInit | Record<string, null | undefined>;
-  sendRawBody?: RawBody;
+export interface RequestParams<RawBody extends boolean = true | false> extends Omit<RequestInit, "body" | "headers"> {
+  body?: RawBody extends true ? BodyInit | null : unknown
+  query?: Record<string, unknown> | undefined
+  headers?: HeadersInit | Record<string, null | undefined>
+  sendRawBody?: RawBody
 }
 
 export class YouTrack {
@@ -94,7 +94,7 @@ export class YouTrack {
   }
 
   static widget(api: {
-    fetchYouTrack: <T = unknown>(relativeURL: string, requestParams?: RequestParams) => Promise<T>;
+    fetchYouTrack: <T = unknown>(relativeURL: string, requestParams?: RequestParams) => Promise<T>
   }) {
     return new YouTrack("", (config) => {
       const { url, data, ...rest } = config
